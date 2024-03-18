@@ -24,15 +24,15 @@ public class Dialogues : MonoBehaviour
 
     public bool DialogPlay { get; private set; }
     [Inject]
-    // public void Construct(DialoguesInstaller dialoguesInstaller)
-    // {
-    //     _inkJson = dialoguesInstaller.inkJson;
-    //     _dialoguePanel = dialoguesInstaller.dialoguePanel;
-    //     _dialogueText = dialoguesInstaller.dialogueText;
-    //     _nameText = dialoguesInstaller.nameText;
-    //     _choiceButtonsPanel = dialoguesInstaller.choiceButtonsPanel;
-    //     _choiceButton = dialoguesInstaller.choiceButton;
-    // }
+    public void Construct(DialoguesInstaller dialoguesInstaller)
+    {
+        _inkJson = dialoguesInstaller.inkJson;
+        _dialoguePanel = dialoguesInstaller.dialoguePanel;
+        _dialogueText = dialoguesInstaller.dialogueText;
+        _nameText = dialoguesInstaller.nameText;
+        _choiceButtonsPanel = dialoguesInstaller.choiceButtonsPanel;
+        _choiceButton = dialoguesInstaller.choiceButton;
+    }
     private void Awake()
     {
         _currentStory = new Story(_inkJson.text);

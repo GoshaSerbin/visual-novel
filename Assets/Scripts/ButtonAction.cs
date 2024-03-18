@@ -13,7 +13,7 @@ public class ButtonAction : MonoBehaviour
     void Start()
     {
         _button = GetComponent<Button>();
-        _dialogues = FindObjectOfType<Dialogues>();
+        _dialogues = FindObjectOfType<Dialogues>(); // must be single on scene
         _clickAction = new UnityAction(() => _dialogues.ChoiceButtonAction(index));
         _button.onClick.AddListener(_clickAction);
     }
