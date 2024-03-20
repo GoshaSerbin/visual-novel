@@ -19,7 +19,7 @@ public class Dialogues : MonoBehaviour
     [HideInInspector] public GameObject _choiceButtonsPanel;
     private GameObject _choiceButton;
     private List<TextMeshProUGUI> _choicesText = new();
-    // private List<Character> characters = new();
+    private List<Character> characters = new();
     private float multiplier = 1.1f;
 
     public bool DialogPlay { get; private set; }
@@ -39,10 +39,10 @@ public class Dialogues : MonoBehaviour
     }
     void Start()
     {
-        // foreach (var character in FindObjectsOfType<Character>())
-        // {
-        //     characters.Add(character);
-        // }
+        foreach (var character in FindObjectsOfType<Character>())
+        {
+            characters.Add(character);
+        }
         StartDialogue();
     }
     public void StartDialogue()
@@ -67,29 +67,29 @@ public class Dialogues : MonoBehaviour
     {
         _dialogueText.text = _currentStory.Continue();
         _nameText.text = (string)_currentStory.variablesState["characterName"];
-        // var index = characters.FindIndex(character => character.characterName.Contains(_nameText.text));
-        // characters[index].ChangeEmotion((int)_currentStory.variablesState["characterExpression"]);
-        // ChangeCharacterScale(index);
+        var index = characters.FindIndex(character => character.CharacterName.Contains(_nameText.text));
+        characters[index].ChangeEmotion((Character.EmotionState)(int)_currentStory.variablesState["characterExpression"]);
+        ChangeCharacterScale(index);
     }
     private void ChangeCharacterScale(int indexCharacter)
     {
         if (indexCharacter >= 0)
         {
-            // foreach (var character in characters)
-            // {
-            //     if (character != characters[indexCharacter])
-            //     {
-            //         character.ResetScale();
-            //     }
-            //     else if (character.DefaultScale == character.transform.localScale)
-            //     {
-            //         character.ChangeScale(multiplier);
-            //     }
-            // }
+            foreach (var character in characters)
+            {
+                if (character != characters[indexCharacter])
+                {
+                    character.ResetScale();
+                }
+                else if (character.DefaultScale == character.transform.localScale)
+                {
+                    character.ChangeScale(multiplier);
+                }
+            }
         }
         else
         {
-            // characters.ForEach(character => character.ResetScale());
+            characters.ForEach(character => character.ResetScale());
         }
     }
     private void ShowChoiceButtons()
@@ -120,7 +120,7 @@ public class Dialogues : MonoBehaviour
         DialogPlay = false;
         _dialoguePanel.SetActive(false);
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        if (nextSceneIndex <= SceneManager.sceneCount)
+        if (nextSceneIndex < SceneManager.sceneCount)
         {
             SceneManager.LoadScene(nextSceneIndex);
         }

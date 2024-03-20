@@ -1,4 +1,5 @@
-VAR characterName = ""
+VAR characterName = "Bill"
+VAR characterExpression = 1
 первый диалог. 
 ~characterName="Bill"
 хмхмхм
@@ -16,7 +17,7 @@ VAR characterName = ""
 хахаха
 ~characterName="Bill"
 лооол
-->END
+->ending
 
 === answer2 ===
 ~characterName="Bill"
@@ -24,5 +25,14 @@ VAR characterName = ""
 ~characterName="John"
 ухухуху
 ~characterName="Bill"
-мммм
+->ending
+
+
+=== ending ===
+я еще раз спрашиваю?
+ + [Ответ1] -> answer
+ + [Ответ2] -> answer
+ 
+=== answer ===
+ок
 ->END
