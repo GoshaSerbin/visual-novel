@@ -34,22 +34,19 @@ public class ServerCommunication : MonoBehaviour
 
         var messages = new List<Message>() { message1, message2 };
 
-        string jsonMessages = "{";
-        foreach (Message message in messages)
+        string jsonMessages = "[";
+        for (int i = 0; i < messages.Count - 1; ++i)
         {
-            string jsonMessage = JsonUtility.ToJson(message);
-            jsonMessages += jsonMessage;
+            string jsonMessage = JsonUtility.ToJson(messages[i]);
+            jsonMessages += jsonMessage + ", ";
         }
-        jsonMessages += "}";
-        // var messages = new List<Dictionary<string, string>>();
-        // // TODO: add class for {role, text} ?
-        // messages.Add(new Dictionary<string, string>() { { "role", "system" }, { "text", messageToSend } });
-
-        // string jsonMessages = JsonSerializer.Serialize(messages);
+        jsonMessages += JsonUtility.ToJson(messages[messages.Count - 1]) + "]";
         Debug.Log(jsonMessages);
         form.AddField("message", jsonMessages);
+        form.AddField("max_tokens", 50);
         using (UnityWebRequest www = UnityWebRequest.Post(serverURL, form))
         {
+            www.timeout = 10; //sec
             yield return www.SendWebRequest();
 
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
