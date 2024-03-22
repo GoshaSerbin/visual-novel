@@ -576,7 +576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52ccf2d64dc1f141a7bd052ea206850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverURL: http://localhost:8080
+  serverURL: http://146.185.211.97:8080
   messageToSend: Hello, server!
 --- !u!4 &622504705
 Transform:
