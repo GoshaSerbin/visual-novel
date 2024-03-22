@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
+using System;
+using System.Text;
 
 public class ServerCommunication : MonoBehaviour
 {
@@ -19,31 +21,13 @@ public class ServerCommunication : MonoBehaviour
         public string text;
     }
 
-    public void SendRequestToServer()
+    public void SendRequestToServer(WWWForm form, Action<string> callback)
     {
-        StartCoroutine(SendMessage());
+        StartCoroutine(SendMessage(form, callback));
     }
 
-
-    IEnumerator SendMessage()
+    IEnumerator SendMessage(WWWForm form, Action<string> callback)
     {
-        WWWForm form = new WWWForm();
-
-        Message message1 = new Message("system", "text");
-        Message message2 = new Message("user", "text");
-
-        var messages = new List<Message>() { message1, message2 };
-
-        string jsonMessages = "[";
-        for (int i = 0; i < messages.Count - 1; ++i)
-        {
-            string jsonMessage = JsonUtility.ToJson(messages[i]);
-            jsonMessages += jsonMessage + ", ";
-        }
-        jsonMessages += JsonUtility.ToJson(messages[messages.Count - 1]) + "]";
-        Debug.Log(jsonMessages);
-        form.AddField("message", jsonMessages);
-        form.AddField("max_tokens", 50);
         using (UnityWebRequest www = UnityWebRequest.Post(serverURL, form))
         {
             www.timeout = 10; //sec
@@ -52,17 +36,15 @@ public class ServerCommunication : MonoBehaviour
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
+                callback(null);
             }
             else
             {
-                Debug.Log("Server response: " + www.downloadHandler.text);
+                string response = www.downloadHandler.text;
+                Debug.Log("Server response: " + response);
+                callback(response);
             }
         }
-    }
-
-    void Start()
-    {
-        SendRequestToServer();
     }
 
 }
