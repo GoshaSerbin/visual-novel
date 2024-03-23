@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Missions : MonoBehaviour
@@ -8,6 +9,8 @@ public class Missions : MonoBehaviour
 
     private void callback(string response)
     {
+        //must check if not null
+        Debug.Log(response.Length);
         Debug.Log(response);
     }
     // Start is called before the first frame update

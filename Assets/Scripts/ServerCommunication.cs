@@ -4,11 +4,11 @@ using UnityEngine.Networking;
 using System.Collections.Generic;
 using System;
 using System.Text;
+using System.Linq;
 
 public class ServerCommunication : MonoBehaviour
 {
-    public string serverURL = "http://";
-    public string messageToSend = "Hello, server!";
+    [SerializeField] private string serverURL = "http://";
 
     public class Message
     {
@@ -26,6 +26,13 @@ public class ServerCommunication : MonoBehaviour
         StartCoroutine(SendMessage(form, callback));
     }
 
+    public string Decode(byte[] bytes, string encodingName)
+    {
+        Debug.Log(bytes.Count());
+        Encoding encoding = Encoding.GetEncoding(encodingName);
+        return encoding.GetString(bytes);
+    }
+
     IEnumerator SendMessage(WWWForm form, Action<string> callback)
     {
         using (UnityWebRequest www = UnityWebRequest.Post(serverURL, form))
@@ -40,7 +47,11 @@ public class ServerCommunication : MonoBehaviour
             }
             else
             {
-                string response = www.downloadHandler.text;
+                string response = Decode(www.downloadHandler.data, "windows-1251");
+                // string response = Encoding.UTF8.GetString(www.downloadHandler.nativeData);
+                // string response = Encoding.UTF7.GetString(www.downloadHandler.data);
+                // string response = Encoding.ASCII.GetString(www.downloadHandler.data);
+                // string response = Encoding.UTF32.GetString(www.downloadHandler.data);
                 Debug.Log("Server response: " + response);
                 callback(response);
             }

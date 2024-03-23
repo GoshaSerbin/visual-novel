@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SendPhrase",
+                    "type": "Button",
+                    "id": "9e68e65c-a258-4974-b0dc-05acde3ac3c5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -24,6 +33,45 @@
                     "processors": "",
                     "groups": "",
                     "action": "NextPhrase",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2f8d5217-dc01-4774-9077-347ad0834e0c",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SendPhrase",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Mission",
+            "id": "e546fcc6-2517-4cca-8620-04ebd8fe4187",
+            "actions": [
+                {
+                    "name": "SendAnswer",
+                    "type": "Button",
+                    "id": "7a73507b-ac1f-4869-8a81-aa0faca7020a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9e2216ec-4e93-4e2a-abed-63282d1d29be",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SendAnswer",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

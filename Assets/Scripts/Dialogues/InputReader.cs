@@ -29,4 +29,11 @@ public class InputReader : MonoBehaviour, Controls.IDialogueActions
             _dialogues.ContinueStory(_dialogues._choiceButtonsPanel.activeInHierarchy); // странновато
         }
     }
+    public void OnSendPhrase(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            // send request to server
+        }
+    }
 }

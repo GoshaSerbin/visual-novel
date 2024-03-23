@@ -35,6 +35,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SendPhrase"",
+                    ""type"": ""Button"",
+                    ""id"": ""9e68e65c-a258-4974-b0dc-05acde3ac3c5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -48,6 +57,45 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""NextPhrase"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2f8d5217-dc01-4774-9077-347ad0834e0c"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SendPhrase"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Mission"",
+            ""id"": ""e546fcc6-2517-4cca-8620-04ebd8fe4187"",
+            ""actions"": [
+                {
+                    ""name"": ""SendAnswer"",
+                    ""type"": ""Button"",
+                    ""id"": ""7a73507b-ac1f-4869-8a81-aa0faca7020a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""9e2216ec-4e93-4e2a-abed-63282d1d29be"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SendAnswer"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -57,6 +105,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         // Dialogue
         m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
         m_Dialogue_NextPhrase = m_Dialogue.FindAction("NextPhrase", throwIfNotFound: true);
+        m_Dialogue_SendPhrase = m_Dialogue.FindAction("SendPhrase", throwIfNotFound: true);
+        // Mission
+        m_Mission = asset.FindActionMap("Mission", throwIfNotFound: true);
+        m_Mission_SendAnswer = m_Mission.FindAction("SendAnswer", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -119,11 +171,13 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Dialogue;
     private List<IDialogueActions> m_DialogueActionsCallbackInterfaces = new List<IDialogueActions>();
     private readonly InputAction m_Dialogue_NextPhrase;
+    private readonly InputAction m_Dialogue_SendPhrase;
     public struct DialogueActions
     {
         private @Controls m_Wrapper;
         public DialogueActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @NextPhrase => m_Wrapper.m_Dialogue_NextPhrase;
+        public InputAction @SendPhrase => m_Wrapper.m_Dialogue_SendPhrase;
         public InputActionMap Get() { return m_Wrapper.m_Dialogue; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -136,6 +190,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @NextPhrase.started += instance.OnNextPhrase;
             @NextPhrase.performed += instance.OnNextPhrase;
             @NextPhrase.canceled += instance.OnNextPhrase;
+            @SendPhrase.started += instance.OnSendPhrase;
+            @SendPhrase.performed += instance.OnSendPhrase;
+            @SendPhrase.canceled += instance.OnSendPhrase;
         }
 
         private void UnregisterCallbacks(IDialogueActions instance)
@@ -143,6 +200,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @NextPhrase.started -= instance.OnNextPhrase;
             @NextPhrase.performed -= instance.OnNextPhrase;
             @NextPhrase.canceled -= instance.OnNextPhrase;
+            @SendPhrase.started -= instance.OnSendPhrase;
+            @SendPhrase.performed -= instance.OnSendPhrase;
+            @SendPhrase.canceled -= instance.OnSendPhrase;
         }
 
         public void RemoveCallbacks(IDialogueActions instance)
@@ -160,8 +220,59 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         }
     }
     public DialogueActions @Dialogue => new DialogueActions(this);
+
+    // Mission
+    private readonly InputActionMap m_Mission;
+    private List<IMissionActions> m_MissionActionsCallbackInterfaces = new List<IMissionActions>();
+    private readonly InputAction m_Mission_SendAnswer;
+    public struct MissionActions
+    {
+        private @Controls m_Wrapper;
+        public MissionActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SendAnswer => m_Wrapper.m_Mission_SendAnswer;
+        public InputActionMap Get() { return m_Wrapper.m_Mission; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MissionActions set) { return set.Get(); }
+        public void AddCallbacks(IMissionActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MissionActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MissionActionsCallbackInterfaces.Add(instance);
+            @SendAnswer.started += instance.OnSendAnswer;
+            @SendAnswer.performed += instance.OnSendAnswer;
+            @SendAnswer.canceled += instance.OnSendAnswer;
+        }
+
+        private void UnregisterCallbacks(IMissionActions instance)
+        {
+            @SendAnswer.started -= instance.OnSendAnswer;
+            @SendAnswer.performed -= instance.OnSendAnswer;
+            @SendAnswer.canceled -= instance.OnSendAnswer;
+        }
+
+        public void RemoveCallbacks(IMissionActions instance)
+        {
+            if (m_Wrapper.m_MissionActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMissionActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MissionActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MissionActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MissionActions @Mission => new MissionActions(this);
     public interface IDialogueActions
     {
         void OnNextPhrase(InputAction.CallbackContext context);
+        void OnSendPhrase(InputAction.CallbackContext context);
+    }
+    public interface IMissionActions
+    {
+        void OnSendAnswer(InputAction.CallbackContext context);
     }
 }
