@@ -33,6 +33,19 @@ public class ServerCommunication : MonoBehaviour
         return encoding.GetString(bytes);
     }
 
+    static public string ToJSON(List<Message> messages)
+    {
+        string jsonMessages = "[";
+        for (int i = 0; i < messages.Count - 1; ++i)
+        {
+            string jsonMessage = JsonUtility.ToJson(messages[i]);
+            jsonMessages += jsonMessage + ", ";
+        }
+        jsonMessages += JsonUtility.ToJson(messages[messages.Count - 1]) + "]";
+        Debug.Log(jsonMessages);
+        return jsonMessages;
+    }
+
     IEnumerator SendMessage(WWWForm form, Action<string> callback)
     {
         using (UnityWebRequest www = UnityWebRequest.Post(serverURL, form))

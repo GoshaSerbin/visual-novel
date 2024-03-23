@@ -10,21 +10,31 @@ public class Missions : MonoBehaviour
     private ServerCommunication _server;
     private TMP_InputField _inputField;
 
-    private void callback(string response)
+    [SerializeField] private GameObject _storyPanel; // TO DO: replace serializefield with zenject
+    [SerializeField] private TextMeshProUGUI _storyText;
+
+    public void Construct(DialoguesInstaller dialoguesInstaller)
+    {
+        //zenject
+    }
+
+    private void RequestCallback(string response)
     {
         //must check if not null
+        if (response == null)
+        {
+            Debug.LogError("server returned error");
+            return;
+        }
         Debug.Log(response.Length);
         Debug.Log(response);
+        _storyText.text = response;
     }
     // Start is called before the first frame update
     void Start()
     {
         _server = FindObjectOfType<ServerCommunication>(); // must be single on scene
         _inputField = FindObjectOfType<TMP_InputField>(); // must be single
-        if (_inputField)
-        {
-            Debug.Log("Find!!!!");
-        }
     }
 
     public void HandleAnswer()
@@ -34,6 +44,13 @@ public class Missions : MonoBehaviour
         {
             return;
         }
+        SendAnswer(answer);
+
+
+    }
+
+    private void SendAnswer(string answer)
+    {
         WWWForm form = new WWWForm();
 
         var message1 = new ServerCommunication.Message("system", "Ты безумен");
@@ -41,17 +58,10 @@ public class Missions : MonoBehaviour
 
         var messages = new List<ServerCommunication.Message>() { message1, message2 };
 
-        string jsonMessages = "[";
-        for (int i = 0; i < messages.Count - 1; ++i)
-        {
-            string jsonMessage = JsonUtility.ToJson(messages[i]);
-            jsonMessages += jsonMessage + ", ";
-        }
-        jsonMessages += JsonUtility.ToJson(messages[messages.Count - 1]) + "]";
-        Debug.Log(jsonMessages);
+        string jsonMessages = ServerCommunication.ToJSON(messages);
         form.AddField("message", jsonMessages);
         form.AddField("max_tokens", 50);
-        _server.SendRequestToServer(form, callback);
-
+        form.AddField("temperature", 1);
+        _server.SendRequestToServer(form, RequestCallback);
     }
 }
