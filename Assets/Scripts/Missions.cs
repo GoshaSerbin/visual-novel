@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Missions : MonoBehaviour
 {
     private ServerCommunication _server;
+    private TMP_InputField _inputField;
 
     private void callback(string response)
     {
@@ -17,7 +20,20 @@ public class Missions : MonoBehaviour
     void Start()
     {
         _server = FindObjectOfType<ServerCommunication>(); // must be single on scene
+        _inputField = FindObjectOfType<TMP_InputField>(); // must be single
+        if (_inputField)
+        {
+            Debug.Log("Find!!!!");
+        }
+    }
 
+    public void HandleAnswer()
+    {
+        string answer = _inputField.text;
+        if (answer == "")
+        {
+            return;
+        }
         WWWForm form = new WWWForm();
 
         var message1 = new ServerCommunication.Message("system", "Ты безумен");
@@ -36,6 +52,6 @@ public class Missions : MonoBehaviour
         form.AddField("message", jsonMessages);
         form.AddField("max_tokens", 50);
         _server.SendRequestToServer(form, callback);
-    }
 
+    }
 }

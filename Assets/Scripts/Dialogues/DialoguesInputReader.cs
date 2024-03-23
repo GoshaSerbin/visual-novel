@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputReader : MonoBehaviour, Controls.IDialogueActions
+public class DialoguesInputReader : MonoBehaviour, Controls.IDialogueActions
 {
     Controls _inputActions;
     Dialogues _dialogues;
