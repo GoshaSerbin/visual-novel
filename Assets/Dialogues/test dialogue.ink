@@ -1,17 +1,31 @@
+CONST DEFAULT = 0
+CONST ANGRY = 1
+CONST SAD = 2
+
+VAR characterExpression = DEFAULT
 VAR characterName = ""
-VAR characterExpression = 1
-первый диалог. 
-~characterName="Clara"
-хмхмхм
+Первый диалог
+Какое-то описание 
+
+~characterName = "Clara"
+~characterExpression = DEFAULT
+Ну дарова
+бла бла бла
+
 ~characterName="John"
-охохох
+~characterExpression = ANGRY
+че ты несешь???
+епта
+
 ~characterName=""
-Вопрос?
- + [Ответ1] -> answer1
- + [Ответ2] -> answer2
+Что делать?
+ + [дать леща] -> answer1
+ + [сломать колени] -> answer2
  
 === answer1 ===
+дает леща
 ~characterName="Clara"
+~characterExpression = DEFAULT
 ответик
 ~characterName="John"
 хахаха
@@ -20,6 +34,7 @@ VAR characterExpression = 1
 ->ending
 
 === answer2 ===
+ломает колени
 ~characterName="Clara"
 ответик тожк
 ~characterName="John"
