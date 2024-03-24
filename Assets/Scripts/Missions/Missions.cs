@@ -12,7 +12,9 @@ public class Missions : MonoBehaviour
     private TMP_InputField _inputField;
 
     [SerializeField] private Button _startButton;
-    [SerializeField] private string generateMissionPrompt;
+
+    [TextArea(3, 10)][SerializeField] private string generateMissionSystemText;
+    [TextArea(3, 10)][SerializeField] private string generateMissionUserText;
 
     [SerializeField] private GameObject _storyPanel; // TO DO: replace serializefield with zenject
     [SerializeField] private TextMeshProUGUI _storyText;
@@ -41,12 +43,13 @@ public class Missions : MonoBehaviour
     {
         WWWForm form = new WWWForm();
 
-        var message1 = new ServerCommunication.Message("user", generateMissionPrompt);
-        var messages = new List<ServerCommunication.Message>() { message1 };
+        var message1 = new ServerCommunication.Message("system", generateMissionSystemText);
+        var message2 = new ServerCommunication.Message("user", generateMissionUserText);
+        var messages = new List<ServerCommunication.Message>() { message1, message2 };
         string jsonMessages = ServerCommunication.ToJSON(messages);
 
         form.AddField("message", jsonMessages);
-        form.AddField("max_tokens", 50);
+        form.AddField("max_tokens", 800);
         form.AddField("temperature", 1);
         _server.SendRequestToServer(form, GenerateMissionCallBack);
     }

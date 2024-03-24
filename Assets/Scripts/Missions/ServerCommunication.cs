@@ -12,13 +12,13 @@ public class ServerCommunication : MonoBehaviour
 
     public class Message
     {
-        public Message(string Role, string Text)
+        public Message(string Role, string Content)
         {
             role = Role;
-            text = Text;
+            content = Content;
         }
         public string role;
-        public string text;
+        public string content;
     }
 
     public void SendRequestToServer(WWWForm form, Action<string> callback)
