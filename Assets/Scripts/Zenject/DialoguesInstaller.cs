@@ -12,5 +12,7 @@ public class DialoguesInstaller : MonoBehaviour
     public TextMeshProUGUI nameText;
 
     public GameObject choiceButtonsPanel;
+    public GameObject inputFieldPanel;
+    public TMP_InputField inputField;
     public GameObject choiceButton;
 }

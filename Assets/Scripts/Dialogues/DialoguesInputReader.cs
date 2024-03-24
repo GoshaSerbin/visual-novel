@@ -31,8 +31,10 @@ public class DialoguesInputReader : MonoBehaviour, Controls.IDialogueActions
     }
     public void OnSendPhrase(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && !_dialogues.DialogPlay)
         {
+            Debug.Log("Send phrase!");
+            _dialogues.ContinueAITalk();
             // send request to server
         }
     }

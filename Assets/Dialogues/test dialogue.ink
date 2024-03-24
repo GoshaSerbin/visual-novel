@@ -21,6 +21,7 @@ VAR characterName = ""
 Что делать?
  + [дать леща] -> answer1
  + [сломать колени] -> answer2
+ + [поговорить с ии] -> answer3
  
 === answer1 ===
 дает леща
@@ -42,6 +43,14 @@ VAR characterName = ""
 ~characterName="Clara"
 ->ending
 
+=== answer3 ===
+#AI_TALK
+~characterName="John"
+Че надо?
+ну чтош, хорошо поболтали, малец
+А теперь проваливай
+ + [ок] -> ending
+->ending
 
 === ending ===
 ~characterName="Clara"

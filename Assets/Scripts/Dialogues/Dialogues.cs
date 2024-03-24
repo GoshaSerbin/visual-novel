@@ -1,9 +1,11 @@
 using Ink.Runtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using Zenject;
 
@@ -17,9 +19,10 @@ public class Dialogues : MonoBehaviour
     private TextMeshProUGUI _nameText;
 
     [HideInInspector] public GameObject _choiceButtonsPanel;
+    private GameObject _inputFieldPanel;
+    private TMP_InputField _inputField;
     private GameObject _choiceButton;
     private List<TextMeshProUGUI> _choicesText = new();
-    // private List<Character> characters = new();
     private GameObject[] _characters;
 
     public bool DialogPlay { get; private set; }
@@ -32,6 +35,8 @@ public class Dialogues : MonoBehaviour
         _dialogueText = dialoguesInstaller.dialogueText;
         _nameText = dialoguesInstaller.nameText;
         _choiceButtonsPanel = dialoguesInstaller.choiceButtonsPanel;
+        _inputFieldPanel = dialoguesInstaller.inputFieldPanel;
+        _inputField = dialoguesInstaller.inputField;
         _choiceButton = dialoguesInstaller.choiceButton;
     }
     private void Awake()
@@ -54,12 +59,52 @@ public class Dialogues : MonoBehaviour
         if (_currentStory.canContinue)
         {
             ShowDialogue();
-            ShowChoiceButtons();
+            if (_currentStory.currentTags.Any("AI_TALK".Contains))
+            {
+                ShowInputField();
+                Debug.Log("talking to AI!");
+
+                //disable clicking
+                DialogPlay = false;
+
+                // var talkingIndex = GetCharacterIndexByName(_characters, _nameText.text);
+                // _characters[talkingIndex].GetComponent<CharacterAI>().ChangeEmotion(newEmotion);
+            }
+            else
+            {
+                _inputFieldPanel.SetActive(false);
+                ShowChoiceButtons();
+            }
         }
         else if (!choiceBefore)
         {
             ExitDialogue();
         }
+    }
+
+    public void ContinueAITalk()
+    {
+        string phrase = _inputField.text;
+        _inputField.enabled = false;
+
+        if (phrase == "")
+        {
+            // handle it
+            return;
+        }
+        var index = GetCharacterIndexByName(_characters, _nameText.text); // TO DO: get active player
+        var ai = _characters[index].GetComponent<CharacterAI>();
+        string answer = ai.Ask(phrase);
+        _dialogueText.text = answer;
+
+        _inputField.enabled = true;
+        _inputField.ActivateInputField();
+    }
+    private void ShowInputField()
+    {
+        _choiceButtonsPanel.SetActive(false);
+        _inputFieldPanel.SetActive(true);
+        _inputField.ActivateInputField();
     }
 
     private int GetCharacterIndexByName(GameObject[] characters, string name)
@@ -139,6 +184,12 @@ public class Dialogues : MonoBehaviour
         {
             SceneManager.LoadScene(nextSceneIndex);
         }
+    }
+    public void StopAITalkAndContinueStory()
+    {
+        DialogPlay = true;
+        _inputFieldPanel.SetActive(false);
+        ContinueStory(_choiceButtonsPanel.activeInHierarchy); // TO DO: rewrite code
     }
 
 }
