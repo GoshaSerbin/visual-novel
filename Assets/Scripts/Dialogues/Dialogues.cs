@@ -19,10 +19,11 @@ public class Dialogues : MonoBehaviour
     [HideInInspector] public GameObject _choiceButtonsPanel;
     private GameObject _choiceButton;
     private List<TextMeshProUGUI> _choicesText = new();
-    private List<Character> characters = new();
-    private List<GameObject> charactersObj = new();
+    // private List<Character> characters = new();
+    private GameObject[] _characters;
 
     public bool DialogPlay { get; private set; }
+
     [Inject]
     public void Construct(DialoguesInstaller dialoguesInstaller)
     {
@@ -39,15 +40,7 @@ public class Dialogues : MonoBehaviour
     }
     void Start()
     {
-        // 100% same indexes ???
-        foreach (var character in FindObjectsOfType<Character>())
-        {
-            characters.Add(character);
-        }
-        foreach (var character in GameObject.FindGameObjectsWithTag("Character"))
-        {
-            charactersObj.Add(character);
-        }
+        _characters = GameObject.FindGameObjectsWithTag("Character");
         StartDialogue();
     }
     public void StartDialogue()
@@ -68,10 +61,24 @@ public class Dialogues : MonoBehaviour
             ExitDialogue();
         }
     }
+
+    private int GetCharacterIndexByName(GameObject[] characters, string name)
+    {
+        for (int i = 0; i < characters.Count(); ++i)
+        {
+            if (characters[i].GetComponent<CharacterInfo>().CharacterName == name)
+            {
+                return i;
+            }
+        }
+        Debug.LogError($"Can not find name {name} among characters");
+        return -1;
+    }
     private void ShowDialogue()
     {
         _dialogueText.text = _currentStory.Continue();
         _nameText.text = (string)_currentStory.variablesState["characterName"];
+
         int talkingIndex;
         if (_nameText.text == "")
         { // narrator
@@ -79,22 +86,24 @@ public class Dialogues : MonoBehaviour
         }
         else
         {
-            talkingIndex = characters.FindIndex(character => character.CharacterName.Contains(_nameText.text));
-            characters[talkingIndex].ChangeEmotion((Character.EmotionState)(int)_currentStory.variablesState["characterExpression"]);
+            talkingIndex = GetCharacterIndexByName(_characters, _nameText.text);
+            var newEmotion = (CharacterEmotion.EmotionState)_currentStory.variablesState["characterExpression"];
+            _characters[talkingIndex].GetComponent<CharacterEmotion>().ChangeEmotion(newEmotion);
         }
-        ChangeCharacterSprites(talkingIndex);
+
+        AnimateCharacters(talkingIndex);
     }
-    private void ChangeCharacterSprites(int talkingIndex)
+    private void AnimateCharacters(int talkingIndex)
     {
-        for (int i = 0; i < charactersObj.Count; ++i)
+        for (int i = 0; i < _characters.Count(); ++i)
         {
             if (i == talkingIndex)
             {
-                charactersObj[i].GetComponent<CharacterAnimations>().StartTalking();
+                _characters[i].GetComponent<CharacterAnimations>().StartTalking();
             }
             else
             {
-                charactersObj[i].GetComponent<CharacterAnimations>().StopTalking();
+                _characters[i].GetComponent<CharacterAnimations>().StopTalking();
             }
         }
     }

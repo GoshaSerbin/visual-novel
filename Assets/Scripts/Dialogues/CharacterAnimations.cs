@@ -30,10 +30,10 @@ public class CharacterAnimations : MonoBehaviour
 
         Color fromColor = _image.color;
         Color toColor = _defaultColor;
-        LeanTween.value(_image.gameObject, setColorCallback, fromColor, toColor, _animationTime);
+        LeanTween.value(_image.gameObject, SetColorCallback, fromColor, toColor, _animationTime);
     }
 
-    private void setColorCallback(Color color)
+    private void SetColorCallback(Color color)
     {
         _image.color = color;
     }
@@ -44,6 +44,6 @@ public class CharacterAnimations : MonoBehaviour
 
         Color fromColor = _image.color;
         Color toColor = new Color(_defaultColor.r * _darkMultiplier, _defaultColor.g * _darkMultiplier, _defaultColor.b * _darkMultiplier, 1);
-        LeanTween.value(_image.gameObject, setColorCallback, fromColor, toColor, _animationTime);
+        LeanTween.value(_image.gameObject, SetColorCallback, fromColor, toColor, _animationTime);
     }
 }
