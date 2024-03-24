@@ -13,8 +13,6 @@ public class CharacterAnimations : MonoBehaviour
     private float _animationTime = 0.4f;
     private Vector3 _defaultScale;
     private Color _defaultColor;
-
-    private CanvasGroup _canvas;
     private UnityEngine.UI.Image _image;
 
     private void Start()
@@ -22,12 +20,12 @@ public class CharacterAnimations : MonoBehaviour
         _defaultScale = transform.localScale;
         _image = GetComponent<UnityEngine.UI.Image>();
         _defaultColor = _image.color;
-        _canvas = GetComponent<CanvasGroup>();
     }
 
     public void StartTalking()
     {
         // more curves https://codepen.io/jhnsnc/pen/LpVXGM
+        // https://youtu.be/YqMpVCPX2ls?si=9i9fF6VOTOgh7CFp
         transform.LeanScale(_sizeMultiplier * _defaultScale, _animationTime).setEaseOutBack();
 
         Color fromColor = _image.color;
