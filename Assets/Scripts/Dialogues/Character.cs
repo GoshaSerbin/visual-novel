@@ -8,6 +8,7 @@ public class Character : MonoBehaviour
     [System.Serializable]
     public enum EmotionState
     {
+        Default,
         Sad,
         Angry
     }

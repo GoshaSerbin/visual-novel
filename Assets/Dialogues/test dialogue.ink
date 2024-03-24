@@ -1,7 +1,7 @@
-VAR characterName = "Bill"
+VAR characterName = ""
 VAR characterExpression = 1
 первый диалог. 
-~characterName="Bill"
+~characterName="Clara"
 хмхмхм
 ~characterName="John"
 охохох
@@ -11,24 +11,25 @@ VAR characterExpression = 1
  + [Ответ2] -> answer2
  
 === answer1 ===
-~characterName="Bill"
+~characterName="Clara"
 ответик
 ~characterName="John"
 хахаха
-~characterName="Bill"
+~characterName="Clara"
 лооол
 ->ending
 
 === answer2 ===
-~characterName="Bill"
+~characterName="Clara"
 ответик тожк
 ~characterName="John"
 ухухуху
-~characterName="Bill"
+~characterName="Clara"
 ->ending
 
 
 === ending ===
+~characterName="Clara"
 я еще раз спрашиваю?
  + [Ответ1] -> answer
  + [Ответ2] -> answer
