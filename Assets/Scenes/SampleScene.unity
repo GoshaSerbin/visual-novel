@@ -976,7 +976,6 @@ GameObject:
   - component: {fileID: 1703198592}
   - component: {fileID: 1703198594}
   - component: {fileID: 1703198595}
-  - component: {fileID: 1703198596}
   m_Layer: 5
   m_Name: Character1Image
   m_TagString: Character
@@ -1069,18 +1068,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85b9fe599b5ffc540ad53aa42271659a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!225 &1703198596
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1703198590}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &1774075941
 GameObject:
   m_ObjectHideFlags: 0

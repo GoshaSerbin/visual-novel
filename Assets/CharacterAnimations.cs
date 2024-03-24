@@ -15,7 +15,7 @@ public class CharacterAnimations : MonoBehaviour
     private Color _defaultColor;
     private UnityEngine.UI.Image _image;
 
-    private void Start()
+    private void Awake()
     {
         _defaultScale = transform.localScale;
         _image = GetComponent<UnityEngine.UI.Image>();
