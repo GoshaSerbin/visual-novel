@@ -5,26 +5,34 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class Missions : MonoBehaviour
 {
     private ServerCommunication _server;
-    private TMP_InputField _inputField;
 
-    [SerializeField] private Button _startButton;
+    private Button _startButton;
 
     [TextArea(3, 10)][SerializeField] private string generateMissionSystemText;
     [TextArea(3, 10)][SerializeField] private string generateMissionUserText;
 
-    [SerializeField] private GameObject _storyPanel; // TO DO: replace serializefield with zenject
-    [SerializeField] private TextMeshProUGUI _storyText;
+    private GameObject _storyPanel; // TO DO: replace serializefield with zenject
+    private TextMeshProUGUI _storyText;
 
-    [SerializeField] private GameObject _choicePanel;
-    [SerializeField] private GameObject _nonMissionPanel; // will not be active during mission
+    private GameObject _choicePanel;
+    private TMP_InputField _inputField;
 
-    public void Construct(DialoguesInstaller dialoguesInstaller)
+    private GameObject _nonMissionPanel; // will not be active during mission
+
+    [Inject]
+    public void Construct(MissionsInstaller missionsInstaller)
     {
-        //zenject
+        _storyPanel = missionsInstaller.storyPanel;
+        _storyText = missionsInstaller.storyText;
+        _choicePanel = missionsInstaller.choicePanel;
+        _nonMissionPanel = missionsInstaller.nonMissionPanel;
+        _inputField = missionsInstaller.inputField;
+        _startButton = missionsInstaller.startButton;
     }
 
     void Start()
@@ -65,6 +73,8 @@ public class Missions : MonoBehaviour
         _storyText.text = response;
         Debug.Log("received mission:" + response);
         _choicePanel.SetActive(true);
+        _inputField.enabled = true;
+        _inputField.ActivateInputField();
     }
     public void HandleAnswer()
     {

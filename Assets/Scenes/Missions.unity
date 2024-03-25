@@ -496,6 +496,89 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 393925716}
   m_CullTransparentMesh: 1
+--- !u!1 &417258443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 417258445}
+  - component: {fileID: 417258444}
+  - component: {fileID: 417258446}
+  m_Layer: 0
+  m_Name: SceneContext
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &417258444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417258443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers: []
+  _monoInstallers:
+  - {fileID: 417258446}
+  _installerPrefabs: []
+  _autoRun: 1
+  OnPreInstall:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostInstall:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPreResolve:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostResolve:
+    m_PersistentCalls:
+      m_Calls: []
+  _parentNewObjectsUnderSceneContext: 0
+  _contractNames: []
+  _parentContractNames: []
+--- !u!4 &417258445
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417258443}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &417258446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417258443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b5cac154504916438afa54c6324f722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storyPanel: {fileID: 1871276209}
+  storyText: {fileID: 961720872}
+  choicePanel: {fileID: 1774075941}
+  nonMissionPanel: {fileID: 592051287}
+  inputField: {fileID: 1703193211}
+  startButton: {fileID: 592051292}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1811,7 +1894,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad740fba22a82a4da10f3aab733b863, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startButton: {fileID: 592051292}
   generateMissionSystemText: "\r\r\r\u041D\u0430\u0441\u0442\u0443\u043F\u0438\u043B
     \u043F\u043E\u0441\u0442-\u0430\u043F\u043E\u043A\u0430\u043B\u0438\u043F\u0441\u0438\u0441.
     \u0418\u0441\u043A\u0443\u0441\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0439
@@ -1887,10 +1969,6 @@ MonoBehaviour:
     \u0438\u043D\u0442\u0435\u043B\u043B\u0435\u043A\u0442. \u0412 \u043E\u0442\u0432\u0435\u0442\u0435
     \u0443\u043A\u0430\u0436\u0438 \u0442\u043E\u043B\u044C\u043A\u043E \u0438\u0441\u0442\u043E\u0440\u0438\u044E
     (\u0431\u0435\u0437 \u043E\u0442\u0432\u0435\u0442\u043E\u0432)"
-  _storyPanel: {fileID: 1871276209}
-  _storyText: {fileID: 961720872}
-  _choicePanel: {fileID: 1774075941}
-  _nonMissionPanel: {fileID: 592051287}
 --- !u!1 &1774075941
 GameObject:
   m_ObjectHideFlags: 0
@@ -2055,3 +2133,4 @@ SceneRoots:
   - {fileID: 1706192503}
   - {fileID: 1738999954}
   - {fileID: 620642462}
+  - {fileID: 417258445}
