@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,9 @@ using Zenject;
 
 public class Missions : MonoBehaviour
 {
+
+    private int _money = 0; // TO DO: move this to player data
+    [SerializeField] private TextMeshProUGUI _moneyText;
     private ServerCommunication _server;
 
     private Button _startButton;
@@ -40,6 +44,8 @@ public class Missions : MonoBehaviour
     {
         _server = FindObjectOfType<ServerCommunication>(); // must be single on scene
         _choicePanel.SetActive(false);
+        _moneyText.text = "money: " + _money;
+
     }
 
     public void StartMission()
@@ -145,8 +151,10 @@ public class Missions : MonoBehaviour
             Debug.LogError("server returned error");
             return;
         }
-        // попытаться преобразовать в int
         Debug.Log("received reward " + reward);
+        // попытаться преобразовать в int
+        _money += Convert.ToInt32(reward);
+        _moneyText.text = "money: " + _money;
         _nonMissionPanel.SetActive(true);
     }
     // Start is called before the first frame update
