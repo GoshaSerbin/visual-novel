@@ -23,6 +23,7 @@ public class Missions : MonoBehaviour
     private TextAsset _missionGenerationForUser;
     private GameObject _storyPanel;
     private TextMeshProUGUI _storyText;
+    private TextMeshProUGUI _titleText;
 
     private GameObject _choicePanel;
     private TMP_InputField _inputField;
@@ -34,6 +35,7 @@ public class Missions : MonoBehaviour
     {
         _storyPanel = missionsInstaller.storyPanel;
         _storyText = missionsInstaller.storyText;
+        _titleText = missionsInstaller.titleText;
         _choicePanel = missionsInstaller.choicePanel;
         _nonMissionPanel = missionsInstaller.nonMissionPanel;
         _inputField = missionsInstaller.inputField;
@@ -45,11 +47,14 @@ public class Missions : MonoBehaviour
         _server = FindObjectOfType<ServerCommunication>(); // must be single on scene
         _choicePanel.SetActive(false);
         _moneyText.text = "money: " + _money;
-
+        _titleText.text = "";
+        _storyText.text = "";
+        _storyPanel.SetActive(false);
     }
 
     public void StartMission()
     {
+        _storyPanel.SetActive(true);
         _nonMissionPanel.SetActive(false);
         GenerateMission();
     }
@@ -77,6 +82,7 @@ public class Missions : MonoBehaviour
             Debug.LogError("server returned error");
             return;
         }
+        _titleText.text = "История";
         _storyText.text = response;
         Debug.Log("received mission:" + response);
         _choicePanel.SetActive(true);
@@ -99,7 +105,7 @@ public class Missions : MonoBehaviour
     {
         WWWForm form = new WWWForm();
 
-        var message1 = new ServerCommunication.Message("system", "Тебе дают историю и действие игрока. Твоя задача - придумать продолжение истории. Если игрок поступает обдуманно и разумно, то его ждет успех, иначе - неудача. История должна быть короткой (1-2 предложения)");
+        var message1 = new ServerCommunication.Message("system", "Ты - расказчик. Тебе дают историю и действие главного героя. Твоя задача - придумать продолжение истории (и закончить ее). Если игрок поступает обдуманно и разумно, то его ждет успех, иначе - неудача. История должна быть короткой (1-2 предложения)");
         var message2 = new ServerCommunication.Message("user", "История: " + _storyText.text + "\nДействие игрока:" + answer);
 
         var messages = new List<ServerCommunication.Message>() { message1, message2 };
@@ -122,6 +128,7 @@ public class Missions : MonoBehaviour
         Debug.Log("received response" + storyResolution);
         string storyText = _storyText.text;
         string userAnswer = _inputField.text;
+        _titleText.text = "Развязка";
         _storyText.text = storyResolution;
         ReceiveReward(storyResolution);
     }
@@ -130,7 +137,7 @@ public class Missions : MonoBehaviour
     {
         WWWForm form = new WWWForm();
 
-        var message1 = new ServerCommunication.Message("system", "Определи награду, которую получит игрок в данной истории. Наградой должно быть число от -100 до 100, где -100 - большая неудача, 100 - большой успех, 0 - отсутствие результата. В ответ укажи только само число");
+        var message1 = new ServerCommunication.Message("system", "Определи награду, которую получит герой в данной истории. Наградой должно быть число от -100 до 100, где -100 - большая неудача, 100 - большой успех, 0 - отсутствие результата. В ответ укажи только само число");
         string request = "История: " + storyResolution;
         var message2 = new ServerCommunication.Message("user", request);
 

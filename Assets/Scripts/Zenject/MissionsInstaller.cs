@@ -11,6 +11,7 @@ public class MissionsInstaller : MonoInstaller
 
     public GameObject storyPanel;
     public TextMeshProUGUI storyText;
+    public TextMeshProUGUI titleText;
     public GameObject choicePanel;
     public GameObject nonMissionPanel;
     public TMP_InputField inputField;
