@@ -87,6 +87,7 @@ public class Missions : MonoBehaviour
         Debug.Log("received mission:" + response);
         _choicePanel.SetActive(true);
         _inputField.enabled = true;
+        _inputField.text = "";
         _inputField.ActivateInputField();
     }
     public void HandleAnswer()
@@ -159,8 +160,14 @@ public class Missions : MonoBehaviour
             return;
         }
         Debug.Log("received reward " + reward);
-        // попытаться преобразовать в int
-        _money += Convert.ToInt32(reward);
+
+        int rewardNumber = 0;
+        bool result = Int32.TryParse(reward, out rewardNumber);
+        if (result)
+        {
+            Debug.Log("Converted successfully");
+        }
+        _money += rewardNumber;
         _moneyText.text = "money: " + _money;
         _nonMissionPanel.SetActive(true);
     }
