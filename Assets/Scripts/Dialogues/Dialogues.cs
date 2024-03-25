@@ -94,16 +94,26 @@ public class Dialogues : MonoBehaviour
         }
         var index = GetCharacterIndexByName(_characters, _nameText.text); // TO DO: get active player
         var ai = _characters[index].GetComponent<CharacterAI>();
-        string answer = ai.Ask(phrase);
-        _dialogueText.text = answer;
-
-        _inputField.enabled = true;
-        _inputField.ActivateInputField();
+        ai.Ask(phrase, AIAnswerCallback);
     }
     private void ShowInputField()
     {
         _choiceButtonsPanel.SetActive(false);
         _inputFieldPanel.SetActive(true);
+        _inputField.ActivateInputField();
+    }
+
+    private void AIAnswerCallback(string answer)
+    {
+        //must check if not null
+        if (answer == null)
+        {
+            Debug.LogError("server returned error");
+            return;
+        }
+        _dialogueText.text = answer;
+
+        _inputField.enabled = true;
         _inputField.ActivateInputField();
     }
 
