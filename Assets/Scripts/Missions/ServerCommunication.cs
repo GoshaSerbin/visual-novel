@@ -60,7 +60,7 @@ public class ServerCommunication : MonoBehaviour
             }
             else
             {
-                string response = Decode(www.downloadHandler.data, "windows-1251");
+                string response = www.downloadHandler.text;
                 // string response = Encoding.UTF8.GetString(www.downloadHandler.nativeData);
                 // string response = Encoding.UTF7.GetString(www.downloadHandler.data);
                 // string response = Encoding.ASCII.GetString(www.downloadHandler.data);
