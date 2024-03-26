@@ -25,6 +25,8 @@ public class Dialogues : MonoBehaviour
     private List<TextMeshProUGUI> _choicesText = new();
     private GameObject[] _characters;
 
+    private ServerCommunication _server;
+
     public bool DialogPlay { get; private set; }
 
     [Inject]
@@ -46,6 +48,7 @@ public class Dialogues : MonoBehaviour
     void Start()
     {
         _characters = GameObject.FindGameObjectsWithTag("Character");
+        _server = FindObjectOfType<ServerCommunication>(); // must be single
         StartDialogue();
     }
     public void StartDialogue()
@@ -58,23 +61,57 @@ public class Dialogues : MonoBehaviour
     {
         if (_currentStory.canContinue)
         {
-            ShowDialogue();
-            if (_currentStory.currentTags.Any("AI_TALK".Contains))
+            string story = _currentStory.Continue();
+            if (_currentStory.currentTags.Any("AI_DESCRIBE".Contains))
             {
-                ShowInputField();
-                Debug.Log("talking to AI!");
+                Debug.Log("Describing!");
+                string prompt = story;
+                _nameText.text = "Narrator";
+                WWWForm form = new WWWForm();
 
-                //disable clicking
-                DialogPlay = false;
-
-                // var talkingIndex = GetCharacterIndexByName(_characters, _nameText.text);
-                // _characters[talkingIndex].GetComponent<CharacterAI>().ChangeEmotion(newEmotion);
+                var messages = new List<ServerCommunication.Message>
+                    {
+                        new ServerCommunication.Message("user", prompt)
+                    };
+                string jsonMessages = ServerCommunication.ToJSON(messages);
+                form.AddField("message", jsonMessages);
+                form.AddField("max_tokens", 50);
+                form.AddField("temperature", 1);
+                // TO DO: disable input?
+                _server.SendRequestToServer(form, (string response) =>
+                {
+                    if (response == "")
+                    {
+                        // handle it
+                        _dialogueText.text = "ошибочка";
+                        return;
+                    }
+                    _dialogueText.text = response;
+                });
+                // ContinueStory(choiceBefore);
             }
             else
             {
-                _inputFieldPanel.SetActive(false);
-                ShowChoiceButtons();
+                ShowDialogue(story);
+                if (_currentStory.currentTags.Any("AI_TALK".Contains))
+                {
+                    ShowInputField();
+                    Debug.Log("talking to AI!");
+
+                    //disable clicking
+                    DialogPlay = false;
+
+                    // var talkingIndex = GetCharacterIndexByName(_characters, _nameText.text);
+                    // _characters[talkingIndex].GetComponent<CharacterAI>().ChangeEmotion(newEmotion);
+                }
+                else
+                {
+                    _inputFieldPanel.SetActive(false);
+                    ShowChoiceButtons();
+
+                }
             }
+
         }
         else if (!choiceBefore)
         {
@@ -129,9 +166,9 @@ public class Dialogues : MonoBehaviour
         Debug.LogError($"Can not find name {name} among characters");
         return -1;
     }
-    private void ShowDialogue()
+    private void ShowDialogue(string dialogue)
     {
-        _dialogueText.text = _currentStory.Continue();
+        _dialogueText.text = dialogue;
         _nameText.text = (string)_currentStory.variablesState["characterName"];
 
         int talkingIndex;
