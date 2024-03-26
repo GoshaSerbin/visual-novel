@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,37 +6,55 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class Missions : MonoBehaviour
 {
+
+    private int _money = 0; // TO DO: move this to player data
+    [SerializeField] private TextMeshProUGUI _moneyText;
     private ServerCommunication _server;
+
+    private Button _startButton;
+
+    [SerializeField]
+    private TextAsset _missionGenerationForSystem;
+    [SerializeField]
+    private TextAsset _missionGenerationForUser;
+    private GameObject _storyPanel;
+    private TextMeshProUGUI _storyText;
+    private TextMeshProUGUI _titleText;
+
+    private GameObject _choicePanel;
     private TMP_InputField _inputField;
 
-    [SerializeField] private Button _startButton;
+    private GameObject _nonMissionPanel; // will not be active during mission
 
-    [TextArea(3, 10)][SerializeField] private string generateMissionSystemText;
-    [TextArea(3, 10)][SerializeField] private string generateMissionUserText;
-
-    [SerializeField] private GameObject _storyPanel; // TO DO: replace serializefield with zenject
-    [SerializeField] private TextMeshProUGUI _storyText;
-
-    [SerializeField] private GameObject _choicePanel;
-    [SerializeField] private GameObject _nonMissionPanel; // will not be active during mission
-
-    public void Construct(DialoguesInstaller dialoguesInstaller)
+    [Inject]
+    public void Construct(MissionsInstaller missionsInstaller)
     {
-        //zenject
+        _storyPanel = missionsInstaller.storyPanel;
+        _storyText = missionsInstaller.storyText;
+        _titleText = missionsInstaller.titleText;
+        _choicePanel = missionsInstaller.choicePanel;
+        _nonMissionPanel = missionsInstaller.nonMissionPanel;
+        _inputField = missionsInstaller.inputField;
+        _startButton = missionsInstaller.startButton;
     }
 
     void Start()
     {
         _server = FindObjectOfType<ServerCommunication>(); // must be single on scene
-        _inputField = FindObjectOfType<TMP_InputField>(); // must be single
         _choicePanel.SetActive(false);
+        _moneyText.text = "money: " + _money;
+        _titleText.text = "";
+        _storyText.text = "";
+        _storyPanel.SetActive(false);
     }
 
     public void StartMission()
     {
+        _storyPanel.SetActive(true);
         _nonMissionPanel.SetActive(false);
         GenerateMission();
     }
@@ -43,8 +62,9 @@ public class Missions : MonoBehaviour
     {
         WWWForm form = new WWWForm();
 
-        var message1 = new ServerCommunication.Message("system", generateMissionSystemText);
-        var message2 = new ServerCommunication.Message("user", generateMissionUserText);
+        // TO DO: store in json right away
+        var message1 = new ServerCommunication.Message("system", _missionGenerationForSystem.text); // TO DO: check if not null?
+        var message2 = new ServerCommunication.Message("user", _missionGenerationForUser.text);
         var messages = new List<ServerCommunication.Message>() { message1, message2 };
         string jsonMessages = ServerCommunication.ToJSON(messages);
 
@@ -62,9 +82,13 @@ public class Missions : MonoBehaviour
             Debug.LogError("server returned error");
             return;
         }
+        _titleText.text = "История";
         _storyText.text = response;
         Debug.Log("received mission:" + response);
         _choicePanel.SetActive(true);
+        _inputField.enabled = true;
+        _inputField.text = "";
+        _inputField.ActivateInputField();
     }
     public void HandleAnswer()
     {
@@ -74,6 +98,7 @@ public class Missions : MonoBehaviour
             return;
         }
         _choicePanel.SetActive(false);
+        _inputField.enabled = false;
         SendAnswer(answer);
 
     }
@@ -81,55 +106,69 @@ public class Missions : MonoBehaviour
     {
         WWWForm form = new WWWForm();
 
-        var message1 = new ServerCommunication.Message("system", "Ты безумен");
-        var message2 = new ServerCommunication.Message("user", "Напиши историю");
+        var message1 = new ServerCommunication.Message("system", "Ты - расказчик. Тебе дают историю и действие главного героя. Твоя задача - придумать продолжение истории (и закончить ее). Если игрок поступает обдуманно и разумно, то его ждет успех, иначе - неудача. История должна быть короткой (1-2 предложения)");
+        var message2 = new ServerCommunication.Message("user", "История: " + _storyText.text + "\nДействие игрока:" + answer);
 
         var messages = new List<ServerCommunication.Message>() { message1, message2 };
 
         string jsonMessages = ServerCommunication.ToJSON(messages);
         form.AddField("message", jsonMessages);
-        form.AddField("max_tokens", 50);
+        form.AddField("max_tokens", 200);
         form.AddField("temperature", 1);
         _server.SendRequestToServer(form, SendAnswerCallback);
     }
-    private void SendAnswerCallback(string response)
+    private void SendAnswerCallback(string storyResolution)
     {
         //must check if not null
-        if (response == null)
+        if (storyResolution == null)
         {
             Debug.LogError("server returned error");
             return;
         }
-        Debug.Log(response.Length);
-        Debug.Log("received response" + response);
+        Debug.Log(storyResolution.Length);
+        Debug.Log("received response" + storyResolution);
         string storyText = _storyText.text;
-        string userAnswer = _inputField.text; // can be not what player sent to server
-        _storyText.text = response;
-        ReceiveReward(_storyText.text, userAnswer, response);
+        string userAnswer = _inputField.text;
+        _titleText.text = "Развязка";
+        _storyText.text = storyResolution;
+        ReceiveReward(storyResolution);
     }
 
-    private void ReceiveReward(string story, string userAnswer, string response)
+    private void ReceiveReward(string storyResolution)
     {
         WWWForm form = new WWWForm();
 
-        var message1 = new ServerCommunication.Message("system", "Определи награду");
-        string request = "История: " + story + "\nОтвет: " + userAnswer + "\nРезультат:" + response;
+        var message1 = new ServerCommunication.Message("system", "Определи награду, которую получит герой в данной истории. Наградой должно быть число от -100 до 100, где -100 - большая неудача, 100 - большой успех, 0 - отсутствие результата. В ответ укажи только само число");
+        string request = "История: " + storyResolution;
         var message2 = new ServerCommunication.Message("user", request);
 
         var messages = new List<ServerCommunication.Message>() { message1, message2 };
 
         string jsonMessages = ServerCommunication.ToJSON(messages);
         form.AddField("message", jsonMessages);
-        form.AddField("max_tokens", 50);
+        form.AddField("max_tokens", 100);
         form.AddField("temperature", 1);
         _server.SendRequestToServer(form, ReceiveRewardCallBack);
     }
 
-    private void ReceiveRewardCallBack(string response)
+    private void ReceiveRewardCallBack(string reward)
     {
+        //must check if not null
+        if (reward == null)
+        {
+            Debug.LogError("server returned error");
+            return;
+        }
+        Debug.Log("received reward " + reward);
 
-        // попытаться преобразовать в int
-        Debug.Log("received reward" + response);
+        int rewardNumber = 0;
+        bool result = Int32.TryParse(reward, out rewardNumber);
+        if (result)
+        {
+            Debug.Log("Converted successfully");
+        }
+        _money += rewardNumber;
+        _moneyText.text = "money: " + _money;
         _nonMissionPanel.SetActive(true);
     }
     // Start is called before the first frame update
