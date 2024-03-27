@@ -8,7 +8,6 @@ public class CharacterAI : MonoBehaviour
 {
 
     [TextArea(3, 10)][SerializeField] private string _characterDescription = "";
-    [SerializeField] private int _contextMemory = 1;
     [SerializeField] private float _talkativeness = 0.5f;
     private int _maxTokens;
     private ServerCommunication _server;
