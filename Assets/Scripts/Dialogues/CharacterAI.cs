@@ -9,13 +9,16 @@ public class CharacterAI : MonoBehaviour
 
     [TextArea(3, 10)][SerializeField] private string _characterDescription = "";
     [SerializeField] private int _contextMemory = 1;
-    int iter = 0;
+    [SerializeField] private float _talkativeness = 0.5f;
+    private int _maxTokens;
     private ServerCommunication _server;
 
     // Start is called before the first frame update
     void Start()
     {
+        _talkativeness = System.Math.Clamp(_talkativeness, 0, 1);
         _server = FindObjectOfType<ServerCommunication>(); // must be single on scene
+        _maxTokens = _characterDescription.Length + Convert.ToInt32(150 * _talkativeness);
     }
 
     public void Ask(string phrase, Action<string> callback)
@@ -29,10 +32,9 @@ public class CharacterAI : MonoBehaviour
 
         string jsonMessages = ServerCommunication.ToJSON(messages);
         form.AddField("message", jsonMessages);
-        form.AddField("max_tokens", 100);
+        form.AddField("max_tokens", _maxTokens);
         form.AddField("temperature", 1);
         _server.SendRequestToServer(form, callback);
-        iter += 1;
     }
 
 }

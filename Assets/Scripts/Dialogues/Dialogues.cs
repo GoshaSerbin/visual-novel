@@ -72,6 +72,7 @@ public class Dialogues : MonoBehaviour
         if (_currentStory.canContinue)
         {
             string story = _currentStory.Continue();
+            Debug.Log("story is " + story);
             if (_currentStory.currentTags.Any("AI_DESCRIBE".Contains))
             {
                 Debug.Log("Describing!");
@@ -114,8 +115,11 @@ public class Dialogues : MonoBehaviour
                     var ai = _characters[talkingIndex].GetComponent<CharacterAI>();
                     ai.Ask(question, (string answer) =>
                     {
-                        _choiceButtonsPanel.SetActive(false);
+                        Debug.Log("He answered");
+                        // _currentStory.ChooseChoiceIndex(choiceIndex);
                         ShowDialogue(PostProccess(answer));
+                        ShowChoiceButtons();
+                        // _currentStory.Continue();
                     });
                 }
                 else
@@ -128,7 +132,8 @@ public class Dialogues : MonoBehaviour
 
                         //disable clicking
                         DialogPlay = false;
-
+                        Debug.Log("current text: " + _currentStory.currentText);
+                        Debug.Log("current choice count: " + _currentStory.currentChoices.Count);
                         // var talkingIndex = GetCharacterIndexByName(_characters, _nameText.text);
                         // _characters[talkingIndex].GetComponent<CharacterAI>().ChangeEmotion(newEmotion);
                     }
@@ -145,6 +150,7 @@ public class Dialogues : MonoBehaviour
         }
         else if (!choiceBefore)
         {
+            Debug.Log("current story cant continue");
             ExitDialogue();
         }
     }
@@ -248,6 +254,8 @@ public class Dialogues : MonoBehaviour
     }
     public void ChoiceButtonAction(int choiceIndex)
     {
+        Debug.Log("prev story is " + _currentStory.currentText);
+        Debug.Log("chosen story index" + choiceIndex);
         _currentStory.ChooseChoiceIndex(choiceIndex);
         ContinueStory(true);
     }
@@ -263,9 +271,13 @@ public class Dialogues : MonoBehaviour
     }
     public void StopAITalkAndContinueStory()
     {
+        Debug.Log("stop talking to ai");
+        Debug.Log("current text: " + _currentStory.currentText);
+        Debug.Log("current choice count: " + _currentStory.currentChoices.Count);
         DialogPlay = true;
         _inputFieldPanel.SetActive(false);
-        ContinueStory(_choiceButtonsPanel.activeInHierarchy); // TO DO: rewrite code
+        ShowChoiceButtons();
+        ContinueStory(_currentStory.currentChoices.Count > 0); // TO DO: rewrite code
     }
 
 }
