@@ -491,7 +491,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0011654, y: 67.70717}
+  m_AnchoredPosition: {x: -0.85001, y: 67.70599}
   m_SizeDelta: {x: 291.99, y: 44.6023}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &393925718
@@ -681,7 +681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0382fb5632e89b46a4d7a9cfe15d08b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: Clara
+  characterName: "\u0412\u0440\u0430\u0447"
 --- !u!114 &451226349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -987,7 +987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bcb67747ca8d6a4fb03cdf38a76bc9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inkJson: {fileID: 4900000, guid: 6fc4de49df89d874db938f4e61e55287, type: 3}
+  inkJson: {fileID: 4900000, guid: be0fab3198a1c2f4daa9e7b31cf9c2b9, type: 3}
   dialoguePanel: {fileID: 1871276209}
   dialogueText: {fileID: 961720872}
   nameText: {fileID: 393925718}
@@ -1166,8 +1166,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00008773804, y: -28.609001}
-  m_SizeDelta: {x: 291.99, y: 148.0294}
+  m_AnchoredPosition: {x: -0.85, y: -21.86}
+  m_SizeDelta: {x: 771.3, y: 134.53}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &961720872
 MonoBehaviour:
@@ -1833,7 +1833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0382fb5632e89b46a4d7a9cfe15d08b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: John
+  characterName: "\u041D\u0435\u0437\u043D\u0430\u043A\u043E\u043C\u0435\u0446"
 --- !u!114 &1703198595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2070,7 +2070,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0018920898, y: 102.630005}
+  m_AnchoredPosition: {x: 0.001953125, y: 102.630005}
   m_SizeDelta: {x: -485.03, y: -205.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1774075943
@@ -2173,8 +2173,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -0.00000047683716, y: 0}
-  m_SizeDelta: {x: 314.9776, y: 205.2507}
+  m_AnchoredPosition: {x: -0.000076294, y: -0.000061035156}
+  m_SizeDelta: {x: 800, y: 205.25}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1871276211
 MonoBehaviour:
