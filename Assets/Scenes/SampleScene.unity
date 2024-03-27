@@ -682,7 +682,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0382fb5632e89b46a4d7a9cfe15d08b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: "\u0412\u0440\u0430\u0447"
+  characterName:
+  - "\u041A\u0442\u043E-\u0442\u043E"
 --- !u!114 &451226349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1862,7 +1863,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0382fb5632e89b46a4d7a9cfe15d08b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: "\u041D\u0435\u0437\u043D\u0430\u043A\u043E\u043C\u0435\u0446"
+  characterName:
+  - "\u0412\u0440\u0430\u0447"
+  - "\u041D\u0435\u0437\u043D\u0430\u043A\u043E\u043C\u0435\u0446"
 --- !u!114 &1703198595
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -188,9 +188,13 @@ public class Dialogues : MonoBehaviour
     {
         for (int i = 0; i < characters.Count(); ++i)
         {
-            if (characters[i].GetComponent<CharacterInfo>().CharacterName == name)
+            var chNames = characters[i].GetComponent<CharacterInfo>().CharacterName;
+            for (int j = 0; j < chNames.Length; ++j)
             {
-                return i;
+                if (chNames[j] == name)
+                {
+                    return i;
+                }
             }
         }
         Debug.LogError($"Can not find name {name} among characters");
