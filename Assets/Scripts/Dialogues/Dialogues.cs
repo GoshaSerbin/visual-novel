@@ -227,9 +227,8 @@ public class Dialogues : MonoBehaviour
         _choicesText.Clear();
         for (int i = 0; i < currentChoices.Count; i++)
         {
-            GameObject choice = Instantiate(_choiceButton);
+            GameObject choice = Instantiate(_choiceButton, _choiceButtonsPanel.transform);
             choice.GetComponent<ButtonAction>().index = i;
-            choice.transform.SetParent(_choiceButtonsPanel.transform);
 
             TextMeshProUGUI choiceText = choice.GetComponentInChildren<TextMeshProUGUI>();
             choiceText.text = currentChoices[i].text;
