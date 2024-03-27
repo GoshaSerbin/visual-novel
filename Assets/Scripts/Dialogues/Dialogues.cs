@@ -92,24 +92,43 @@ public class Dialogues : MonoBehaviour
             }
             else
             {
-                ShowDialogue(story);
-                if (_currentStory.currentTags.Any("AI_TALK".Contains))
+
+                if (_currentStory.currentTags.Any("AI_ANSWER".Contains))
                 {
-                    ShowInputField();
-                    Debug.Log("talking to AI!");
+                    Debug.Log("Answering!");
+                    string question = story;
+                    string name = (string)_currentStory.variablesState["characterName"];
 
-                    //disable clicking
-                    DialogPlay = false;
-
-                    // var talkingIndex = GetCharacterIndexByName(_characters, _nameText.text);
-                    // _characters[talkingIndex].GetComponent<CharacterAI>().ChangeEmotion(newEmotion);
+                    int talkingIndex = GetCharacterIndexByName(_characters, name);
+                    var ai = _characters[talkingIndex].GetComponent<CharacterAI>();
+                    ai.Ask(question, (string answer) =>
+                    {
+                        _choiceButtonsPanel.SetActive(false);
+                        ShowDialogue(answer);
+                    });
                 }
                 else
                 {
-                    _inputFieldPanel.SetActive(false);
-                    ShowChoiceButtons();
+                    ShowDialogue(story);
+                    if (_currentStory.currentTags.Any("AI_TALK".Contains))
+                    {
+                        ShowInputField();
+                        Debug.Log("talking to AI!");
 
+                        //disable clicking
+                        DialogPlay = false;
+
+                        // var talkingIndex = GetCharacterIndexByName(_characters, _nameText.text);
+                        // _characters[talkingIndex].GetComponent<CharacterAI>().ChangeEmotion(newEmotion);
+                    }
+                    else
+                    {
+                        _inputFieldPanel.SetActive(false);
+                        ShowChoiceButtons();
+
+                    }
                 }
+
             }
 
         }
