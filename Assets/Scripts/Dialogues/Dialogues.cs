@@ -66,7 +66,7 @@ public class Dialogues : MonoBehaviour
             {
                 Debug.Log("Describing!");
                 string prompt = story;
-                _nameText.text = "Narrator";
+                _nameText.text = "";
                 WWWForm form = new WWWForm();
 
                 var messages = new List<ServerCommunication.Message>
@@ -75,7 +75,7 @@ public class Dialogues : MonoBehaviour
                     };
                 string jsonMessages = ServerCommunication.ToJSON(messages);
                 form.AddField("message", jsonMessages);
-                form.AddField("max_tokens", 50);
+                form.AddField("max_tokens", 100);
                 form.AddField("temperature", 1);
                 // TO DO: disable input?
                 _server.SendRequestToServer(form, (string response) =>
