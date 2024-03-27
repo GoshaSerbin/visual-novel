@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CharacterInfo : MonoBehaviour
 {
-    [SerializeField] private string characterName = "";
-    public string CharacterName { get { return characterName; } private set { characterName = value; } }
+    [SerializeField] private string[] characterName = {};
+    public string[] CharacterName { get { return characterName; } private set { characterName = value; } }
 
 }
