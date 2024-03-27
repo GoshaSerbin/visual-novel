@@ -95,11 +95,12 @@ public class Dialogues : MonoBehaviour
 
                 if (_currentStory.currentTags.Any("AI_ANSWER".Contains))
                 {
-                    Debug.Log("Answering!");
                     string question = story;
                     string name = (string)_currentStory.variablesState["characterName"];
+                    Debug.Log(name + " is answering!");
 
                     int talkingIndex = GetCharacterIndexByName(_characters, name);
+                    Debug.Log(name + "his index is " + talkingIndex);
                     var ai = _characters[talkingIndex].GetComponent<CharacterAI>();
                     ai.Ask(question, (string answer) =>
                     {

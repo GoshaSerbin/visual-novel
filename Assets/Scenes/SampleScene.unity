@@ -605,6 +605,7 @@ GameObject:
   - component: {fileID: 451226348}
   - component: {fileID: 451226349}
   - component: {fileID: 451226350}
+  - component: {fileID: 451226351}
   m_Layer: 5
   m_Name: Clara
   m_TagString: Character
@@ -710,6 +711,23 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 66d0ea99442cd674aafd031188794698, type: 3}
   - {fileID: 21300000, guid: 66d0ea99442cd674aafd031188794698, type: 3}
   - {fileID: 21300000, guid: 66d0ea99442cd674aafd031188794698, type: 3}
+--- !u!114 &451226351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451226344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7ae3ae983738204b983b59144a09456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterDescription: "\u0442\u044B \u0431\u0430\u043D\u0434\u0438\u0442 \u0438\u0437
+    \u043B\u0438\u0445\u0438\u0445 \u0434\u0435\u0432\u044F\u043D\u043E\u0441\u0442\u044B\u0445.
+    \u0412 \u0434\u0435\u0440\u0437\u043E\u0441\u0442\u0438 \u0442\u0435\u0431\u0435
+    \u043D\u0435\u0442 \u0440\u0430\u0432\u043D\u044B\u0445"
+  _contextMemory: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

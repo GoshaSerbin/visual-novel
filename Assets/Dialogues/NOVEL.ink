@@ -91,22 +91,17 @@ VAR characterName = ""
     -> look_around_camp
 
 = doctor
-~characterName = ""
- * [Расскажи о себе] 
     ~characterName = "Врач"
     ~characterExpression = DEFAULT
+ * [Расскажи о себе] 
     #AI_ANSWER
     Расскажи о себе
     -> doctor
  * [Можешь примерно описать положение дел? Я не знаю ничего про этот лагерь]
-    ~characterName = "Врач"
-    ~characterExpression = DEFAULT
     #AI_ANSWER
     Можешь примерно описать положение дел? Я не знаю ничего про этот лагерь
     -> doctor
  + [Задать другой вопрос]
-    ~characterName = "Врач"
-    ~characterExpression = DEFAULT
     #AI_TALK
     Разговор
     -> doctor
