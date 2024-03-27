@@ -45,6 +45,16 @@ public class Dialogues : MonoBehaviour
     {
         _currentStory = new Story(_inkJson.text);
     }
+
+    private string PostProccess(string aiAnswer)
+    {
+        var charsToRemove = new string[] { "\n" };
+        foreach (var c in charsToRemove)
+        {
+            aiAnswer = aiAnswer.Replace(c, string.Empty);
+        }
+        return aiAnswer;
+    }
     void Start()
     {
         _characters = GameObject.FindGameObjectsWithTag("Character");
@@ -65,7 +75,7 @@ public class Dialogues : MonoBehaviour
             if (_currentStory.currentTags.Any("AI_DESCRIBE".Contains))
             {
                 Debug.Log("Describing!");
-                string prompt = story;
+                string prompt = story.TrimEnd('\n');
                 _nameText.text = "";
                 WWWForm form = new WWWForm();
 
@@ -86,7 +96,7 @@ public class Dialogues : MonoBehaviour
                         _dialogueText.text = "ошибочка";
                         return;
                     }
-                    _dialogueText.text = response;
+                    _dialogueText.text = PostProccess(response);
                 });
                 // ContinueStory(choiceBefore);
             }
@@ -95,7 +105,7 @@ public class Dialogues : MonoBehaviour
 
                 if (_currentStory.currentTags.Any("AI_ANSWER".Contains))
                 {
-                    string question = story;
+                    string question = story.TrimEnd('\n');
                     string name = (string)_currentStory.variablesState["characterName"];
                     Debug.Log(name + " is answering!");
 
@@ -105,7 +115,7 @@ public class Dialogues : MonoBehaviour
                     ai.Ask(question, (string answer) =>
                     {
                         _choiceButtonsPanel.SetActive(false);
-                        ShowDialogue(answer);
+                        ShowDialogue(PostProccess(answer));
                     });
                 }
                 else
@@ -168,7 +178,7 @@ public class Dialogues : MonoBehaviour
             Debug.LogError("server returned error");
             return;
         }
-        _dialogueText.text = answer;
+        _dialogueText.text = PostProccess(answer);
 
         _inputField.enabled = true;
         _inputField.ActivateInputField();
