@@ -8,9 +8,9 @@ using UnityEngine.UI;
 public class CharacterAnimations : MonoBehaviour
 {
 
-    private float _sizeMultiplier = 1.1f;
-    private float _darkMultiplier = 0.6f;
-    private float _animationTime = 0.4f;
+    private float _sizeMultiplier = 1.07f;
+    private float _darkMultiplier = 0.65f;
+    private float _animationTime = 0.5f;
     private Vector3 _defaultScale;
     private Color _defaultColor;
     private UnityEngine.UI.Image _image;
