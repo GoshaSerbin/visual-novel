@@ -23,6 +23,8 @@ CONST Barracks = "Barracks"
 VAR characterName = ""
 VAR characterExpression = DEFAULT
 
+CONST doctor_description = "Ты - npc в игре. Ты лекарь в лазарете в лагере сопротивления. Идет война против искусственного интеллекта. Большего ты не знаешь и рассказывать про это главному герою не хочешь. Твой характер - неприветливый, грубый, общаешься с главным героем, который только что очнулся у тебя в лазарете."
+
 -> part1
 
 === part1 ===
@@ -108,7 +110,7 @@ VAR characterExpression = DEFAULT
 Чего тебе опять?
  * [Расскажи о себе]
     # AI : ANSWER
-    # system : ты думаешь, что ты гений
+    # system : {doctor_description}
     # max_tokens : 100
     # temperature : 1
     Расскажи о себе
@@ -117,14 +119,14 @@ VAR characterExpression = DEFAULT
     # {speaker} : {None}
     Можешь примерно описать положение дел? Я не знаю ничего про этот лагерь
     # AI : ANSWER
-    # system : ты думаешь, что ты гений
+    # system : {doctor_description}
     # max_tokens : 100
     # temperature : 1
     Можешь примерно описать положение дел? Я не знаю ничего про этот лагерь
     -> doctor
  + [Задать другой вопрос]
     # AI : TALK
-    # system : ты думаешь, что ты гений
+    # system : {doctor_description}
     # max_tokens : 100
     # temperature : 1
     Да?
