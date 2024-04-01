@@ -12,6 +12,8 @@ public class DialogueDisplay : MonoBehaviour
 
     private GameObject _dialoguePanel;
 
+    [SerializeField] private float _secondsForOneSymbol = 0.02f;
+
     [Inject]
     public void Construct(DialoguesInstaller dialoguesInstaller)
     {
@@ -35,9 +37,20 @@ public class DialogueDisplay : MonoBehaviour
 
     private void DisplayReplica(Dialogues.Replica replica)
     {
-        // TO DO: animate
-        _dialogueText.text = replica.Text;
+        // _dialogueText.text = replica.Text;
         _characterNameText.text = replica.Name;
+        StopAllCoroutines(); // is it ok?
+        StartCoroutine(TypeSentence(replica.Text));
+    }
+
+    IEnumerator TypeSentence(string sentence)
+    {
+        _dialogueText.text = "";
+        foreach (char letter in sentence.ToCharArray())
+        {
+            _dialogueText.text += letter;
+            yield return new WaitForSeconds(_secondsForOneSymbol);
+        }
     }
 
     private void ShowPanel()

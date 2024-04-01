@@ -105,7 +105,10 @@ public class Dialogues : MonoBehaviour
     {
         Debug.Log("AITalk stop");
         IsPrewrittenDialoguePlay = true;
-        OnStoryContinued.Invoke(_inkStory.currentChoices);
+        if (_inkStory.canContinue)
+        {
+            ContinueStory();
+        }
     }
 
     void Start()
