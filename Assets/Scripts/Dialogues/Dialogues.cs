@@ -39,6 +39,8 @@ public class Dialogues : MonoBehaviour
             Emotion = emotion;
         }
     }
+    public static event Action<string> OnBackgroundChanged;
+
     public static event Action<Replica> OnCharacterSaid;
     public static event Action OnDialogueStarted;
     public static event Action OnDialogueStoped;
@@ -103,7 +105,6 @@ public class Dialogues : MonoBehaviour
     {
         Debug.Log("AITalk stop");
         IsPrewrittenDialoguePlay = true;
-        // _nextPhraseButton.gameObject.SetActive(true);
         OnStoryContinued.Invoke(_inkStory.currentChoices);
     }
 
@@ -129,12 +130,12 @@ public class Dialogues : MonoBehaviour
             _nextPhraseButton.gameObject.SetActive(true); // AIManager and Choice display can disable it
             _inkStory.Continue();
             UpdateCurrentTags();
+
             // reset characters
-            if (_currentTags["reset_characters"] != "")
-            {
-                string[] characterNames = _currentTags["reset_characters"].Split();
-                _charactersManager.ResetCharacters(characterNames);
-            }
+            _charactersManager.ResetCharacters(_currentTags["reset_characters"]);
+
+            // update background
+            OnBackgroundChanged.Invoke(_currentTags["background"]);
 
             if (_currentTags["AI"] != "")
             {
@@ -222,7 +223,6 @@ public class Dialogues : MonoBehaviour
         // reset
         _currentTags["AI"] = "";
         _currentTags["max_tokens"] = "";
-        _currentTags["reset_characters"] = "";
         foreach (string tag in _inkStory.currentTags)
         {
 

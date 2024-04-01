@@ -7,12 +7,21 @@ public class CharactersManager : MonoBehaviour
     [SerializeField] private List<GameObject> _characters = new();
     private List<GameObject> _currentCharacters = new();
 
+    private string _previousResetCharactersValue = "";
+
     [SerializeField] private GameObject _leftCharacterPanel;
     [SerializeField] private GameObject _rightCharacterPanel;
 
 
-    public void ResetCharacters(string[] characterNames)
+    public void ResetCharacters(string resetCharactersValue)
     {
+        if (_previousResetCharactersValue == resetCharactersValue)
+        {
+            return;
+        }
+        _previousResetCharactersValue = resetCharactersValue;
+        string[] characterNames = resetCharactersValue.Split();
+        Debug.Log("Destroying characters");
         foreach (var character in _currentCharacters)
         {
             Destroy(character);
@@ -43,23 +52,6 @@ public class CharactersManager : MonoBehaviour
             _currentCharacters.Add(Instantiate(GetCharacterByName(characterNames[1]), _rightCharacterPanel.transform));
         }
     }
-
-
-    // public void AnimateCharacters(string speakerName, CharacterEmotion.EmotionState emotion)
-    // {
-    //     foreach (var character in _currentCharacters)
-    //     {
-    //         if (character.GetComponent<CharacterInfo>().CharacterNames.Contains(speakerName))
-    //         {
-    //             character.GetComponent<CharacterAnimations>().StartTalking();
-    //             character.GetComponent<CharacterEmotion>().ChangeEmotion(emotion);
-    //         }
-    //         else
-    //         {
-    //             character.GetComponent<CharacterAnimations>().StopTalking();
-    //         }
-    //     }
-    // }
 
     private GameObject GetCharacterByName(string name)
     {
