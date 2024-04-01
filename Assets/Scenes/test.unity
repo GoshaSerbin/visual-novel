@@ -353,6 +353,9 @@ MonoBehaviour:
   - Names:
     - Camp
     sprite: {fileID: 21300000, guid: 521648f5f94051944965cba46cbaa97d, type: 3}
+  - Names:
+    - Canteen
+    sprite: {fileID: 21300000, guid: 45911e936f6d7ab46933faff4e291dd8, type: 3}
   _backgroundImage: {fileID: 1025167071}
 --- !u!1 &315197404
 GameObject:
