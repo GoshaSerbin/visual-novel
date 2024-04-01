@@ -19,8 +19,6 @@ public class Dialogues : MonoBehaviour
 
     private Button _nextPhraseButton;
 
-
-
     private CharactersManager _charactersManager;
 
     private ServerCommunication _server;
@@ -28,12 +26,37 @@ public class Dialogues : MonoBehaviour
 
     public bool IsPrewrittenDialoguePlay { get; private set; }
 
+    public struct Replica
+    {
+        public string Name;
+        public string Text;
+        public CharacterEmotion.EmotionState Emotion;
+
+        public Replica(string name, string text, CharacterEmotion.EmotionState emotion)
+        {
+            Name = name;
+            Text = text;
+            Emotion = emotion;
+        }
+    }
+    public static event Action<Replica> OnCharacterSaid;
+    public static event Action OnDialogueStarted;
+    public static event Action OnDialogueStoped;
+    public static event Action<List<Choice>> OnStoryContinued;
+
+    private Dictionary<string, string> _currentTags = new Dictionary<string, string>(){
+            {"speaker", ""},
+            {"emotion", "0"},
+            {"temperature", "1"},
+        };
+
     [Inject]
     public void Construct(DialoguesInstaller dialoguesInstaller)
     {
         _inkJson = dialoguesInstaller.inkJson;
         _nextPhraseButton = dialoguesInstaller.nextPhraseButton;
     }
+
     private void Awake()
     {
         _inkStory = new Story(_inkJson.text);
@@ -46,6 +69,7 @@ public class Dialogues : MonoBehaviour
         AIManager.OnAITalkStarted += AITalkStart;
         AIManager.OnAITalkStoped += AITalkStop;
     }
+
     private void OnDisable()
     {
         AIManager.OnAITalkAnswered -= AITalkAnswer;
@@ -74,17 +98,13 @@ public class Dialogues : MonoBehaviour
             (CharacterEmotion.EmotionState)Convert.ToInt32(_currentTags["emotion"])
         ));
     }
+
     private void AITalkStop()
     {
         Debug.Log("AITalk stop");
         IsPrewrittenDialoguePlay = true;
         // _nextPhraseButton.gameObject.SetActive(true);
         OnStoryContinued.Invoke(_inkStory.currentChoices);
-    }
-
-    public bool CanContinue()
-    {
-        return _inkStory.canContinue;
     }
 
     void Start()
@@ -94,6 +114,7 @@ public class Dialogues : MonoBehaviour
         _charactersManager = FindObjectOfType<CharactersManager>(); // must be single
         StartDialogue();
     }
+
     public void StartDialogue()
     {
         OnDialogueStarted?.Invoke();
@@ -114,6 +135,7 @@ public class Dialogues : MonoBehaviour
                 string[] characterNames = _currentTags["reset_characters"].Split();
                 _charactersManager.ResetCharacters(characterNames);
             }
+
             if (_currentTags["AI"] != "")
             {
                 Debug.Log(_currentTags["AI"]);
@@ -128,6 +150,7 @@ public class Dialogues : MonoBehaviour
                 ));
 
             }
+
             if (_currentTags["AI"] != "TALK")
             {
                 Debug.Log("display choices");
@@ -140,24 +163,6 @@ public class Dialogues : MonoBehaviour
             ExitDialogue();
         }
     }
-
-    public struct Replica
-    {
-        public string Name;
-        public string Text;
-        public CharacterEmotion.EmotionState Emotion;
-
-        public Replica(string name, string text, CharacterEmotion.EmotionState emotion)
-        {
-            Name = name;
-            Text = text;
-            Emotion = emotion;
-        }
-    }
-    public static event Action<Replica> OnCharacterSaid;
-    public static event Action OnDialogueStarted;
-    public static event Action OnDialogueStoped;
-    public static event Action<List<Choice>> OnStoryContinued;
 
     private void HandleAI()
     {
@@ -212,12 +217,6 @@ public class Dialogues : MonoBehaviour
         }
     }
 
-    private Dictionary<string, string> _currentTags = new Dictionary<string, string>(){
-            {"speaker", ""},
-            {"emotion", "0"},
-            {"temperature", "1"},
-        };
-
     private void UpdateCurrentTags()
     {
         // reset
@@ -265,6 +264,7 @@ public class Dialogues : MonoBehaviour
         _inkStory.ChooseChoiceIndex(choiceIndex);
         ContinueStory();
     }
+
     private void ExitDialogue()
     {
         IsPrewrittenDialoguePlay = false;
