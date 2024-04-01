@@ -4,284 +4,277 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.TextCore.Text;
+using UnityEngine.UI;
 using Zenject;
 
 public class Dialogues : MonoBehaviour
 {
-    private Story _currentStory;
-    private TextAsset _inkJson;
+    private Story _inkStory;
+    private UnityEngine.TextAsset _inkJson;
 
-    private GameObject _dialoguePanel;
-    private TextMeshProUGUI _dialogueText;
-    private TextMeshProUGUI _nameText;
+    private Button _nextPhraseButton;
 
-    [HideInInspector] public GameObject _choiceButtonsPanel;
-    private GameObject _inputFieldPanel;
-    private TMP_InputField _inputField;
-    private GameObject _choiceButton;
-    private List<TextMeshProUGUI> _choicesText = new();
-    private GameObject[] _characters;
+
+
+    private CharactersManager _charactersManager;
 
     private ServerCommunication _server;
+    private AIManager _aiManager;
 
-    public bool DialogPlay { get; private set; }
+    public bool IsPrewrittenDialoguePlay { get; private set; }
 
     [Inject]
     public void Construct(DialoguesInstaller dialoguesInstaller)
     {
         _inkJson = dialoguesInstaller.inkJson;
-        _dialoguePanel = dialoguesInstaller.dialoguePanel;
-        _dialogueText = dialoguesInstaller.dialogueText;
-        _nameText = dialoguesInstaller.nameText;
-        _choiceButtonsPanel = dialoguesInstaller.choiceButtonsPanel;
-        _inputFieldPanel = dialoguesInstaller.inputFieldPanel;
-        _inputField = dialoguesInstaller.inputField;
-        _choiceButton = dialoguesInstaller.choiceButton;
+        _nextPhraseButton = dialoguesInstaller.nextPhraseButton;
     }
     private void Awake()
     {
-        _currentStory = new Story(_inkJson.text);
+        _inkStory = new Story(_inkJson.text);
+        _nextPhraseButton.onClick.AddListener(ContinueStory);
     }
 
-    private string PostProccess(string aiAnswer)
+    private void OnEnable()
     {
-        var charsToRemove = new string[] { "\n" };
-        foreach (var c in charsToRemove)
-        {
-            aiAnswer = aiAnswer.Replace(c, string.Empty);
-        }
-        return aiAnswer;
+        AIManager.OnAITalkAnswered += AITalkAnswer;
+        AIManager.OnAITalkStarted += AITalkStart;
+        AIManager.OnAITalkStoped += AITalkStop;
     }
+    private void OnDisable()
+    {
+        AIManager.OnAITalkAnswered -= AITalkAnswer;
+        AIManager.OnAITalkStarted -= AITalkStart;
+        AIManager.OnAITalkStoped -= AITalkStop;
+    }
+
+    private void AITalkStart()
+    {
+        Debug.Log("Disabling next phrase");
+        IsPrewrittenDialoguePlay = false;
+        _nextPhraseButton.gameObject.SetActive(false); // TO DO: move it to display
+        OnCharacterSaid.Invoke(new Replica(
+            _currentTags["speaker"],
+            _inkStory.currentText,
+            (CharacterEmotion.EmotionState)Convert.ToInt32(_currentTags["emotion"])
+        ));
+    }
+
+    private void AITalkAnswer(string response)
+    {
+        IsPrewrittenDialoguePlay = false;
+        OnCharacterSaid.Invoke(new Replica(
+            _currentTags["speaker"],
+            response,
+            (CharacterEmotion.EmotionState)Convert.ToInt32(_currentTags["emotion"])
+        ));
+    }
+    private void AITalkStop()
+    {
+        Debug.Log("AITalk stop");
+        IsPrewrittenDialoguePlay = true;
+        // _nextPhraseButton.gameObject.SetActive(true);
+        OnStoryContinued.Invoke(_inkStory.currentChoices);
+    }
+
+    public bool CanContinue()
+    {
+        return _inkStory.canContinue;
+    }
+
     void Start()
     {
-        _characters = GameObject.FindGameObjectsWithTag("Character");
         _server = FindObjectOfType<ServerCommunication>(); // must be single
+        _aiManager = FindObjectOfType<AIManager>(); // must be single
+        _charactersManager = FindObjectOfType<CharactersManager>(); // must be single
         StartDialogue();
     }
     public void StartDialogue()
     {
-        DialogPlay = true;
-        _dialoguePanel.SetActive(true);
+        OnDialogueStarted?.Invoke();
+        IsPrewrittenDialoguePlay = true;
         ContinueStory();
     }
-    public void ContinueStory(bool choiceBefore = false)
-    {
-        if (_currentStory.canContinue)
-        {
-            string story = _currentStory.Continue();
-            Debug.Log("story is " + story);
-            if (_currentStory.currentTags.Any("AI_DESCRIBE".Contains))
-            {
-                Debug.Log("Describing!");
-                string prompt = story.TrimEnd('\n');
-                _nameText.text = "";
-                WWWForm form = new WWWForm();
 
-                var messages = new List<ServerCommunication.Message>
-                    {
-                        new ServerCommunication.Message("user", prompt)
-                    };
-                string jsonMessages = ServerCommunication.ToJSON(messages);
-                form.AddField("message", jsonMessages);
-                form.AddField("max_tokens", 100);
-                form.AddField("temperature", 1);
-                // TO DO: disable input?
-                _server.SendRequestToServer(form, (string response) =>
-                {
-                    if (response == "")
-                    {
-                        // handle it
-                        _dialogueText.text = "ошибочка";
-                        return;
-                    }
-                    _dialogueText.text = PostProccess(response);
-                });
-                // ContinueStory(choiceBefore);
+    public void ContinueStory()
+    {
+        if (_inkStory.canContinue)
+        {
+            _nextPhraseButton.gameObject.SetActive(true); // AIManager and Choice display can disable it
+            _inkStory.Continue();
+            UpdateCurrentTags();
+            // reset characters
+            if (_currentTags["reset_characters"] != "")
+            {
+                string[] characterNames = _currentTags["reset_characters"].Split();
+                _charactersManager.ResetCharacters(characterNames);
+            }
+            if (_currentTags["AI"] != "")
+            {
+                Debug.Log(_currentTags["AI"]);
+                HandleAI();
             }
             else
             {
+                OnCharacterSaid.Invoke(new Replica(
+                    _currentTags["speaker"],
+                    _inkStory.currentText,
+                    (CharacterEmotion.EmotionState)Convert.ToInt32(_currentTags["emotion"])
+                ));
 
-                if (_currentStory.currentTags.Any("AI_ANSWER".Contains))
-                {
-                    string question = story.TrimEnd('\n');
-                    string name = (string)_currentStory.variablesState["characterName"];
-                    Debug.Log(name + " is answering!");
-
-                    int talkingIndex = GetCharacterIndexByName(_characters, name);
-                    Debug.Log(name + "his index is " + talkingIndex);
-                    var ai = _characters[talkingIndex].GetComponent<CharacterAI>();
-                    ai.Ask(question, (string answer) =>
-                    {
-                        Debug.Log("He answered");
-                        // _currentStory.ChooseChoiceIndex(choiceIndex);
-                        ShowDialogue(PostProccess(answer));
-                        ShowChoiceButtons();
-                        // _currentStory.Continue();
-                    });
-                }
-                else
-                {
-                    ShowDialogue(story);
-                    if (_currentStory.currentTags.Any("AI_TALK".Contains))
-                    {
-                        ShowInputField();
-                        Debug.Log("talking to AI!");
-
-                        //disable clicking
-                        DialogPlay = false;
-                        Debug.Log("current text: " + _currentStory.currentText);
-                        Debug.Log("current choice count: " + _currentStory.currentChoices.Count);
-                        // var talkingIndex = GetCharacterIndexByName(_characters, _nameText.text);
-                        // _characters[talkingIndex].GetComponent<CharacterAI>().ChangeEmotion(newEmotion);
-                    }
-                    else
-                    {
-                        _inputFieldPanel.SetActive(false);
-                        ShowChoiceButtons();
-
-                    }
-                }
-
+            }
+            if (_currentTags["AI"] != "TALK")
+            {
+                Debug.Log("display choices");
+                OnStoryContinued.Invoke(_inkStory.currentChoices);
             }
 
         }
-        else if (!choiceBefore)
+        else
         {
-            Debug.Log("current story cant continue");
             ExitDialogue();
         }
     }
 
-    public void ContinueAITalk()
+    public struct Replica
     {
-        string phrase = _inputField.text;
-        _inputField.enabled = false;
+        public string Name;
+        public string Text;
+        public CharacterEmotion.EmotionState Emotion;
 
-        if (phrase == "")
+        public Replica(string name, string text, CharacterEmotion.EmotionState emotion)
         {
-            // handle it
-            return;
+            Name = name;
+            Text = text;
+            Emotion = emotion;
         }
-        var index = GetCharacterIndexByName(_characters, _nameText.text); // TO DO: get active player
-        var ai = _characters[index].GetComponent<CharacterAI>();
-        ai.Ask(phrase, AIAnswerCallback);
     }
-    private void ShowInputField()
-    {
-        _choiceButtonsPanel.SetActive(false);
-        _inputFieldPanel.SetActive(true);
-        _inputField.ActivateInputField();
-    }
+    public static event Action<Replica> OnCharacterSaid;
+    public static event Action OnDialogueStarted;
+    public static event Action OnDialogueStoped;
+    public static event Action<List<Choice>> OnStoryContinued;
 
-    private void AIAnswerCallback(string answer)
+    private void HandleAI()
     {
-        //must check if not null
-        if (answer == null)
+        switch (_currentTags["AI"])
         {
-            Debug.LogError("server returned error");
-            return;
-        }
-        _dialogueText.text = PostProccess(answer);
-
-        _inputField.enabled = true;
-        _inputField.ActivateInputField();
-    }
-
-    private int GetCharacterIndexByName(GameObject[] characters, string name)
-    {
-        for (int i = 0; i < characters.Count(); ++i)
-        {
-            var chNames = characters[i].GetComponent<CharacterInfo>().CharacterName;
-            for (int j = 0; j < chNames.Length; ++j)
-            {
-                if (chNames[j] == name)
+            case "TALK":
                 {
-                    return i;
+                    _aiManager.TalkWith(_currentTags["system"]);
+                    break;
                 }
-            }
+            // basically "describe" uses only user prompt and "answer" uses both system and user
+            case "DESCRIBE":
+                {
+                    _aiManager.Describe(
+                        _inkStory.currentText,
+                        (string response) =>
+                        {
+                            OnCharacterSaid.Invoke(new Replica(
+                                _currentTags["speaker"],
+                                response,
+                                (CharacterEmotion.EmotionState)Convert.ToInt32(_currentTags["emotion"])
+                            ));
+                        },
+                        Convert.ToInt32(_currentTags["max_tokens"]),
+                        Convert.ToSingle(_currentTags["temperature"])
+                    );
+                    break;
+                }
+            case "ANSWER":
+                {
+                    _aiManager.Answer(
+                        _inkStory.currentText,
+                        _currentTags["system"],
+                        (string response) =>
+                        {
+                            OnCharacterSaid.Invoke(new Replica(
+                                _currentTags["speaker"],
+                                response,
+                                (CharacterEmotion.EmotionState)Convert.ToInt32(_currentTags["emotion"])
+                            ));
+                        },
+                        Convert.ToInt32(_currentTags["max_tokens"]),
+                        Convert.ToSingle(_currentTags["temperature"])
+                    );
+                    break;
+                }
+            default:
+                {
+                    Debug.LogError("Unknown ai tag " + _currentTags["AI"]);
+                    break;
+                }
         }
-        Debug.LogError($"Can not find name {name} among characters");
-        return -1;
     }
-    private void ShowDialogue(string dialogue)
-    {
-        _dialogueText.text = dialogue;
-        _nameText.text = (string)_currentStory.variablesState["characterName"];
 
-        int talkingIndex;
-        if (_nameText.text == "")
-        { // narrator
-            talkingIndex = -1;
-        }
-        else
-        {
-            talkingIndex = GetCharacterIndexByName(_characters, _nameText.text);
-            var newEmotion = (CharacterEmotion.EmotionState)_currentStory.variablesState["characterExpression"];
-            _characters[talkingIndex].GetComponent<CharacterEmotion>().ChangeEmotion(newEmotion);
-        }
+    private Dictionary<string, string> _currentTags = new Dictionary<string, string>(){
+            {"speaker", ""},
+            {"emotion", "0"},
+            {"temperature", "1"},
+        };
 
-        AnimateCharacters(talkingIndex);
-    }
-    private void AnimateCharacters(int talkingIndex)
+    private void UpdateCurrentTags()
     {
-        for (int i = 0; i < _characters.Count(); ++i)
+        // reset
+        _currentTags["AI"] = "";
+        _currentTags["max_tokens"] = "";
+        _currentTags["reset_characters"] = "";
+        foreach (string tag in _inkStory.currentTags)
         {
-            if (i == talkingIndex)
+
+            string[] parts = tag.Split(':');
+            if (parts.Count() != 2)
             {
-                _characters[i].GetComponent<CharacterAnimations>().StartTalking();
+                Debug.LogError($"Strange tag {tag}");
+                continue;
             }
-            else
-            {
-                _characters[i].GetComponent<CharacterAnimations>().StopTalking();
-            }
-        }
-    }
-    private void ShowChoiceButtons()
-    {
-        List<Choice> currentChoices = _currentStory.currentChoices;
-        _choiceButtonsPanel.SetActive(currentChoices.Count != 0);
-        if (currentChoices.Count <= 0) { return; }
-        _choiceButtonsPanel.transform.Cast<Transform>().ToList().ForEach(child => Destroy(child.gameObject));
-        _choicesText.Clear();
-        for (int i = 0; i < currentChoices.Count; i++)
-        {
-            GameObject choice = Instantiate(_choiceButton, _choiceButtonsPanel.transform);
-            choice.GetComponent<ButtonAction>().index = i;
 
-            TextMeshProUGUI choiceText = choice.GetComponentInChildren<TextMeshProUGUI>();
-            choiceText.text = currentChoices[i].text;
-            _choicesText.Add(choiceText);
+            string key = parts[0].Trim();
+            string value = parts[1].Trim();
+            _currentTags[key] = value;
+            switch (key)
+            {
+                case "speaker":
+                case "emotion":
+                case "background":
+                case "AI":
+                case "system":
+                case "max_tokens":
+                case "reset_characters":
+                case "temperature":
+                    {
+                        break;
+                    }
+                default:
+                    {
+                        Debug.LogError($"Unknown tag {key}!");
+                        break;
+                    }
+            }
         }
     }
+
     public void ChoiceButtonAction(int choiceIndex)
     {
-        Debug.Log("prev story is " + _currentStory.currentText);
         Debug.Log("chosen story index" + choiceIndex);
-        _currentStory.ChooseChoiceIndex(choiceIndex);
-        ContinueStory(true);
+        _inkStory.ChooseChoiceIndex(choiceIndex);
+        ContinueStory();
     }
     private void ExitDialogue()
     {
-        DialogPlay = false;
-        _dialoguePanel.SetActive(false);
+        IsPrewrittenDialoguePlay = false;
+        Debug.Log("End dialogue");
+        OnDialogueStoped.Invoke();
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if (nextSceneIndex < SceneManager.sceneCount)
         {
             SceneManager.LoadScene(nextSceneIndex);
         }
-    }
-    public void StopAITalkAndContinueStory()
-    {
-        Debug.Log("stop talking to ai");
-        Debug.Log("current text: " + _currentStory.currentText);
-        Debug.Log("current choice count: " + _currentStory.currentChoices.Count);
-        DialogPlay = true;
-        _inputFieldPanel.SetActive(false);
-        ShowChoiceButtons();
-        ContinueStory(_currentStory.currentChoices.Count > 0); // TO DO: rewrite code
     }
 
 }

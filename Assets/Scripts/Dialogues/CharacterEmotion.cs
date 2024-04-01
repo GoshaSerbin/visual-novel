@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
 public class CharacterEmotion : MonoBehaviour
 {
     [System.Serializable]
@@ -15,8 +17,15 @@ public class CharacterEmotion : MonoBehaviour
 
     [SerializeField] private List<Sprite> emotions;
 
+    private Image _image;
+
+    private void Start()
+    {
+        _image = GetComponent<Image>();
+    }
+
     public void ChangeEmotion(EmotionState currentExpression)
     {
-        GetComponent<Image>().sprite = emotions[(int)currentExpression];
+        _image.sprite = emotions[(int)currentExpression];
     }
 }

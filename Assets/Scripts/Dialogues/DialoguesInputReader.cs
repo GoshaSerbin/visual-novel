@@ -7,9 +7,11 @@ public class DialoguesInputReader : MonoBehaviour, Controls.IDialogueActions
 {
     Controls _inputActions;
     Dialogues _dialogues;
+    AIManager _aiManager;
     private void OnEnable()
     {
         _dialogues = FindObjectOfType<Dialogues>();
+        _aiManager = FindObjectOfType<AIManager>();
         if (_inputActions != null)
         {
             return;
@@ -24,17 +26,17 @@ public class DialoguesInputReader : MonoBehaviour, Controls.IDialogueActions
     }
     public void OnNextPhrase(InputAction.CallbackContext context)
     {
-        if (context.started && _dialogues.DialogPlay)
+        if (context.started && _dialogues.IsPrewrittenDialoguePlay)
         {
-            _dialogues.ContinueStory(_dialogues._choiceButtonsPanel.activeInHierarchy); // странновато
+            // _dialogues.ContinueStory();
         }
     }
     public void OnSendPhrase(InputAction.CallbackContext context)
     {
-        if (context.started && !_dialogues.DialogPlay)
+        if (context.started && _aiManager.isAITalking)
         {
             Debug.Log("Send phrase!");
-            _dialogues.ContinueAITalk();
+            // _dialogues.ContinueAITalk();
             // send request to server
         }
     }
