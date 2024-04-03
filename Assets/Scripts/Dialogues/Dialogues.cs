@@ -21,7 +21,6 @@ public class Dialogues : MonoBehaviour
 
     private CharactersManager _charactersManager;
 
-    private ServerCommunication _server;
     private AIManager _aiManager;
 
     public bool IsPrewrittenDialoguePlay { get; private set; }
@@ -125,7 +124,6 @@ public class Dialogues : MonoBehaviour
 
     void Start()
     {
-        _server = FindObjectOfType<ServerCommunication>(); // must be single
         _aiManager = FindObjectOfType<AIManager>(); // must be single
         _charactersManager = FindObjectOfType<CharactersManager>(); // must be single
         StartDialogue();
