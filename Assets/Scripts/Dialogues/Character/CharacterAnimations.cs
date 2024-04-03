@@ -36,6 +36,23 @@ public class CharacterAnimations : MonoBehaviour
         Dialogues.OnCharacterSaid -= Animate;
     }
 
+    public void Appear(bool fromLeft)
+    {
+        // Vector3 initPosition = transform.position;
+        // Vector3 delta = new Vector3(0, 0, 0);
+        // if (fromLeft)
+        // {
+        //     delta *= -1;
+        // }
+        // transform.position = initPosition + delta;
+        // transform.LeanMoveLocalX(initPosition.x, 5);
+    }
+
+    public void Dissapear()
+    {
+
+    }
+
     private void Animate(Dialogues.Replica replica)
     {
         if (_characterInfo.CharacterNames.Contains(replica.Name))

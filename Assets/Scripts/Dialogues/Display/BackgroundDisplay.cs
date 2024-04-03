@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Unity.VisualStudio.Editor;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +25,9 @@ public class BackgroundDisplay : MonoBehaviour
     [SerializeField] private List<Background> _backgrounds;
 
     [SerializeField] private UnityEngine.UI.Image _backgroundImage;
+
+    [SerializeField] private float _animationTime;
+
     private void OnEnable()
     {
         Dialogues.OnBackgroundChanged += Updatebackground;
@@ -41,7 +45,19 @@ public class BackgroundDisplay : MonoBehaviour
             return;
         }
         _currentBackground = FindBackgroundByName(name);
+        LeanTween.value(_backgroundImage.gameObject, SetColorCallback, _backgroundImage.color, new Color(0, 0, 0), _animationTime).setOnComplete(UpdateSpriteAndFadeOut);
+    }
+
+    private void SetColorCallback(Color color)
+    {
+        _backgroundImage.color = color;
+    }
+
+    private void UpdateSpriteAndFadeOut()
+    {
+        // TO DO: не оч красиво сделано
         _backgroundImage.sprite = _currentBackground.sprite;
+        LeanTween.value(_backgroundImage.gameObject, SetColorCallback, _backgroundImage.color, new Color(1, 1, 1), _animationTime);
     }
 
     private Background FindBackgroundByName(string name)

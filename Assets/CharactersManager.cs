@@ -20,7 +20,7 @@ public class CharactersManager : MonoBehaviour
             return;
         }
         _previousResetCharactersValue = resetCharactersValue;
-        string[] characterNames = resetCharactersValue.Split();
+        string[] characterNames = resetCharactersValue.Split(",");
         Debug.Log("Destroying characters");
         foreach (var character in _currentCharacters)
         {
@@ -45,11 +45,16 @@ public class CharactersManager : MonoBehaviour
         }
         if (characterNames[0] != "")
         {
-            _currentCharacters.Add(Instantiate(GetCharacterByName(characterNames[0]), _leftCharacterPanel.transform));
+            var character = Instantiate(GetCharacterByName(characterNames[0].Trim()), _leftCharacterPanel.transform);
+            // character.GetComponent<CharacterAnimations>().Appear(true);
+            _currentCharacters.Add(character);
         }
         if (characterNames[1] != "")
         {
-            _currentCharacters.Add(Instantiate(GetCharacterByName(characterNames[1]), _rightCharacterPanel.transform));
+            var character = Instantiate(GetCharacterByName(characterNames[1].Trim()), _rightCharacterPanel.transform);
+            // character.GetComponent<CharacterAnimations>().Appear(false);
+            // TO DO: Add animations to appear and disapear. Возможно придется переделать панели для персонажей.
+            _currentCharacters.Add(character);
         }
     }
 
