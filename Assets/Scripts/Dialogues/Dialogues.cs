@@ -109,6 +109,18 @@ public class Dialogues : MonoBehaviour
         {
             ContinueStory();
         }
+        else
+        {
+            if (_inkStory.currentChoices.Count > 0)
+            {
+                OnStoryContinued.Invoke(_inkStory.currentChoices);
+            }
+            else
+            {
+                ExitDialogue();
+            }
+
+        }
     }
 
     void Start()
