@@ -34,8 +34,10 @@ public class TextEffects : MonoBehaviour
 
             for (int j = 0; j < 4; ++j)
             {
-                var orig = verts[charInfo.vertexIndex + j];
-                verts[charInfo.vertexIndex + j] = orig + new Vector3(0, Mathf.Sin(Time.time * 2f + orig.x * 0.01f) * 10f, 0);
+                var index = charInfo.vertexIndex + j;
+                var orig = verts[index];
+                // verts[index] = orig + new Vector3(0, 10 / (10 - (orig.x - verts[0].x) + (verts[1].y - orig.y) + 0.1f * Time.time), 0);
+                // подумоть
             }
         }
 

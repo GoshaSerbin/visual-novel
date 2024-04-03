@@ -48,7 +48,7 @@ public class Dialogues : MonoBehaviour
     private Dictionary<string, string> _currentTags = new Dictionary<string, string>(){
             {"speaker", ""},
             {"emotion", "0"},
-            {"temperature", "1"},
+            {"temperature", "1.2f"},
         };
 
     [Inject]
@@ -180,6 +180,16 @@ public class Dialogues : MonoBehaviour
 
     private void HandleAI()
     {
+        float temperature = 1f;
+        if (float.TryParse(_currentTags["temperature"], out temperature))
+        {
+            Debug.Log("parsed" + temperature);
+        }
+        else
+        {
+            Debug.Log("Cannot parse " + _currentTags["temperature"]);
+        }
+
         switch (_currentTags["AI"])
         {
             case "TALK":
@@ -201,7 +211,7 @@ public class Dialogues : MonoBehaviour
                             ));
                         },
                         Convert.ToInt32(_currentTags["max_tokens"]),
-                        Convert.ToSingle(_currentTags["temperature"])
+                        temperature
                     );
                     break;
                 }
@@ -219,7 +229,7 @@ public class Dialogues : MonoBehaviour
                             ));
                         },
                         Convert.ToInt32(_currentTags["max_tokens"]),
-                        Convert.ToSingle(_currentTags["temperature"])
+                        temperature
                     );
                     break;
                 }

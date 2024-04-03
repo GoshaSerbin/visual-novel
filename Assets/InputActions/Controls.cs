@@ -79,17 +79,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""SendPhrase"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a7a2348f-e60a-48ef-bc75-3a95fe937d9b"",
-                    ""path"": ""*/{Submit}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SendPhrase"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
