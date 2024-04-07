@@ -10,7 +10,7 @@ public class TextEffects : MonoBehaviour
 
     [SerializeField] private float _secondsForOneSymbol = 0.02f;
 
-    void Start()
+    private void Awake()
     {
         _textComponent = GetComponent<TMP_Text>();
     }

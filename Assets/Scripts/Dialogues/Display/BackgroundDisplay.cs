@@ -64,8 +64,6 @@ public class BackgroundDisplay : MonoBehaviour
     {
         foreach (var background in _backgrounds)
         {
-            Debug.Log(background.Names[0]);
-            Debug.Log(name);
             if (background.Names.Contains(name))
             {
                 return background;
