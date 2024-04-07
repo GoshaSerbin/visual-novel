@@ -572,7 +572,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8620987713946612565}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999999
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -813,6 +813,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemPrefab: {fileID: 4735238261018654171, guid: 27f8bb0221afc2b4690d75b818f539ce, type: 3}
   _contentPanel: {fileID: 243760814595081156}
+  _itemDescription: {fileID: 1740801555477356027}
+  image: {fileID: 21300000, guid: c3846b59e7b940642b405a7b024f35c4, type: 3}
+  quantity: 1
+  title: shtani
+  description: clothes
 --- !u!1 &6753178977963958213
 GameObject:
   m_ObjectHideFlags: 0
@@ -1120,6 +1125,7 @@ GameObject:
   - component: {fileID: 6960942771888289238}
   - component: {fileID: 5471072705405856582}
   - component: {fileID: 5423167628197408066}
+  - component: {fileID: 1740801555477356027}
   m_Layer: 5
   m_Name: ItemDescriptionPanel
   m_TagString: Untagged
@@ -1232,6 +1238,20 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1740801555477356027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803418585337128121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d08597c6fb3a4db49819b570c6892301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _title: {fileID: 9145814270501143795}
+  _description: {fileID: 7799950887966526870}
 --- !u!1 &8791911539602780912
 GameObject:
   m_ObjectHideFlags: 0
