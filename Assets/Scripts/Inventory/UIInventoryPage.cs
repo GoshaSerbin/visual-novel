@@ -18,10 +18,11 @@ public class UIInventoryPage : MonoBehaviour
 
     List<UIInventoryItem> _uiInventoryItems = new List<UIInventoryItem>();
 
-    public Sprite image;
+    public Sprite image, image2;
     public int quantity;
     public string title, description;
 
+    private int currentlyDraggedItemIndex = -1;
 
     private void Awake()
     {
@@ -49,12 +50,24 @@ public class UIInventoryPage : MonoBehaviour
 
     private void HandleShowItemActions(UIInventoryItem item)
     {
-        throw new NotImplementedException();
+
     }
 
     private void HandleSwap(UIInventoryItem item)
     {
+        int index = _uiInventoryItems.IndexOf(item);
+        if (index == -1)
+        {
+            _mouseFollower.Toggle(false);
+            currentlyDraggedItemIndex = -1;
+            return;
+        }
         _mouseFollower.Toggle(false);
+
+        _uiInventoryItems[currentlyDraggedItemIndex].SetData(index == 0 ? image : image2, quantity);
+        _uiInventoryItems[index].SetData(currentlyDraggedItemIndex == 0 ? image : image2, quantity);
+        _mouseFollower.Toggle(false);
+        currentlyDraggedItemIndex = -1;
     }
 
     private void HandleEndDrag(UIInventoryItem item)
@@ -64,8 +77,15 @@ public class UIInventoryPage : MonoBehaviour
 
     private void HandleBeginDrag(UIInventoryItem item)
     {
+        int index = _uiInventoryItems.IndexOf(item);
+        if (index == -1)
+        {
+            return;
+        }
+        currentlyDraggedItemIndex = index;
+
         _mouseFollower.Toggle(true);
-        _mouseFollower.SetData(image, quantity);
+        _mouseFollower.SetData(index == 0 ? image : image2, quantity);
     }
 
     private void HandleItemSelection(UIInventoryItem item)
@@ -79,6 +99,7 @@ public class UIInventoryPage : MonoBehaviour
         gameObject.SetActive(true);
         _itemDescription.ResetDescription();
         _uiInventoryItems[0].SetData(image, quantity);
+        _uiInventoryItems[1].SetData(image2, quantity);
     }
 
     public void Hide()
@@ -86,15 +107,4 @@ public class UIInventoryPage : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
