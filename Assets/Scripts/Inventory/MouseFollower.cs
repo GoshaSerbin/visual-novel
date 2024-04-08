@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Inventory.UI;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Scripting;

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Egg
   m_EditorClassIdentifier: 
   <IsStackable>k__BackingField: 1
-  <MaxStackSize>k__BackingField: 10
-  <Name>k__BackingField: egg
+  <MaxStackSize>k__BackingField: 1
+  <Name>k__BackingField: Egg
   <Description>k__BackingField: kinder surprise
   <ItemImage>k__BackingField: {fileID: 21300000, guid: d38abdc137eb9dc48ad53f5fe5c56575, type: 3}
