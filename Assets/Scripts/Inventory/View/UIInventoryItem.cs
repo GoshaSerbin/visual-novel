@@ -51,10 +51,7 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IBeginDragHa
 
     public void OnPointerClick(PointerEventData pointerData)
     {
-        if (_isEmpty)
-        {
-            return;
-        }
+
         if (pointerData.button == PointerEventData.InputButton.Right)
         { // TO DO: extent to other inputs
             OnRightMouseBtnClick?.Invoke(this);
