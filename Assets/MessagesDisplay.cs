@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MessagesDisplay : MonoBehaviour
 {
-    private float _animationTime = 0.5f;
+    private float _animationTime = 0.7f;
     private float _showTime = 2f;
     private Queue<Message> _messageQueue = new Queue<Message>();
     private bool _isShowingMessage = false;
@@ -42,9 +42,9 @@ public class MessagesDisplay : MonoBehaviour
         _messageText.text = currentMessage.Text;
         _messageImage.sprite = currentMessage.Image;
 
-        _messagePanel.transform.localPosition = new Vector2(Screen.width / 2, 0);
+        _messagePanel.transform.localPosition = new Vector2(Screen.width, 0);
         _messagePanel.transform.LeanMoveLocalX(0, _animationTime).setEaseOutBack();
-        _messagePanel.transform.LeanMoveLocalX(Screen.width / 2, _animationTime).setEaseOutBack().delay = _showTime - _animationTime;
+        _messagePanel.transform.LeanMoveLocalX(Screen.width, _animationTime).setEaseOutBack().delay = _showTime - _animationTime;
 
         yield return new WaitForSeconds(_showTime);
 

@@ -16,7 +16,7 @@ public class ButtonAddItem : MonoBehaviour
         if (reminder == 0)
         {
             Debug.Log("Added 2 items");
-            _messageDisplay.ShowMessage("new item: " + _item.Name, _item.ItemImage);
+            _messageDisplay.ShowMessage("Новый предмет: " + _item.Name, _item.ItemImage);
         }
         else
         {
