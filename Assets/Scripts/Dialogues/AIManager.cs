@@ -51,6 +51,16 @@ public class AIManager : MonoBehaviour
         return form;
     }
 
+    private WWWForm GetImageWWWForm(string prompt, int width, int height, string style)
+    {
+        WWWForm form = new();
+        form.AddField("prompt", prompt);
+        form.AddField("width", width);
+        form.AddField("height", height);
+        form.AddField("style", style);
+        return form;
+    }
+
     public static event Action OnAITalkStarted;
     public static event Action OnAITalkStoped;
 
@@ -106,8 +116,6 @@ public class AIManager : MonoBehaviour
         OnAITalkStoped?.Invoke();
     }
 
-
-
     public void Describe(string prompt, Action<string> callback, int maxTokens, float temperature = 1)
     {
         prompt = prompt.TrimEnd('\n');
@@ -138,6 +146,15 @@ public class AIManager : MonoBehaviour
 
         _server.SendRequestToServer(form, callback);
         Debug.Log("AIManager sent request to server");
+    }
+
+    public void Show(string prompt, Action<Sprite> callback, int width = 1024, int height = 1024, string style = "DEFAULT")
+    {
+        prompt = prompt.TrimEnd('\n');
+        Debug.Log($"AIManager started showing: {prompt}");
+        var form = GetImageWWWForm(prompt, width, height, style);
+        _server.SendImageRequestToServer(form, callback);
+        Debug.Log("AIManager sent image request to server");
     }
 
 }
