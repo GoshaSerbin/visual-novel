@@ -33,7 +33,6 @@ public class HealthSystem
     public void Damage(int amount)
     {
         _currentHP = Mathf.Clamp(_currentHP - amount, 0, _maxHP);
-        Debug.Log("CurrentHealth = " + _currentHP.ToString());
         // OnHealthChange(this, EventArgs.Empty);
         if (_currentHP == 0)
         {
