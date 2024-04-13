@@ -2,6 +2,7 @@ using Ink.Runtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
@@ -44,11 +45,12 @@ public class Dialogues : MonoBehaviour
     public static event Action OnDialogueStarted;
     public static event Action OnDialogueStoped;
     public static event Action<List<Choice>> OnStoryContinued;
+    public static event Action<string> OnItemRecieved;
 
     private Dictionary<string, string> _currentTags = new Dictionary<string, string>(){
             {"speaker", ""},
             {"emotion", "0"},
-            {"temperature", "1.2f"},
+            {"temperature", "1.2"},
         };
 
     [Inject]
@@ -69,6 +71,7 @@ public class Dialogues : MonoBehaviour
         AIManager.OnAITalkAnswered += AITalkAnswer;
         AIManager.OnAITalkStarted += AITalkStart;
         AIManager.OnAITalkStoped += AITalkStop;
+        AIManager.OnAIRecievedItem += AIRecieveItem;
     }
 
     private void OnDisable()
@@ -76,6 +79,7 @@ public class Dialogues : MonoBehaviour
         AIManager.OnAITalkAnswered -= AITalkAnswer;
         AIManager.OnAITalkStarted -= AITalkStart;
         AIManager.OnAITalkStoped -= AITalkStop;
+        AIManager.OnAIRecievedItem -= AIRecieveItem;
     }
 
     private void AITalkStart()
@@ -90,8 +94,33 @@ public class Dialogues : MonoBehaviour
         ));
     }
 
+    private string[] getItems(string itemsEnumeration)
+    {
+        string[] items = itemsEnumeration.Split(",");
+        for (int i = 0; i < items.Count(); ++i)
+        {
+            items[i] = items[i].Trim(' ');
+        }
+        return items;
+    }
+
+    private void AIRecieveItem(string item)
+    {
+        Debug.Log("player gets item " + item);
+        OnItemRecieved?.Invoke(item);
+    }
+
     private void AITalkAnswer(string response)
     {
+        Debug.Log("current text is " + _inkStory.currentText);
+        if (_currentTags["may_recieve_items"] != "")
+        {
+            string[] items = getItems(_currentTags["may_recieve_items"]);
+            for (int i = 0; i < items.Count(); ++i)
+            {
+                _aiManager.IsRecieved(items[i], response);
+            }
+        }
         IsPrewrittenDialoguePlay = false;
         OnCharacterSaid.Invoke(new Replica(
             _currentTags["speaker"],
@@ -180,15 +209,11 @@ public class Dialogues : MonoBehaviour
 
     private void HandleAI()
     {
-        float temperature = 1f;
-        if (float.TryParse(_currentTags["temperature"], out temperature))
-        {
-            Debug.Log("parsed" + temperature);
-        }
-        else
-        {
-            Debug.Log("Cannot parse " + _currentTags["temperature"]);
-        }
+        CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+        ci.NumberFormat.CurrencyDecimalSeparator = ".";
+        float temperature = float.Parse(_currentTags["temperature"], NumberStyles.Any, ci);
+        // float temperature = float.Parse(_currentTags["temperature"], CultureInfo.InvariantCulture.NumberFormat);
+        Debug.Log("parsed " + temperature);
 
         switch (_currentTags["AI"])
         {
@@ -246,6 +271,7 @@ public class Dialogues : MonoBehaviour
         // reset
         _currentTags["AI"] = "";
         _currentTags["max_tokens"] = "";
+        _currentTags["may_recieve"] = "";
         foreach (string tag in _inkStory.currentTags)
         {
 
@@ -268,6 +294,7 @@ public class Dialogues : MonoBehaviour
                 case "system":
                 case "max_tokens":
                 case "reset_characters":
+                case "may_recieve_items":
                 case "temperature":
                     {
                         break;

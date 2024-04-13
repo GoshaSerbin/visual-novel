@@ -114,6 +114,7 @@ INCLUDE settings.ink
     # AI : TALK
     # system : {doctor_description}
     # max_tokens : 200
+    # may_recieve_items : money, pills
     Да?
     -> doctor
  + [Выход]

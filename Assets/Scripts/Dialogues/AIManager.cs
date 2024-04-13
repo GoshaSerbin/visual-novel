@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -65,6 +66,7 @@ public class AIManager : MonoBehaviour
     public static event Action OnAITalkStoped;
 
     public static event Action<string> OnAITalkAnswered;
+    public static event Action<string> OnAIRecievedItem;
 
     public void TalkWith(string characterDescription) // TO DO: Add history
     {
@@ -157,4 +159,25 @@ public class AIManager : MonoBehaviour
         Debug.Log("AIManager sent image request to server");
     }
 
+    public void IsRecieved(string item, string npcAnswer)
+    {
+        // Debug.Log($"AIManager started answering: {question}");
+
+        var systemMsg = new ServerCommunication.Message("system", "NPC в игре сказал следующую фразу: \"" + npcAnswer + "\". Тебе будут называть названия предметов, которые игрок мог бы получить после данной фразы. Твоя задача - отвечать \"Да\" или \"Нет\" в зависимости от того получил ли в действительности игрок указанный предмет от NPC.");
+
+        var messages = new List<ServerCommunication.Message>
+            {
+                systemMsg,
+                new("user", item),
+            };
+        var form = GetWWWForm(messages, 300, 0);
+        _server.SendRequestToServer(form, (string response) =>
+        {
+            Debug.Log("ai answer to get item: " + response);
+            if (response.StartsWith('Д'))
+            {
+                OnAIRecievedItem.Invoke(item);
+            }
+        });
+    }
 }
