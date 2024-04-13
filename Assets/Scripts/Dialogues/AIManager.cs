@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -51,10 +52,22 @@ public class AIManager : MonoBehaviour
         return form;
     }
 
+    private WWWForm GetImageWWWForm(string prompt, int width, int height, string style)
+    {
+        WWWForm form = new();
+        form.AddField("prompt", prompt);
+        form.AddField("width", width);
+        form.AddField("height", height);
+        form.AddField("style", style);
+        return form;
+    }
+
     public static event Action OnAITalkStarted;
     public static event Action OnAITalkStoped;
 
     public static event Action<string> OnAITalkAnswered;
+    public static event Action<string> OnAIRecievedItem;
+    public static event Action<string> OnAIAffectedStory;
 
     public void TalkWith(string characterDescription) // TO DO: Add history
     {
@@ -106,8 +119,6 @@ public class AIManager : MonoBehaviour
         OnAITalkStoped?.Invoke();
     }
 
-
-
     public void Describe(string prompt, Action<string> callback, int maxTokens, float temperature = 1)
     {
         prompt = prompt.TrimEnd('\n');
@@ -138,6 +149,57 @@ public class AIManager : MonoBehaviour
 
         _server.SendRequestToServer(form, callback);
         Debug.Log("AIManager sent request to server");
+    }
+
+    public void Show(string prompt, Action<Sprite> callback, int width = 1024, int height = 1024, string style = "DEFAULT")
+    {
+        prompt = prompt.TrimEnd('\n');
+        Debug.Log($"AIManager started showing: {prompt}");
+        var form = GetImageWWWForm(prompt, width, height, style);
+        _server.SendImageRequestToServer(form, callback);
+        Debug.Log("AIManager sent image request to server");
+    }
+
+    public void IsRecieved(string item, string npcAnswer)
+    {
+
+        var systemMsg = new ServerCommunication.Message("system", "NPC в игре сказал следующую фразу: \"" + npcAnswer + "\". Тебе будут называть названия предметов, которые игрок мог бы получить после данной фразы. Твоя задача - отвечать \"Да\" или \"Нет\" в зависимости от того получил ли в действительности игрок указанный предмет от NPC.");
+
+        var messages = new List<ServerCommunication.Message>
+            {
+                systemMsg,
+                new("user", item),
+            };
+        var form = GetWWWForm(messages, 300, 0);
+        _server.SendRequestToServer(form, (string response) =>
+        {
+            Debug.Log("ai answer to get item: " + response);
+            if (response.StartsWith('Д'))
+            {
+                OnAIRecievedItem.Invoke(item);
+            }
+        });
+    }
+
+    public void IsAffected(string varName, string npcAnswer, string varDescription)
+    {
+
+        var systemMsg = new ServerCommunication.Message("system", "NPC в игре сказал следующую фразу: " + npcAnswer + ". Тебе будут описывать события, которые могут произойти. Твоя задача - отвечать \"Да\" или \"Нет\" в зависимости от того произошло ли это событие, исходя из фразы. Отвечай да, только если это напрямую следует из фразы.");
+
+        var messages = new List<ServerCommunication.Message>
+            {
+                systemMsg,
+                new("user", varDescription),
+            };
+        var form = GetWWWForm(messages, 300, 0);
+        _server.SendRequestToServer(form, (string response) =>
+        {
+            Debug.Log($"ai answer to affected story {varName}: {response}");
+            if (response.Contains('Д'))
+            {
+                OnAIAffectedStory.Invoke(varName);
+            }
+        });
     }
 
 }

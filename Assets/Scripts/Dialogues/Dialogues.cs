@@ -2,6 +2,7 @@ using Ink.Runtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
@@ -44,11 +45,13 @@ public class Dialogues : MonoBehaviour
     public static event Action OnDialogueStarted;
     public static event Action OnDialogueStoped;
     public static event Action<List<Choice>> OnStoryContinued;
+    public static event Action<string> OnItemRecieved;
+    public static event Action OnStoryAffected;
 
     private Dictionary<string, string> _currentTags = new Dictionary<string, string>(){
             {"speaker", ""},
             {"emotion", "0"},
-            {"temperature", "1.2f"},
+            {"temperature", "1.2"},
         };
 
     [Inject]
@@ -69,6 +72,8 @@ public class Dialogues : MonoBehaviour
         AIManager.OnAITalkAnswered += AITalkAnswer;
         AIManager.OnAITalkStarted += AITalkStart;
         AIManager.OnAITalkStoped += AITalkStop;
+        AIManager.OnAIRecievedItem += AIRecieveItem;
+        AIManager.OnAIAffectedStory += AIAffectStory;
     }
 
     private void OnDisable()
@@ -76,6 +81,15 @@ public class Dialogues : MonoBehaviour
         AIManager.OnAITalkAnswered -= AITalkAnswer;
         AIManager.OnAITalkStarted -= AITalkStart;
         AIManager.OnAITalkStoped -= AITalkStop;
+        AIManager.OnAIRecievedItem -= AIRecieveItem;
+        AIManager.OnAIAffectedStory -= AIAffectStory;
+    }
+
+    private void AIAffectStory(string varName)
+    {
+        Debug.Log("affected story: " + varName);
+        _inkStory.variablesState[varName] = 1;
+        OnStoryAffected?.Invoke();
     }
 
     private void AITalkStart()
@@ -90,8 +104,46 @@ public class Dialogues : MonoBehaviour
         ));
     }
 
+    private string[] getItems(string itemsEnumeration)
+    {
+        string[] items = itemsEnumeration.Split(",");
+        for (int i = 0; i < items.Count(); ++i)
+        {
+            items[i] = items[i].Trim(' ');
+        }
+        return items;
+    }
+    [SerializeField]
+    private Dictionary<string, string> _itemName2FileName = new Dictionary<string, string>(){
+            {"таблетки", "Tablets"},
+            {"деньги", "Money"},
+        };
+
+    private void AIRecieveItem(string item)
+    {
+        Debug.Log("player gets item " + item);
+        OnItemRecieved?.Invoke(_itemName2FileName[item]);
+    }
+
     private void AITalkAnswer(string response)
     {
+        if (_currentTags["may_recieve_items"] != "")
+        {
+            string[] items = getItems(_currentTags["may_recieve_items"]);
+            for (int i = 0; i < items.Count(); ++i)
+            {
+                _aiManager.IsRecieved(items[i], response);
+            }
+        }
+        if (_currentTags["may_affect_vars"] != "")
+        {
+            string[] vars = getItems(_currentTags["may_affect_vars"]);
+            string[] descriptions = getItems(_currentTags["may_affect_descriptions"]);
+            for (int i = 0; i < vars.Count(); ++i)
+            {
+                _aiManager.IsAffected(vars[i], response, descriptions[i]);
+            }
+        }
         IsPrewrittenDialoguePlay = false;
         OnCharacterSaid.Invoke(new Replica(
             _currentTags["speaker"],
@@ -180,15 +232,10 @@ public class Dialogues : MonoBehaviour
 
     private void HandleAI()
     {
-        float temperature = 1f;
-        if (float.TryParse(_currentTags["temperature"], out temperature))
-        {
-            Debug.Log("parsed" + temperature);
-        }
-        else
-        {
-            Debug.Log("Cannot parse " + _currentTags["temperature"]);
-        }
+        CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+        ci.NumberFormat.CurrencyDecimalSeparator = ".";
+        float temperature = float.Parse(_currentTags["temperature"], NumberStyles.Any, ci);
+        Debug.Log("parsed " + temperature);
 
         switch (_currentTags["AI"])
         {
@@ -246,6 +293,9 @@ public class Dialogues : MonoBehaviour
         // reset
         _currentTags["AI"] = "";
         _currentTags["max_tokens"] = "";
+        _currentTags["may_recieve_items"] = "";
+        _currentTags["may_affect_vars"] = "";
+        _currentTags["may_affect_descriptions"] = "";
         foreach (string tag in _inkStory.currentTags)
         {
 
@@ -268,6 +318,9 @@ public class Dialogues : MonoBehaviour
                 case "system":
                 case "max_tokens":
                 case "reset_characters":
+                case "may_recieve_items":
+                case "may_affect_vars":
+                case "may_affect_descriptions":
                 case "temperature":
                     {
                         break;

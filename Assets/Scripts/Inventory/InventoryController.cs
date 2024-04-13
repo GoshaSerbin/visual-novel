@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Inventory.Model;
 using Inventory.UI;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -16,6 +17,17 @@ namespace Inventory
         private InventorySO _inventoryData;
 
         public List<InventoryItem> initialItems = new List<InventoryItem>();
+
+
+        private void OnEnable()
+        {
+            Dialogues.OnItemRecieved += AddItem;
+        }
+
+        private void OnDisable()
+        {
+            Dialogues.OnItemRecieved -= AddItem;
+        }
 
         void Start()
         {
@@ -112,21 +124,42 @@ namespace Inventory
                 item.name, description);
         }
 
-        public void ShowOrHide()
+        public void Show()
         {
-            if (_inventoryUI.isActiveAndEnabled == false)
+            _inventoryUI.Show();
+            foreach (var item in _inventoryData.GetCurrentInventoryState())
             {
-                _inventoryUI.Show();
-                foreach (var item in _inventoryData.GetCurrentInventoryState())
-                {
-                    _inventoryUI.UpdateData(item.Key,
-                        item.Value.item.ItemImage,
-                        item.Value.quantity);
-                }
+                _inventoryUI.UpdateData(item.Key,
+                    item.Value.item.ItemImage,
+                    item.Value.quantity);
+            }
+        }
+
+        public void Hide()
+        {
+            _inventoryUI.Hide();
+        }
+
+        [SerializeField] private ItemSO _item;
+        [SerializeField] private MessagesDisplay _messageDisplay;
+
+        private ItemSO GetItemByName(string itemName)
+        {
+            Debug.Log("getting item:" + itemName);
+            return AssetDatabase.LoadAssetAtPath<ItemSO>("Assets/Data/Items/" + itemName + ".asset");
+        }
+        public void AddItem(string itemName)
+        {
+            ItemSO item = GetItemByName(itemName); //_itemsManager.GetItemByName(itemName);
+            int reminder = _inventoryData.AddItem(item, 1);
+            if (reminder == 0)
+            {
+                Debug.Log("Added 2 items");
+                _messageDisplay.ShowMessage("Новый предмет: " + item.Name, item.ItemImage);
             }
             else
             {
-                _inventoryUI.Hide();
+                Debug.Log($"{reminder} items can not be added because inventory is full");
             }
         }
 

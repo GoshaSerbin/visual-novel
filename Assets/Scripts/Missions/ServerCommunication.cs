@@ -3,8 +3,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 using System;
-using System.Text;
-using System.Linq;
 
 public class ServerCommunication : MonoBehaviour
 {
@@ -41,7 +39,7 @@ public class ServerCommunication : MonoBehaviour
 
     IEnumerator SendMessage(WWWForm form, Action<string> callback)
     {
-        using (UnityWebRequest www = UnityWebRequest.Post(serverURL, form))
+        using (UnityWebRequest www = UnityWebRequest.Post(serverURL + "/talk", form))
         {
             www.timeout = 10; //sec
             yield return www.SendWebRequest();
@@ -56,6 +54,35 @@ public class ServerCommunication : MonoBehaviour
             {
                 Debug.Log(www.error);
                 callback("заглушка"); // TO DO: return null and then handle it
+            }
+        }
+    }
+
+    public void SendImageRequestToServer(WWWForm form, Action<Sprite> callback)
+    {
+        StartCoroutine(GetSprite(form, callback));
+    }
+
+    IEnumerator GetSprite(WWWForm form, Action<Sprite> callback)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Post(serverURL + "/image", form))
+        {
+            www.timeout = 100; //sec
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                byte[] rawImage = www.downloadHandler.data;
+                Texture2D texture = new Texture2D(1, 1);
+                texture.LoadImage(rawImage);
+                var sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+                Debug.Log("Server received image");
+                callback(sprite);
+            }
+            else
+            {
+                Debug.Log(www.error);
+                callback(null); // TO DO: return null and then handle it
             }
         }
     }
