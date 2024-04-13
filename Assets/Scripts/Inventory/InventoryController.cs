@@ -112,22 +112,20 @@ namespace Inventory
                 item.name, description);
         }
 
-        public void ShowOrHide()
+        public void Show()
         {
-            if (_inventoryUI.isActiveAndEnabled == false)
+            _inventoryUI.Show();
+            foreach (var item in _inventoryData.GetCurrentInventoryState())
             {
-                _inventoryUI.Show();
-                foreach (var item in _inventoryData.GetCurrentInventoryState())
-                {
-                    _inventoryUI.UpdateData(item.Key,
-                        item.Value.item.ItemImage,
-                        item.Value.quantity);
-                }
+                _inventoryUI.UpdateData(item.Key,
+                    item.Value.item.ItemImage,
+                    item.Value.quantity);
             }
-            else
-            {
-                _inventoryUI.Hide();
-            }
+        }
+
+        public void Hide()
+        {
+            _inventoryUI.Hide();
         }
 
         [SerializeField] private ItemSO _item;

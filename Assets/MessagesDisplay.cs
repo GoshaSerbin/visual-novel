@@ -11,7 +11,7 @@ public class MessagesDisplay : MonoBehaviour
     private Queue<Message> _messageQueue = new Queue<Message>();
     private bool _isShowingMessage = false;
 
-    private Vector3 _paneliInitialPosition;
+    // private Vector3 _paneliInitialPosition;
     [SerializeField] private GameObject _messagePanel;
     [SerializeField] private TextMeshProUGUI _messageText;
     [SerializeField] private Image _messageImage;
@@ -19,7 +19,8 @@ public class MessagesDisplay : MonoBehaviour
 
     public void Start()
     {
-        _paneliInitialPosition = _messagePanel.transform.position;
+        // _paneliInitialPosition = _messagePanel.transform.position;
+        _messagePanel.transform.localScale = Vector2.zero;
     }
 
     public void ShowMessage(string text, Sprite image)
@@ -42,9 +43,11 @@ public class MessagesDisplay : MonoBehaviour
         _messageText.text = currentMessage.Text;
         _messageImage.sprite = currentMessage.Image;
 
-        _messagePanel.transform.localPosition = new Vector2(Screen.width, 0);
-        _messagePanel.transform.LeanMoveLocalX(0, _animationTime).setEaseOutBack();
-        _messagePanel.transform.LeanMoveLocalX(Screen.width, _animationTime).setEaseOutBack().delay = _showTime - _animationTime;
+        _messagePanel.transform.LeanScale(Vector2.one, _animationTime).setEaseOutBack();
+        // _messagePanel.transform.localPosition = new Vector2(Screen.width, 0);
+        // _messagePanel.transform.LeanMoveLocalX(0, _animationTime).setEaseOutBack();
+        // _messagePanel.transform.LeanMoveLocalX(Screen.width, _animationTime).setEaseOutBack().delay = _showTime - _animationTime;
+        _messagePanel.transform.LeanScale(Vector2.zero, _animationTime).setEaseOutBack().delay = _showTime - _animationTime;
 
         yield return new WaitForSeconds(_showTime);
 

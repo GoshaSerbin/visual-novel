@@ -16,7 +16,7 @@ namespace Inventory.UI
 
         [SerializeField] private UIInventoryDescription _itemDescription;
 
-        [SerializeField] private MouseFollower _mouseFollower;
+        private MouseFollower _mouseFollower;
 
         List<UIInventoryItem> _uiInventoryItems = new List<UIInventoryItem>();
 
@@ -30,6 +30,7 @@ namespace Inventory.UI
 
         private void Awake()
         {
+            _mouseFollower = FindObjectOfType<MouseFollower>();
             Hide();
             _mouseFollower.Toggle(false);
             _itemDescription.ResetDescription();
@@ -132,7 +133,8 @@ namespace Inventory.UI
 
         public void Show()
         {
-            gameObject.SetActive(true);
+            gameObject.GetComponent<InventoryAnimation>().Open();
+            // gameObject.SetActive(true);
 
             ResetSelection();
         }
@@ -153,7 +155,8 @@ namespace Inventory.UI
 
         public void Hide()
         {
-            gameObject.SetActive(false);
+            gameObject.GetComponent<InventoryAnimation>().Close();
+            // gameObject.SetActive(false);
             ResetDraggedItem();
         }
 
