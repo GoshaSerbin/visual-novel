@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Inventory.Model;
 using Inventory.UI;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -16,6 +17,17 @@ namespace Inventory
         private InventorySO _inventoryData;
 
         public List<InventoryItem> initialItems = new List<InventoryItem>();
+
+
+        private void OnEnable()
+        {
+            Dialogues.OnItemRecieved += AddItem;
+        }
+
+        private void OnDisable()
+        {
+            Dialogues.OnItemRecieved -= AddItem;
+        }
 
         void Start()
         {
@@ -131,13 +143,19 @@ namespace Inventory
         [SerializeField] private ItemSO _item;
         [SerializeField] private MessagesDisplay _messageDisplay;
 
-        public void AddItem()
+        private ItemSO GetItemByName(string itemName)
         {
-            int reminder = _inventoryData.AddItem(_item, 1);
+            Debug.Log("getting item:" + itemName);
+            return AssetDatabase.LoadAssetAtPath<ItemSO>("Assets/Data/Items/" + itemName + ".asset");
+        }
+        public void AddItem(string itemName)
+        {
+            ItemSO item = GetItemByName(itemName); //_itemsManager.GetItemByName(itemName);
+            int reminder = _inventoryData.AddItem(item, 1);
             if (reminder == 0)
             {
                 Debug.Log("Added 2 items");
-                _messageDisplay.ShowMessage("Новый предмет: " + _item.Name, _item.ItemImage);
+                _messageDisplay.ShowMessage("Новый предмет: " + item.Name, item.ItemImage);
             }
             else
             {

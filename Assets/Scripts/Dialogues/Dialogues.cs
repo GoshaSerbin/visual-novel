@@ -103,11 +103,16 @@ public class Dialogues : MonoBehaviour
         }
         return items;
     }
+    [SerializeField]
+    private Dictionary<string, string> _itemName2FileName = new Dictionary<string, string>(){
+            {"таблетки", "Tablets"},
+            {"деньги", "Money"},
+        };
 
     private void AIRecieveItem(string item)
     {
         Debug.Log("player gets item " + item);
-        OnItemRecieved?.Invoke(item);
+        OnItemRecieved?.Invoke(_itemName2FileName[item]);
     }
 
     private void AITalkAnswer(string response)
