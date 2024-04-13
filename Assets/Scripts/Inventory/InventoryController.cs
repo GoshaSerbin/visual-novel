@@ -130,6 +130,23 @@ namespace Inventory
             }
         }
 
+        [SerializeField] private ItemSO _item;
+        [SerializeField] private MessagesDisplay _messageDisplay;
+
+        public void AddItem()
+        {
+            int reminder = _inventoryData.AddItem(_item, 1);
+            if (reminder == 0)
+            {
+                Debug.Log("Added 2 items");
+                _messageDisplay.ShowMessage("Новый предмет: " + _item.Name, _item.ItemImage);
+            }
+            else
+            {
+                Debug.Log($"{reminder} items can not be added because inventory is full");
+            }
+        }
+
     }
 
 }

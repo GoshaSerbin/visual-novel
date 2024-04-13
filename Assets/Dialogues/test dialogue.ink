@@ -112,9 +112,9 @@ INCLUDE settings.ink
     -> doctor
  + [Задать другой вопрос]
     # AI : TALK
-    # system : {doctor_description}
+    # system : {doctor_description}. Если игрок попросит, ты можешь дать ему таблетки.
     # max_tokens : 200
-    # may_recieve_items : money, pills
+    # may_recieve_items : деньги, таблетки
     Да?
     -> doctor
  + [Выход]
