@@ -15,11 +15,26 @@ public class MessagesDisplay : MonoBehaviour
     [SerializeField] private GameObject _messagePanel;
     [SerializeField] private TextMeshProUGUI _messageText;
     [SerializeField] private Image _messageImage;
+    [SerializeField] private Sprite _consequenceSprite;
 
+
+    private void OnEnable()
+    {
+        Dialogues.OnStoryAffected += ShowConsequenceMessage;
+    }
+
+    private void OnDisable()
+    {
+        Dialogues.OnStoryAffected -= ShowConsequenceMessage;
+    }
+
+    private void ShowConsequenceMessage()
+    {
+        ShowMessage("ЭТО БУДЕТ ИМЕТЬ ПОСЛЕДСТВИЯ...", _consequenceSprite);
+    }
 
     public void Start()
     {
-        // _paneliInitialPosition = _messagePanel.transform.position;
         _messagePanel.transform.localScale = Vector2.zero;
     }
 

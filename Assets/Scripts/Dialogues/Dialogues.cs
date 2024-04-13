@@ -46,6 +46,7 @@ public class Dialogues : MonoBehaviour
     public static event Action OnDialogueStoped;
     public static event Action<List<Choice>> OnStoryContinued;
     public static event Action<string> OnItemRecieved;
+    public static event Action OnStoryAffected;
 
     private Dictionary<string, string> _currentTags = new Dictionary<string, string>(){
             {"speaker", ""},
@@ -72,6 +73,7 @@ public class Dialogues : MonoBehaviour
         AIManager.OnAITalkStarted += AITalkStart;
         AIManager.OnAITalkStoped += AITalkStop;
         AIManager.OnAIRecievedItem += AIRecieveItem;
+        AIManager.OnAIAffectedStory += AIAffectStory;
     }
 
     private void OnDisable()
@@ -80,6 +82,14 @@ public class Dialogues : MonoBehaviour
         AIManager.OnAITalkStarted -= AITalkStart;
         AIManager.OnAITalkStoped -= AITalkStop;
         AIManager.OnAIRecievedItem -= AIRecieveItem;
+        AIManager.OnAIAffectedStory -= AIAffectStory;
+    }
+
+    private void AIAffectStory(string varName)
+    {
+        Debug.Log("affected story: " + varName);
+        _inkStory.variablesState[varName] = 1;
+        OnStoryAffected?.Invoke();
     }
 
     private void AITalkStart()
@@ -117,13 +127,21 @@ public class Dialogues : MonoBehaviour
 
     private void AITalkAnswer(string response)
     {
-        Debug.Log("current text is " + _inkStory.currentText);
         if (_currentTags["may_recieve_items"] != "")
         {
             string[] items = getItems(_currentTags["may_recieve_items"]);
             for (int i = 0; i < items.Count(); ++i)
             {
                 _aiManager.IsRecieved(items[i], response);
+            }
+        }
+        if (_currentTags["may_affect_vars"] != "")
+        {
+            string[] vars = getItems(_currentTags["may_affect_vars"]);
+            string[] descriptions = getItems(_currentTags["may_affect_descriptions"]);
+            for (int i = 0; i < vars.Count(); ++i)
+            {
+                _aiManager.IsAffected(vars[i], response, descriptions[i]);
             }
         }
         IsPrewrittenDialoguePlay = false;
@@ -217,7 +235,6 @@ public class Dialogues : MonoBehaviour
         CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
         ci.NumberFormat.CurrencyDecimalSeparator = ".";
         float temperature = float.Parse(_currentTags["temperature"], NumberStyles.Any, ci);
-        // float temperature = float.Parse(_currentTags["temperature"], CultureInfo.InvariantCulture.NumberFormat);
         Debug.Log("parsed " + temperature);
 
         switch (_currentTags["AI"])
@@ -276,7 +293,9 @@ public class Dialogues : MonoBehaviour
         // reset
         _currentTags["AI"] = "";
         _currentTags["max_tokens"] = "";
-        _currentTags["may_recieve"] = "";
+        _currentTags["may_recieve_items"] = "";
+        _currentTags["may_affect_vars"] = "";
+        _currentTags["may_affect_descriptions"] = "";
         foreach (string tag in _inkStory.currentTags)
         {
 
@@ -300,6 +319,8 @@ public class Dialogues : MonoBehaviour
                 case "max_tokens":
                 case "reset_characters":
                 case "may_recieve_items":
+                case "may_affect_vars":
+                case "may_affect_descriptions":
                 case "temperature":
                     {
                         break;

@@ -67,6 +67,7 @@ public class AIManager : MonoBehaviour
 
     public static event Action<string> OnAITalkAnswered;
     public static event Action<string> OnAIRecievedItem;
+    public static event Action<string> OnAIAffectedStory;
 
     public void TalkWith(string characterDescription) // TO DO: Add history
     {
@@ -161,7 +162,6 @@ public class AIManager : MonoBehaviour
 
     public void IsRecieved(string item, string npcAnswer)
     {
-        // Debug.Log($"AIManager started answering: {question}");
 
         var systemMsg = new ServerCommunication.Message("system", "NPC в игре сказал следующую фразу: \"" + npcAnswer + "\". Тебе будут называть названия предметов, которые игрок мог бы получить после данной фразы. Твоя задача - отвечать \"Да\" или \"Нет\" в зависимости от того получил ли в действительности игрок указанный предмет от NPC.");
 
@@ -180,4 +180,26 @@ public class AIManager : MonoBehaviour
             }
         });
     }
+
+    public void IsAffected(string varName, string npcAnswer, string varDescription)
+    {
+
+        var systemMsg = new ServerCommunication.Message("system", "NPC в игре сказал следующую фразу: " + npcAnswer + ". Тебе будут описывать события, которые могут произойти. Твоя задача - отвечать \"Да\" или \"Нет\" в зависимости от того произошло ли это событие, исходя из фразы. Отвечай да, только если это напрямую следует из фразы.");
+
+        var messages = new List<ServerCommunication.Message>
+            {
+                systemMsg,
+                new("user", varDescription),
+            };
+        var form = GetWWWForm(messages, 300, 0);
+        _server.SendRequestToServer(form, (string response) =>
+        {
+            Debug.Log($"ai answer to affected story {varName}: {response}");
+            if (response.Contains('Д'))
+            {
+                OnAIAffectedStory.Invoke(varName);
+            }
+        });
+    }
+
 }
