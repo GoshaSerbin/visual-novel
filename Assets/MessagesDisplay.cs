@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class MessagesDisplay : MonoBehaviour
 {
-    private float _animationTime = 0.7f;
-    private float _showTime = 2f;
+    private float _animationTime = 0.5f;
+    private float _showTime = 4f;
     private Queue<Message> _messageQueue = new Queue<Message>();
     private bool _isShowingMessage = false;
 
