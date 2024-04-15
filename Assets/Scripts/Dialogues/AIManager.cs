@@ -163,12 +163,12 @@ public class AIManager : MonoBehaviour
     public void IsRecieved(string item, string npcAnswer)
     {
 
-        var systemMsg = new ServerCommunication.Message("system", "NPC в игре сказал следующую фразу: \"" + npcAnswer + "\". Тебе будут называть названия предметов, которые игрок может получить от персонажа после данной фразы. Твоя задача - отвечать \"Да\" или \"Нет\" в зависимости от того получил ли в игрок указанный предмет от NPC. Отвечай да, ТОЛЬКО если получение предмета НАПРЯМУЮ следует из фразы, иначе говори Нет");
+        var systemMsg = new ServerCommunication.Message("system", "Персонаж в игре сказал игроку следующую фразу: \"" + npcAnswer + "\". Тебе нужно отвечать \"Да\" или \"Нет\" на вопросы, исходя из его фразы.");
 
         var messages = new List<ServerCommunication.Message>
             {
                 systemMsg,
-                new("user", "игрок получил " + item + "?"),
+                new("user", "Следует ли напрямую из фразы, что игрок получил от персонажа предмет \"" + item + "\"?"),
             };
         var form = GetWWWForm(messages, 400, 0);
         _server.SendRequestToServer(form, (string response) =>
@@ -184,12 +184,12 @@ public class AIManager : MonoBehaviour
     public void IsAffected(string varName, string npcAnswer, string varDescription)
     {
 
-        var systemMsg = new ServerCommunication.Message("system", "NPC в игре сказал следующую фразу: " + npcAnswer + ". Тебе будут описывать события, которые могут произойти. Твоя задача - отвечать \"Да\" или \"Нет\" в зависимости от того произошло ли это событие, исходя из фразы. Отвечай да, только если это напрямую следует из фразы.");
+        var systemMsg = new ServerCommunication.Message("system", "Персонаж в игре сказал игроку следующую фразу: \"" + npcAnswer + "\". Тебе нужно отвечать \"Да\" или \"Нет\" на вопросы, исходя из его фразы.");
 
         var messages = new List<ServerCommunication.Message>
             {
                 systemMsg,
-                new("user", varDescription),
+                new("user", "Следует ли напрямую из фразы, что произошло событие \"" + varDescription + "\"?"),
             };
         var form = GetWWWForm(messages, 400, 0);
         _server.SendRequestToServer(form, (string response) =>
