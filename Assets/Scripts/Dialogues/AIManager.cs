@@ -32,8 +32,10 @@ public class AIManager : MonoBehaviour
     }
 
 
+    // these will be uniqie for every startAITalk call. TO DO: refactor it
     private string _characterDescription;
-
+    private int _maxTokens;
+    private List<ServerCommunication.Message> _messageHistory = new();
     private void Start()
     {
         isAITalking = false;
@@ -69,9 +71,11 @@ public class AIManager : MonoBehaviour
     public static event Action<string> OnAIRecievedItem;
     public static event Action<string> OnAIAffectedStory;
 
-    public void TalkWith(string characterDescription) // TO DO: Add history
+
+    public void TalkWith(string characterDescription, int maxTokens = 100) // TO DO: Add history
     {
         _characterDescription = characterDescription;
+        _maxTokens = maxTokens;
         StartAITalk();
 
     }
@@ -79,6 +83,7 @@ public class AIManager : MonoBehaviour
     private void StartAITalk()
     {
         Debug.Log("Start AI Talk!");
+        _messageHistory = new();
         isAITalking = true;
         OnAITalkStarted.Invoke();
         _inputFieldPanel.SetActive(true);
@@ -94,9 +99,8 @@ public class AIManager : MonoBehaviour
         }
 
         _inputField.enabled = false;
-        Answer(
+        ContinueAnswer(
             phrase,
-            _characterDescription,
             (string answer) =>
                 {
                     if (answer == null)
@@ -104,12 +108,12 @@ public class AIManager : MonoBehaviour
                         Debug.LogError("server returned error");
                         return;
                     }
+                    _messageHistory.Add(new("assistant", answer));
                     OnAITalkAnswered?.Invoke(TextProcessor.PostProccess(answer));
 
                     _inputField.enabled = true;
                     _inputField.ActivateInputField();
-                },
-            100);
+                });
     }
 
     private void StopAITalk()
@@ -134,6 +138,29 @@ public class AIManager : MonoBehaviour
     }
 
 
+    private void ContinueAnswer(string question, Action<string> callback, float temperature = 1)
+    {
+        question = question.TrimEnd('\n');
+        Debug.Log($"AIManager started answering: {question}");
+
+        _messageHistory.Add(new("user", question));
+        if (_messageHistory.Count() > 6)
+        {
+            _messageHistory.RemoveAt(0);
+        }
+
+        var messages = new List<ServerCommunication.Message>
+            {
+                new("system", _characterDescription),
+            };
+        messages.InsertRange(1, _messageHistory);
+
+        var form = GetWWWForm(messages, _maxTokens * (1 + _messageHistory.Count() / 2), temperature);
+
+        _server.SendRequestToServer(form, callback);
+        Debug.Log("AIManager sent request to server");
+    }
+
     public void Answer(string question, string characterDescription, Action<string> callback, int maxTokens, float temperature = 1) //TO DO: add List<ServerCommunication.Message> history
     {
         question = question.TrimEnd('\n');
@@ -150,7 +177,6 @@ public class AIManager : MonoBehaviour
         _server.SendRequestToServer(form, callback);
         Debug.Log("AIManager sent request to server");
     }
-
     public void Show(string prompt, Action<Sprite> callback, int width = 1024, int height = 1024, string style = "DEFAULT")
     {
         prompt = prompt.TrimEnd('\n');
