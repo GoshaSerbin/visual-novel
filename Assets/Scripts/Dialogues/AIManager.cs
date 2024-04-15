@@ -163,14 +163,14 @@ public class AIManager : MonoBehaviour
     public void IsRecieved(string item, string npcAnswer)
     {
 
-        var systemMsg = new ServerCommunication.Message("system", "NPC в игре сказал следующую фразу: \"" + npcAnswer + "\". Тебе будут называть названия предметов, которые игрок мог бы получить после данной фразы. Твоя задача - отвечать \"Да\" или \"Нет\" в зависимости от того получил ли в действительности игрок указанный предмет от NPC.");
+        var systemMsg = new ServerCommunication.Message("system", "NPC в игре сказал следующую фразу: \"" + npcAnswer + "\". Тебе будут называть названия предметов, которые игрок может получить от персонажа после данной фразы. Твоя задача - отвечать \"Да\" или \"Нет\" в зависимости от того получил ли в игрок указанный предмет от NPC. Отвечай да, ТОЛЬКО если получение предмета НАПРЯМУЮ следует из фразы, иначе говори Нет");
 
         var messages = new List<ServerCommunication.Message>
             {
                 systemMsg,
-                new("user", item),
+                new("user", "игрок получил " + item + "?"),
             };
-        var form = GetWWWForm(messages, 300, 0);
+        var form = GetWWWForm(messages, 400, 0);
         _server.SendRequestToServer(form, (string response) =>
         {
             Debug.Log("ai answer to get item: " + response);
@@ -191,7 +191,7 @@ public class AIManager : MonoBehaviour
                 systemMsg,
                 new("user", varDescription),
             };
-        var form = GetWWWForm(messages, 300, 0);
+        var form = GetWWWForm(messages, 400, 0);
         _server.SendRequestToServer(form, (string response) =>
         {
             Debug.Log($"ai answer to affected story {varName}: {response}");

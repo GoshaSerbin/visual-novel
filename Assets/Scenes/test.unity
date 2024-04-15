@@ -3623,21 +3623,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: MouseFollower
       objectReference: {fileID: 0}
+    - target: {fileID: 2721131550820875587, guid: 816ae3f3bb4bce34188bb449797b7dd2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3152511498736156085, guid: 816ae3f3bb4bce34188bb449797b7dd2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3152511498736156085, guid: 816ae3f3bb4bce34188bb449797b7dd2, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3152511498736156085, guid: 816ae3f3bb4bce34188bb449797b7dd2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 13.672899
       objectReference: {fileID: 0}
     - target: {fileID: 3152511498736156085, guid: 816ae3f3bb4bce34188bb449797b7dd2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -10.76385
       objectReference: {fileID: 0}
     - target: {fileID: 5485741525621927536, guid: 816ae3f3bb4bce34188bb449797b7dd2, type: 3}
       propertyPath: m_Pivot.x
