@@ -31,9 +31,14 @@ namespace Inventory.UI
         private void Awake()
         {
             _mouseFollower = FindObjectOfType<MouseFollower>();
-            Hide();
+
             _mouseFollower.Toggle(false);
             _itemDescription.ResetDescription();
+        }
+
+        private void Start()
+        {
+            Hide();
         }
 
         public void InitializeInventoryUI(int inventorySize)
