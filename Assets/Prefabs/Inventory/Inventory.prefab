@@ -55,5 +55,7 @@ MonoBehaviour:
     item: {fileID: 11400000, guid: d6882adeaafe88f48b983a2dcc0d55c7, type: 2}
   - quantity: 1
     item: {fileID: 11400000, guid: 8057e72924a6b8a47b3a7f1bfad081c7, type: 2}
+  - quantity: 1
+    item: {fileID: 11400000, guid: d617cef14dc95bc4292324a7e33bf3f9, type: 2}
   _item: {fileID: 11400000, guid: b2c33045925edb34d98c17729bbacdd4, type: 2}
   _messageDisplay: {fileID: 0}
