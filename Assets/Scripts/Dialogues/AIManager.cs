@@ -177,7 +177,7 @@ public class AIManager : MonoBehaviour
         _server.SendRequestToServer(form, callback);
         Debug.Log("AIManager sent request to server");
     }
-    public void Show(string prompt, Action<Sprite> callback, int width = 1024, int height = 1024, string style = "DEFAULT")
+    public void Show(string prompt, Action<Sprite> callback, int width = 1280, int height = 720, string style = "DEFAULT")
     {
         prompt = prompt.TrimEnd('\n');
         Debug.Log($"AIManager started showing: {prompt}");

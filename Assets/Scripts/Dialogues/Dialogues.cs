@@ -40,6 +40,7 @@ public class Dialogues : MonoBehaviour
         }
     }
     public static event Action<string> OnBackgroundChanged;
+    public static event Action<Sprite> OnBackgroundSpriteChanged;
 
     public static event Action<Replica> OnCharacterSaid;
     public static event Action OnDialogueStarted;
@@ -200,7 +201,10 @@ public class Dialogues : MonoBehaviour
             _charactersManager.ResetCharacters(_currentTags["reset_characters"]);
 
             // update background
-            OnBackgroundChanged.Invoke(_currentTags["background"]);
+            if (_currentTags["background"] != "")
+            {
+                OnBackgroundChanged.Invoke(_currentTags["background"]);
+            }
 
             if (_currentTags["AI"] != "")
             {
@@ -280,6 +284,17 @@ public class Dialogues : MonoBehaviour
                     );
                     break;
                 }
+            case "SHOW":
+                {
+                    _aiManager.Show(
+                        _inkStory.currentText,
+                        (Sprite sprite) =>
+                        {
+                            OnBackgroundSpriteChanged.Invoke(sprite);
+                        }
+                    );
+                    break;
+                }
             default:
                 {
                     Debug.LogError("Unknown ai tag " + _currentTags["AI"]);
@@ -292,6 +307,7 @@ public class Dialogues : MonoBehaviour
     {
         // reset
         _currentTags["AI"] = "";
+        _currentTags["background"] = "";
         _currentTags["max_tokens"] = "";
         _currentTags["may_recieve_items"] = "";
         _currentTags["may_affect_vars"] = "";
@@ -334,7 +350,7 @@ public class Dialogues : MonoBehaviour
         }
     }
 
-    public void ChoiceButtonAction(int choiceIndex)
+    public void ChooseChoiceIndex(int choiceIndex)
     {
         Debug.Log("chosen story index" + choiceIndex);
         _inkStory.ChooseChoiceIndex(choiceIndex);

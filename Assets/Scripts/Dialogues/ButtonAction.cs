@@ -14,7 +14,7 @@ public class ButtonAction : MonoBehaviour
     {
         _button = GetComponent<Button>();
         _dialogues = FindObjectOfType<Dialogues>(); // must be single on scene
-        _clickAction = new UnityAction(() => _dialogues.ChoiceButtonAction(index));
+        _clickAction = new UnityAction(() => _dialogues.ChooseChoiceIndex(index));
         _button.onClick.AddListener(_clickAction);
     }
 }

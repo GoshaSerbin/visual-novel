@@ -31,11 +31,19 @@ public class BackgroundDisplay : MonoBehaviour
     private void OnEnable()
     {
         Dialogues.OnBackgroundChanged += Updatebackground;
+        Dialogues.OnBackgroundSpriteChanged += UpdatebackgroundSprite;
     }
 
     private void OnDisable()
     {
         Dialogues.OnBackgroundChanged -= Updatebackground;
+        Dialogues.OnBackgroundSpriteChanged -= UpdatebackgroundSprite;
+    }
+
+    private void UpdatebackgroundSprite(Sprite sprite)
+    {
+        _currentBackground = new Background(new(), sprite);
+        LeanTween.value(_backgroundImage.gameObject, SetColorCallback, _backgroundImage.color, new Color(0, 0, 0), _animationTime).setOnComplete(UpdateSpriteAndFadeOut);
     }
 
     private void Updatebackground(string name)
