@@ -118,6 +118,7 @@ public class Dialogues : MonoBehaviour
     private Dictionary<string, string> _itemName2FileName = new Dictionary<string, string>(){
             {"таблетки", "Tablets"},
             {"деньги", "Money"},
+            {"кофе", "Coffee"},
         };
 
     private void AIRecieveItem(string item)
