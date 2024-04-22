@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d0abb9ae16c7541845a9253bc6f491, type: 3}
+  m_Name: John
+  m_EditorClassIdentifier: 
+  Names:
+  - "\u0414\u0436\u043E\u043D"
+  EmotionSprites:
+  - {fileID: 21300000, guid: dda9b7037be149941bad7ee80a79bb51, type: 3}
+  - {fileID: 21300000, guid: dda9b7037be149941bad7ee80a79bb51, type: 3}
+  - {fileID: 21300000, guid: dda9b7037be149941bad7ee80a79bb51, type: 3}

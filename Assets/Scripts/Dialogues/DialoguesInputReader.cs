@@ -26,18 +26,18 @@ public class DialoguesInputReader : MonoBehaviour, Controls.IDialogueActions
     }
     public void OnNextPhrase(InputAction.CallbackContext context)
     {
-        if (context.started && _dialogues.IsPrewrittenDialoguePlay)
-        {
-            // _dialogues.ContinueStory();
-        }
+        // if (context.started && _dialogues.IsPrewrittenDialoguePlay)
+        // {
+        //     // _dialogues.ContinueStory();
+        // }
     }
     public void OnSendPhrase(InputAction.CallbackContext context)
     {
-        if (context.started && _aiManager.isAITalking)
-        {
-            Debug.Log("Send phrase!");
-            // _dialogues.ContinueAITalk();
-            // send request to server
-        }
+        // if (context.started && _aiManager.isAITalking)
+        // {
+        //     Debug.Log("Send phrase!");
+        //     // _dialogues.ContinueAITalk();
+        //     // send request to server
+        // }
     }
 }
