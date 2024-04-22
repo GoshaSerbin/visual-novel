@@ -11,4 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/MapScene.unity
+    guid: 9f1b206a15db31041b91906e3627fdd7
+  - enabled: 1
+    path: Assets/Scenes/TalkingWithJohn.unity
+    guid: 66fe1c2bd9151964bbf66847f08a8660
+  - enabled: 1
+    path: Assets/Scenes/TalkingWithTom.unity
+    guid: f69f17a2276fc30439b04c502f3adcd6
   m_configObjects: {}
