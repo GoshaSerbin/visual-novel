@@ -121,10 +121,10 @@ VAR what_happened = "Слушай, мне некогда..."
     {what_happened}
     -> doctor
  + [Задать другой вопрос]
+ ~AITalk("{doctor_description} Если игрок попросит, ты можешь дать ему таблетки.", 150)
     # {may_receive_items} : деньги, таблетки
     # speaker : {Врач}
     Да?
- ~AITalk("{doctor_description} Если игрок попросит, ты можешь дать ему таблетки.", 150)
     -> doctor
  + [Выход]
     -> free_time_infirmary

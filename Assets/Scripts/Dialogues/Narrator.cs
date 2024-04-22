@@ -36,6 +36,7 @@ public class Narrator : MonoBehaviour
     public static event Action<List<Choice>> OnChoicesAppeared;
     public static event Action<string[]> OnCharactersReset;
     public static event Action<string> OnStoryContinued;
+    public static event Action OnChoiceChosen;
     public static event Action<string, int> OnItemReceived;
     public static event Action OnStoryAffected;
 
@@ -167,7 +168,6 @@ public class Narrator : MonoBehaviour
     {
         if (_inkStory.canContinue)
         {
-            // _nextPhraseButton.gameObject.SetActive(true); // AIManager and Choice display can disable it
             _inkStory.Continue();
             _storyParser.UpdateCurrentTags(_inkStory.currentTags);
             _storyParser.UpdateCurrentText(_inkStory.currentText);
@@ -215,6 +215,10 @@ public class Narrator : MonoBehaviour
                 Debug.Log("Story ended.");
                 OnStoryEnded?.Invoke();
             }
+            else
+            {
+                OnChoicesAppeared?.Invoke(_inkStory.currentChoices);
+            }
         }
     }
 
@@ -222,6 +226,7 @@ public class Narrator : MonoBehaviour
     {
         Debug.Log($"On phrase \"{_inkStory.currentText}\" chosen story index {choiceIndex}");
         _inkStory.ChooseChoiceIndex(choiceIndex);
+        OnChoiceChosen.Invoke();
         ContinueStory();
     }
 

@@ -147,7 +147,7 @@ namespace Inventory
         private ItemSO GetItemByName(string itemName)
         {
             Debug.Log("getting item:" + itemName);
-            return Resources.Load<ItemSO>("Items/" + itemName + ".asset");
+            return Resources.Load<ItemSO>("Items/" + itemName);
         }
 
         [SerializeField]
@@ -159,7 +159,9 @@ namespace Inventory
 
         public void AddItem(string itemName, int amount = 1) // to do: add return
         {
+            Debug.Log("adding item " + itemName);
             itemName = _itemName2FileName[itemName];
+            Debug.Log("now it is " + itemName);
             ItemSO item = GetItemByName(itemName); // to do: _itemsManager.GetItemByName(itemName);
             int reminder = _inventoryData.AddItem(item, amount);
             if (reminder == 0)

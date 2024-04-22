@@ -19,20 +19,18 @@ public class NextPhraseButton : MonoBehaviour
 
     private void OnEnable()
     {
-        // OnChoicesAppeared MUST be called before OnAITalkStarted 
         Narrator.OnChoicesAppeared += ShowOrHide;
+        Narrator.OnChoiceChosen += Show;
         TalkManager.OnAITalkStarted += Hide;
-        // Narrator.OnStoryCanNotContinue += Hide;
-        // Narrator.OnStoryCanContinue += Show;
-
+        TalkManager.OnAITalkStopped += Show;
     }
 
     private void OnDisable()
     {
         Narrator.OnChoicesAppeared -= ShowOrHide;
+        Narrator.OnChoiceChosen -= Show;
         TalkManager.OnAITalkStarted -= Hide;
-        // Narrator.OnStoryCanNotContinue -= Hide;
-        // Narrator.OnStoryCanContinue -= Show;
+        TalkManager.OnAITalkStopped -= Show;
     }
 
     private void ShowOrHide(List<Ink.Runtime.Choice> choices)
@@ -41,21 +39,15 @@ public class NextPhraseButton : MonoBehaviour
         {
             Hide();
         }
-        else
-        {
-            Show();
-        }
     }
 
     void Show()
     {
-        // _nextPhraseButton.gameObject.SetActive(true);
         _nextPhraseButton.gameObject.transform.localScale = new Vector3(1, 1, 1);
     }
 
     void Hide()
     {
         _nextPhraseButton.gameObject.transform.localScale = new Vector3(0, 0, 0);
-        // _nextPhraseButton.gameObject.SetActive(false);
     }
 }

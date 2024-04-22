@@ -85,8 +85,8 @@ public class StoryParser
     public void UpdateCurrentTags(List<string> tags)
     {
         _previousTags = new Dictionary<string, string>(_currentTags);
-        _currentAffects = new Dictionary<string, string>();
-        _currentItems = new List<string>();
+        _currentAffects.Clear();// = new Dictionary<string, string>(); // not new because talkmanager use reference to it
+        _currentItems.Clear();// = new List<string>();
 
 
         ResetUncacheableTags();
