@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,14 +30,14 @@ public class BackgroundDisplay : MonoBehaviour
 
     private void OnEnable()
     {
-        Dialogues.OnBackgroundChanged += Updatebackground;
-        Dialogues.OnBackgroundSpriteChanged += UpdatebackgroundSprite;
+        Narrator.OnBackgroundChanged += Updatebackground;
+        Narrator.OnBackgroundSpriteChanged += UpdatebackgroundSprite;
     }
 
     private void OnDisable()
     {
-        Dialogues.OnBackgroundChanged -= Updatebackground;
-        Dialogues.OnBackgroundSpriteChanged -= UpdatebackgroundSprite;
+        Narrator.OnBackgroundChanged -= Updatebackground;
+        Narrator.OnBackgroundSpriteChanged -= UpdatebackgroundSprite;
     }
 
     private void UpdatebackgroundSprite(Sprite sprite)
@@ -52,7 +52,14 @@ public class BackgroundDisplay : MonoBehaviour
         {
             return;
         }
+        Debug.Log(name);
+
         _currentBackground = FindBackgroundByName(name);
+        if (_currentBackground.sprite == null)
+        {
+            _currentBackground.sprite = AIManager.LoadSpriteFromPNG(name); // TO DO: move from ai manager
+        }
+
         LeanTween.value(_backgroundImage.gameObject, SetColorCallback, _backgroundImage.color, new Color(0, 0, 0), _animationTime).setOnComplete(UpdateSpriteAndFadeOut);
     }
 
@@ -77,7 +84,7 @@ public class BackgroundDisplay : MonoBehaviour
                 return background;
             }
         }
-        Debug.LogError($"Can not find background {name} among backgrounds");
-        return _currentBackground;
+        Debug.Log($"Can not find background {name} among not generated backgrounds");
+        return new Background(new List<string>() { }, null);
     }
 }

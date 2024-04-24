@@ -20,7 +20,7 @@ public class Dialogues : MonoBehaviour
 
     private Button _nextPhraseButton;
 
-    private CharactersManager _charactersManager;
+    // private CharactersManager _charactersManager;
 
     private AIManager _aiManager;
 
@@ -30,9 +30,9 @@ public class Dialogues : MonoBehaviour
     {
         public string Name;
         public string Text;
-        public CharacterEmotion.EmotionState Emotion;
+        public TalkAnimations.EmotionState Emotion;
 
-        public Replica(string name, string text, CharacterEmotion.EmotionState emotion)
+        public Replica(string name, string text, TalkAnimations.EmotionState emotion)
         {
             Name = name;
             Text = text;
@@ -58,33 +58,27 @@ public class Dialogues : MonoBehaviour
     [Inject]
     public void Construct(DialoguesInstaller dialoguesInstaller)
     {
-        _inkJson = dialoguesInstaller.inkJson;
-        _nextPhraseButton = dialoguesInstaller.nextPhraseButton;
+        // _inkJson = dialoguesInstaller.inkJson;
+        // _nextPhraseButton = dialoguesInstaller.nextPhraseButton;
     }
 
     private void Awake()
     {
         _inkStory = new Story(_inkJson.text);
-        _nextPhraseButton.onClick.AddListener(ContinueStory);
+        _nextPhraseButton.onClick.AddListener(ContinueStory); //!!!
     }
 
-    private void OnEnable()
-    {
-        AIManager.OnAITalkAnswered += AITalkAnswer;
-        AIManager.OnAITalkStarted += AITalkStart;
-        AIManager.OnAITalkStoped += AITalkStop;
-        AIManager.OnAIRecievedItem += AIRecieveItem;
-        AIManager.OnAIAffectedStory += AIAffectStory;
-    }
+    // private void OnEnable()
+    // {
+    //     AIManager.OnAIRecievedItem += AIRecieveItem;
+    //     AIManager.OnAIAffectedStory += AIAffectStory;
+    // }
 
-    private void OnDisable()
-    {
-        AIManager.OnAITalkAnswered -= AITalkAnswer;
-        AIManager.OnAITalkStarted -= AITalkStart;
-        AIManager.OnAITalkStoped -= AITalkStop;
-        AIManager.OnAIRecievedItem -= AIRecieveItem;
-        AIManager.OnAIAffectedStory -= AIAffectStory;
-    }
+    // private void OnDisable()
+    // {
+    //     AIManager.OnAIRecievedItem -= AIRecieveItem;
+    //     AIManager.OnAIAffectedStory -= AIAffectStory;
+    // }
 
     private void AIAffectStory(string varName)
     {
@@ -101,7 +95,7 @@ public class Dialogues : MonoBehaviour
         OnCharacterSaid.Invoke(new Replica(
             _currentTags["speaker"],
             _inkStory.currentText,
-            (CharacterEmotion.EmotionState)Convert.ToInt32(_currentTags["emotion"])
+            (TalkAnimations.EmotionState)Convert.ToInt32(_currentTags["emotion"])
         ));
     }
 
@@ -134,7 +128,7 @@ public class Dialogues : MonoBehaviour
             string[] items = getItems(_currentTags["may_recieve_items"]);
             for (int i = 0; i < items.Count(); ++i)
             {
-                _aiManager.IsRecieved(items[i], response);
+                // _aiManager.IsReceived(items[i], response);
             }
         }
         if (_currentTags["may_affect_vars"] != "")
@@ -143,14 +137,14 @@ public class Dialogues : MonoBehaviour
             string[] descriptions = getItems(_currentTags["may_affect_descriptions"]);
             for (int i = 0; i < vars.Count(); ++i)
             {
-                _aiManager.IsAffected(vars[i], response, descriptions[i]);
+                // _aiManager.IsAffected(vars[i], response, descriptions[i]);
             }
         }
         IsPrewrittenDialoguePlay = false;
         OnCharacterSaid.Invoke(new Replica(
             _currentTags["speaker"],
             response,
-            (CharacterEmotion.EmotionState)Convert.ToInt32(_currentTags["emotion"])
+            (TalkAnimations.EmotionState)Convert.ToInt32(_currentTags["emotion"])
         ));
     }
 
@@ -179,7 +173,7 @@ public class Dialogues : MonoBehaviour
     void Start()
     {
         _aiManager = FindObjectOfType<AIManager>(); // must be single
-        _charactersManager = FindObjectOfType<CharactersManager>(); // must be single
+        // _charactersManager = FindObjectOfType<CharactersManager>(); // must be single
         StartDialogue();
     }
 
@@ -199,7 +193,7 @@ public class Dialogues : MonoBehaviour
             UpdateCurrentTags();
 
             // reset characters
-            _charactersManager.ResetCharacters(_currentTags["reset_characters"]);
+            // _charactersManager.ResetCharacters(_currentTags["reset_characters"]);
 
             // update background
             if (_currentTags["background"] != "")
@@ -217,7 +211,7 @@ public class Dialogues : MonoBehaviour
                 OnCharacterSaid.Invoke(new Replica(
                     _currentTags["speaker"],
                     _inkStory.currentText,
-                    (CharacterEmotion.EmotionState)Convert.ToInt32(_currentTags["emotion"])
+                    (TalkAnimations.EmotionState)Convert.ToInt32(_currentTags["emotion"])
                 ));
 
             }
@@ -246,20 +240,20 @@ public class Dialogues : MonoBehaviour
         {
             case "TALK":
                 {
-                    _aiManager.TalkWith(_currentTags["system"]);
+                    // _aiManager.TalkWith(_currentTags["system"]);
                     break;
                 }
             // basically "describe" uses only user prompt and "answer" uses both system and user
             case "DESCRIBE":
                 {
-                    _aiManager.Describe(
+                    _aiManager.GenerateText(
                         _inkStory.currentText,
                         (string response) =>
                         {
                             OnCharacterSaid.Invoke(new Replica(
                                 _currentTags["speaker"],
                                 response,
-                                (CharacterEmotion.EmotionState)Convert.ToInt32(_currentTags["emotion"])
+                                (TalkAnimations.EmotionState)Convert.ToInt32(_currentTags["emotion"])
                             ));
                         },
                         Convert.ToInt32(_currentTags["max_tokens"]),
@@ -277,7 +271,7 @@ public class Dialogues : MonoBehaviour
                             OnCharacterSaid.Invoke(new Replica(
                                 _currentTags["speaker"],
                                 response,
-                                (CharacterEmotion.EmotionState)Convert.ToInt32(_currentTags["emotion"])
+                                (TalkAnimations.EmotionState)Convert.ToInt32(_currentTags["emotion"])
                             ));
                         },
                         Convert.ToInt32(_currentTags["max_tokens"]),
