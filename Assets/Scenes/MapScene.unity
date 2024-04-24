@@ -232,7 +232,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -8.7, y: -5.3}
+  m_AnchoredPosition: {x: 4.1, y: 0.0000019073}
   m_SizeDelta: {x: 158.14, y: 38.28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &76549552
@@ -478,7 +478,7 @@ GameObject:
   - component: {fileID: 122979465}
   - component: {fileID: 122979466}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Ploschad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -578,6 +578,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneName: TalkingWithJohn
+  _inventoryOnLoc: []
+  _peopleOnLoc: []
 --- !u!1 &247689336
 GameObject:
   m_ObjectHideFlags: 0
@@ -1306,6 +1308,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneName: TalkingWithTom
+  _inventoryOnLoc:
+  - "\u0422\u0430\u0431\u043B\u0435\u0442\u043A\u0438"
+  - "\u0427\u0435\u0442\u043E \u0435\u0449\u0435"
+  _peopleOnLoc:
+  - "\u0414\u0436\u043E\u043D"
+  - "\u0422\u043E\u043C\u0430"
 --- !u!1 &1085572814
 GameObject:
   m_ObjectHideFlags: 0
