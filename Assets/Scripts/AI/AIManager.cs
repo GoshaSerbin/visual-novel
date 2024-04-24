@@ -38,8 +38,8 @@ public class AIManager : MonoBehaviour
         return form;
     }
 
-    public static event Action<string> OnAIRecievedItem;
-    public static event Action<string> OnAIAffectedStory;
+    // public static event Action<string> OnAIRecievedItem;
+    // public static event Action<string> OnAIAffectedStory;
 
     public void GenerateText(string prompt, Action<string> callback, int maxTokens, float temperature)
     {

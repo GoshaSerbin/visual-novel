@@ -68,17 +68,17 @@ public class Dialogues : MonoBehaviour
         _nextPhraseButton.onClick.AddListener(ContinueStory); //!!!
     }
 
-    private void OnEnable()
-    {
-        AIManager.OnAIRecievedItem += AIRecieveItem;
-        AIManager.OnAIAffectedStory += AIAffectStory;
-    }
+    // private void OnEnable()
+    // {
+    //     AIManager.OnAIRecievedItem += AIRecieveItem;
+    //     AIManager.OnAIAffectedStory += AIAffectStory;
+    // }
 
-    private void OnDisable()
-    {
-        AIManager.OnAIRecievedItem -= AIRecieveItem;
-        AIManager.OnAIAffectedStory -= AIAffectStory;
-    }
+    // private void OnDisable()
+    // {
+    //     AIManager.OnAIRecievedItem -= AIRecieveItem;
+    //     AIManager.OnAIAffectedStory -= AIAffectStory;
+    // }
 
     private void AIAffectStory(string varName)
     {

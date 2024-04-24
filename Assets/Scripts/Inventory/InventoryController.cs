@@ -18,18 +18,6 @@ namespace Inventory
 
         public List<InventoryItem> initialItems = new List<InventoryItem>();
 
-
-        private void OnEnable()
-        {
-            TalkManager.OnItemReceived += AddItem;
-            // Narrator.OnItemReceived += AddItem;
-        }
-
-        private void OnDisable()
-        {
-            TalkManager.OnItemReceived -= AddItem;
-        }
-
         void Start()
         {
             PrepareUI();
@@ -122,7 +110,7 @@ namespace Inventory
             // string description = PrepareDescription(inventoryItem);
             string description = item.Description;
             _inventoryUI.UpdateDescription(itemIndex, item.ItemImage,
-                item.name, description);
+                item.Name, description);
         }
 
         public void Show()
@@ -141,38 +129,22 @@ namespace Inventory
             _inventoryUI.Hide();
         }
 
-        [SerializeField] private MessagesDisplay _messageDisplay;
 
-        private ItemSO GetItemByName(string itemName)
+
+
+        public int AddItem(string itemName, int amount = 1) // to do: add return
         {
-            Debug.Log("getting item:" + itemName);
-            return Resources.Load<ItemSO>("Items/" + itemName);
-        }
-
-        [SerializeField]
-        private Dictionary<string, string> _itemName2FileName = new Dictionary<string, string>(){
-            {"таблетки", "Tablets"},
-            {"деньги", "Money"},
-            {"кофе", "Coffee"},
-        };
-
-        public void AddItem(string itemName, int amount = 1) // to do: add return
-        {
-            Debug.Log("adding item " + itemName);
-            itemName = _itemName2FileName[itemName];
-            Debug.Log("now it is " + itemName);
-            ItemSO item = GetItemByName(itemName); // to do: _itemsManager.GetItemByName(itemName);
+            ItemSO item = ItemsManager.GetItemByName(itemName);
             int reminder = _inventoryData.AddItem(item, amount);
             if (reminder == 0)
             {
                 Debug.Log("Added 2 items");
-                _messageDisplay.ShowMessage("Новый предмет: " + item.Name, item.ItemImage);
             }
             else
             {
                 Debug.Log($"{reminder} items can not be added because inventory is full");
             }
-            // return reminder;
+            return reminder;
         }
 
         private void DropItem(int itemIndex, int quantity)
@@ -183,7 +155,7 @@ namespace Inventory
 
         public int RemoveItem(string itemName, int amount = 1)
         {
-            ItemSO item = GetItemByName(itemName); // to do: _itemsManager.GetItemByName(itemName);
+            ItemSO item = ItemsManager.GetItemByName(itemName);
             var items = _inventoryData.GetCurrentInventoryState();
             foreach (var (k, v) in items)
             {

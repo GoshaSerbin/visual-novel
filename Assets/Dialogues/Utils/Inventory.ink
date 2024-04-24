@@ -1,6 +1,6 @@
-// return 0 on success
+// return 0 on success (in future releases)
 EXTERNAL AddToInventory(name, count)
 EXTERNAL RemoveFromInventory(name, count)
 
-// returns num of items
-EXTERNAL ItemsNumInInventory(name)
+// returns num of items (in future releases)
+// EXTERNAL ItemsNumInInventory(name)

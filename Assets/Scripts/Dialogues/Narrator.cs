@@ -38,6 +38,7 @@ public class Narrator : MonoBehaviour
     public static event Action<string> OnStoryContinued;
     public static event Action OnChoiceChosen;
     public static event Action<string, int> OnItemReceived;
+    public static event Action<string, int> OnItemRemoved;
     public static event Action OnStoryAffected;
 
     private Story _inkStory;
@@ -138,16 +139,16 @@ public class Narrator : MonoBehaviour
         _inkStory.BindExternalFunction("AddToInventory", (string itemName, int count) =>
         {
             Debug.Log($"AddToInventory {count} {itemName}");
-            _inventory.AddItem(itemName);
+            // _inventory.AddItem(itemName);
             // return _inventory.AddItem(itemName);
-            // OnItemRecieved?.Invoke(itemName, count);
+            OnItemReceived?.Invoke(itemName, count); // TO DO: on success?
         });
 
         _inkStory.BindExternalFunction("RemoveFromInventory", (string itemName, int count) =>
         {
             Debug.Log($"RemoveFromInventory {count} {itemName}");
-            return _inventory.RemoveItem(itemName, count);
-            // OnItemRemoved?.Invoke(itemName, count);
+            // return _inventory.RemoveItem(itemName, count);
+            OnItemRemoved?.Invoke(itemName, count);
         });
     }
 
