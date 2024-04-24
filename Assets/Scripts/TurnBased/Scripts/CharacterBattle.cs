@@ -1,70 +1,37 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class CharacterBattle : MonoBehaviour
+public abstract class CharacterBattle : MonoBehaviour
 {
-    CharacterBase _charBase;
-    [SerializeField] private HealthSystem _healthSystem;
+    [SerializeField] public abstract HealthSystem HealthComponent {  get; set; }
 
-    //private enum StatusBuffs
-    //{
-    //    ATTACKBUFF,
-    //    DEFENSEBUFF,
-    //}
-
-    //List<StatusBuffs> _characterBuffs;
-    // заготовка на будущее прост
-    bool _defenseBuffActive = false;
-    private void Awake()
-    {
-        _charBase = GetComponent<CharacterBase>();
-    }
-
-    public void Attack(CharacterBattle target, Action onAttackComplete)
-    {
-        // animation
-        int damageDone = _charBase._baseAttack + UnityEngine.Random.Range(0, _charBase._baseAttack + 1);
-        Debug.Log(target._defenseBuffActive);
-        if (target._defenseBuffActive ) {
-            Debug.Log("Damage halved");
-            damageDone /= 2;
-            _defenseBuffActive = false;
-        }
-        target.TakeDamage(damageDone);
-        Debug.Log(target + "CurrentHealth = " + target.GetCurrentHealth().ToString());
-        onAttackComplete();
-    }
+    [SerializeField] public abstract bool DefenseBuffActive { get; set; }
+    [SerializeField] public abstract bool AttackBuffActive { get; set; }
+    public abstract void Attack(CharacterBattle target, Action onAttackComplete);
 
     public void Guard(Action onAttackComplete)
     {
-        _defenseBuffActive = true;
+        DefenseBuffActive = true;
         onAttackComplete();
     }
 
-    public void Setup()
-    {
-        _healthSystem = new HealthSystem(100);
-    }
-
-
     public int GetMaxHealth()
     {
-        return _healthSystem.GetMaxHealth();
+        return HealthComponent.GetMaxHealth();
     }
 
     public int GetCurrentHealth()
     {
-        return _healthSystem.GetCurrentHealth();
+        return HealthComponent.GetCurrentHealth();
     }
     public void TakeDamage(int damage)
     {
-        _healthSystem.Damage(damage);
+        HealthComponent.Damage(damage);
     }
 
     public bool IsDead() {
-        return _healthSystem.IsDead();
+        return HealthComponent.IsDead();
     }
 }

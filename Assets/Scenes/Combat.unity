@@ -152,14 +152,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e432a3706cb4a234fa4fdd197736ca87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyBattlePrefab: {fileID: 4261637501973885721, guid: 15f872373062bac45a864800d7aa3ece, type: 3}
-  _enemyUIPrefab: {fileID: 4607675184901327035, guid: 687ce868fb683d247a7dc744ed2b4893, type: 3}
-  _enemyPanel: {fileID: 957078866}
-  _characterHealthText: {fileID: 961184109}
-  _characterHealthBar: {fileID: 432702185}
-  _enemyNameText: {fileID: 0}
-  _enemyHealthText: {fileID: 0}
-  _enemyHealthBar: {fileID: 0}
+  _enemyPrefabNoData: {fileID: 0}
+  _enemyGameObjects: []
+  _enemyDataAll:
+  - {fileID: 11400000, guid: 7ffaea5a28a2e7849af233de610e6f99, type: 2}
+  - {fileID: 11400000, guid: 22f62e900953fb6499c1b7caff442eec, type: 2}
+  _playerCharacter: {fileID: 1645652472}
+  _enemyCharacters: []
 --- !u!4 &352345498
 Transform:
   m_ObjectHideFlags: 0
@@ -1367,7 +1366,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1645652471}
   - component: {fileID: 1645652472}
-  - component: {fileID: 1645652473}
   m_Layer: 0
   m_Name: Main Character
   m_TagString: Player
@@ -1399,28 +1397,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1645652469}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7a84cc5b0bf0c545b416af9d4be5435, type: 3}
+  m_Script: {fileID: 11500000, guid: 2477b514ac1087b41a2ad588a3dce1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthSystem:
-    _maxHP: 0
-    _currentHP: 0
---- !u!114 &1645652473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1645652469}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8830e358d804c1447ab832f6a61eabc2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _unitName: 
-  _maxHP: 0
-  _baseAttack: 0
-  _critRate: 0
+  _mainCharData:
+    maxHP: 200
+    stamina: 1
+    intellect: 1
+    strength: 1
+    agility: 1
 --- !u!1 &1658422828
 GameObject:
   m_ObjectHideFlags: 0
