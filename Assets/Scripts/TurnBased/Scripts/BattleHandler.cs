@@ -6,26 +6,29 @@ using TMPro;
 public class BattleHandler : MonoBehaviour
 {
 
-    [SerializeField] private GameObject _enemyPrefabNoData;
-    private enum BattleState
-    {
-        WAITINGFORPLAYER,
-        BUSY
-    }
-
-    private List<EnemyData> _enemyData;
-
     private static BattleHandler _instance;
     public static BattleHandler GetInstance()
     {
         return _instance;
     }
 
-    [SerializeField] private List<GameObject> _enemyGameObjects = new();
+    [SerializeField] private GameObject _enemyPrefabNoData;
+    [SerializeField] private Transform _enemyLayout;
+    [SerializeField] private UIHandler _UIHandler;
+    private enum BattleState
+    {
+        PLAYERTURN,
+        BUSY,
+        BATTLEEND,
+    };
+
+    private List<EnemyData> _enemyData;
+
     [SerializeField] private List<EnemyData> _enemyDataAll;
     [SerializeField] private MainCharBattle _playerCharacter;
     [SerializeField] private List<EnemyBattle> _enemyCharacters;
     private CharacterBattle _activeCharacterBattle;
+    private EnemyBattle _playersTarget;
 
     private BattleState _state;
 
@@ -34,62 +37,62 @@ public class BattleHandler : MonoBehaviour
         int enemiesCount = Random.Range(1, 5);
         for (int i = 0; i < enemiesCount; ++i)
         {
-            int randomIndex = Random.Range(0, _enemyDataAll.Count - 1);
-            var enemyGameObj = Instantiate(_enemyPrefabNoData);
-            _enemyGameObjects.Add(enemyGameObj);
+            int randomIndex = Random.Range(0, _enemyDataAll.Count);
+            var enemyGameObj = Instantiate(_enemyPrefabNoData, _enemyLayout);
+            var enemyBattleComp = enemyGameObj.GetComponent<EnemyBattle>();
+            enemyBattleComp.Setup(_enemyDataAll[randomIndex]);
+            enemyGameObj.GetComponent<SpriteRenderer>().sprite = enemyBattleComp.GetSprite();
+            _enemyCharacters.Add(enemyBattleComp);
         }
+        _playerCharacter.Setup();
     }
 
     void Awake()
     {
         _instance = this;
         BattleInitialize();
+        _UIHandler.SpawnUIs(_enemyCharacters, _playerCharacter);
     }
 
     private void Start()
     {
+        _state = BattleState.PLAYERTURN;
+        Debug.Log(_state);
+        _activeCharacterBattle = _playerCharacter;
+        _playersTarget = _enemyCharacters[0];
+    }
+
+    public void CharacterAttack()
+    {
+        if (_state == BattleState.PLAYERTURN)
+        {
+            _state = BattleState.BUSY;
+            Debug.Log(_state);
+            _playerCharacter.Attack(_playersTarget, () => { _UIHandler.UpdateHealth(_playersTarget); ChooseNextActiveCharacter(); });
+        }
+
+    }
+
+    private void ChooseNextActiveCharacter()
+    {
+        if (_activeCharacterBattle == _playerCharacter)
+        {
+            Debug.Log("Choosing active char");
+            SetActiveCharacterBattle(_enemyCharacters[0]);
+            _activeCharacterBattle.Attack(_playerCharacter, () => { _UIHandler.UpdateHealth(_playerCharacter);  ChooseNextActiveCharacter(); });
+
+        }
+        else
+        {
+            SetActiveCharacterBattle(_playerCharacter);
+            _state = BattleState.PLAYERTURN;
+        }
+    }
+    private void SetActiveCharacterBattle(CharacterBattle character)
+    {
+        _activeCharacterBattle = character;
     }
 }
-        //_enemyCharacter = SpawnEnemy();
-        //_enemyNameText.text = _enemyCharacter.GetComponent<CharacterBase>()._unitName;
-        //SetupHealthUI(_enemyCharacter);
-        //_state = BattleState.WAITINGFORPLAYER;
-        //_playerCharacter = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterBattle>();
-        //_activeCharacterBattle = _playerCharacter;
-        //_playerCharacter.Setup();
-        //SetupHealthUI(_playerCharacter);
- 
-
-    //private void Update()
-    //{
-      
-    //}
-
-    //private void SetupHealthUI(CharacterBattle character)
-    //{
-    //    var currHP = character.GetCurrentHealth();
-    //    var maxHP = character.GetMaxHealth();
-    //    if (character == _playerCharacter)
-    //    {
-    //        _characterHealthText.text = currHP.ToString() + "/" + maxHP.ToString();
-    //        _characterHealthBar.transform.localScale = new Vector3((float)currHP / maxHP, _characterHealthBar.transform.localScale.y, _characterHealthBar.transform.localScale.z);
-    //    }
-    //    else
-    //    {
-    //        _enemyHealthText.text = currHP.ToString() + "/" + maxHP.ToString(); ;
-    //        _enemyHealthBar.transform.localScale = new Vector3((float)currHP / maxHP, _enemyHealthBar.transform.localScale.y, _enemyHealthBar.transform.localScale.z);
-    //    }
-    //}
-
-//    public void CharacterAttack()
-//    {
-//        if (_state == BattleState.WAITINGFORPLAYER)
-//        {
-//           _state = BattleState.BUSY;
-//           _playerCharacter.Attack(_enemyCharacter, () => { SetupHealthUI(_enemyCharacter); ChooseNextActiveCharacter(); });
-//        }
-
-//    }
 
 //    public void CharacterGuard()
 //    {
@@ -101,24 +104,6 @@ public class BattleHandler : MonoBehaviour
 
 //    }
 
-//    private CharacterBattle SpawnEnemy()
-//    {
-//        Vector3 position = new Vector3(0, 2f, 0);
-//        Transform enemyTransform = Instantiate(_enemyBattlePrefab, position, Quaternion.identity);
-//        GameObject enemyUI = Instantiate(_enemyUIPrefab, _enemyPanel).gameObject;
-//        Debug.Log("EnemyUI spawned" + enemyUI);
-//        _enemyNameText = enemyUI.GetComponentInChildren<TextMeshProUGUI>();
-//        _enemyHealthBar = enemyUI.GetComponentInChildren<Image>();
-//        _enemyHealthText = enemyUI.GetComponentsInChildren<TextMeshProUGUI>()[1];
-//        CharacterBattle enemyBattle = enemyTransform.GetComponent<CharacterBattle>();
-//        enemyBattle.Setup();
-//        return enemyBattle;
-//    }
-
-//    private void SetActiveCharacterBattle(CharacterBattle character)
-//    {
-//        _activeCharacterBattle = character;
-//    }
 
 //    void EnemyAttackWithDelay(float delayTime)
 //    {
@@ -131,20 +116,5 @@ public class BattleHandler : MonoBehaviour
 
 //        _enemyCharacter.Attack(_playerCharacter, () => { ChooseNextActiveCharacter(); });
 //        SetupHealthUI(_playerCharacter);
-//    }
-
-//    private void ChooseNextActiveCharacter()
-//    {
-//        if (_activeCharacterBattle == _playerCharacter)
-//        {
-//            SetActiveCharacterBattle(_enemyCharacter);
-//            _state = BattleState.BUSY;
-//            EnemyAttackWithDelay(1.5f);
-//        }
-//        else
-//        {
-//            SetActiveCharacterBattle(_playerCharacter);
-//            _state = BattleState.WAITINGFORPLAYER;
-//        }
 //    }
 //}

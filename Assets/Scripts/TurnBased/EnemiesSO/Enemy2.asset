@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: stststst
   enemyWeakness: 2
-  enemyBaseAttack: 0
-  enemyHealthMax: 0
+  enemyBaseAttack: 23
+  enemyHealthMax: 30
   enemySprite: {fileID: 21300000, guid: 9af30731731bf084f9e16be154a5a27b, type: 3}

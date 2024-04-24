@@ -10,7 +10,6 @@ public abstract class CharacterBattle : MonoBehaviour
     [SerializeField] public abstract bool DefenseBuffActive { get; set; }
     [SerializeField] public abstract bool AttackBuffActive { get; set; }
     public abstract void Attack(CharacterBattle target, Action onAttackComplete);
-
     public void Guard(Action onAttackComplete)
     {
         DefenseBuffActive = true;

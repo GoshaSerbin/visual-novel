@@ -11,7 +11,17 @@ public class EnemyBattle : CharacterBattle
     public override bool DefenseBuffActive { get; set; }
 
     public override HealthSystem HealthComponent { get; set; }
-    public EnemyBattle(EnemyData enemyData)
+
+    public Sprite GetSprite()
+    {
+        return _enemyData.EnemySprite;
+    }
+    public string GetEnemyName()
+    {
+        return _enemyData.EnemyName;
+    }
+
+    public void Setup(EnemyData enemyData)
     {
         _enemyData = enemyData;
         HealthComponent = new HealthSystem(enemyData.EnemyHealthMax);
@@ -21,6 +31,7 @@ public class EnemyBattle : CharacterBattle
 
     public override void Attack(CharacterBattle target, Action onAttackComplete)
     {
-
+        target.TakeDamage(_enemyData.EnemyBaseAttack);
+        onAttackComplete();
     }
 }

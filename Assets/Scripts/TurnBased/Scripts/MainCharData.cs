@@ -5,6 +5,7 @@ using System;
 public class MainCharData
 {
     [SerializeField] private int maxHP = 200;
+    [SerializeField] private int baseAttack = 15;
 
     [SerializeField] private int stamina = 1;
     [SerializeField] private int intellect = 1;
@@ -16,4 +17,5 @@ public class MainCharData
     public float Strength { get { return strength; } }
     public int Agility { get {  return agility; } }
     public int Intellect { get { return intellect; } }
+    public int BaseAttack { get { return baseAttack; } }
 }
