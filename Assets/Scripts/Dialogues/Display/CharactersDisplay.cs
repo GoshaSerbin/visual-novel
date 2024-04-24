@@ -58,6 +58,7 @@ public class CharactersDisplay : MonoBehaviour
         LoadAllCharacters();
         Vector3 leftScreenPos = new Vector3(0, 0.5f, 10);
         Vector3 rightScreenPos = new Vector3(1, 0.5f, 10);
+        // to do: reset this _hiddenPanelPos when screen resolution is changed
         _hiddenLeftPanelPos = Camera.main.ViewportToWorldPoint(leftScreenPos);
         _hiddenRightPanelPos = Camera.main.ViewportToWorldPoint(rightScreenPos);
         _leftCharacterPanel.transform.position = _hiddenLeftPanelPos;
