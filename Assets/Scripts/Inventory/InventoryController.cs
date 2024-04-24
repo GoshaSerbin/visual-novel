@@ -141,7 +141,6 @@ namespace Inventory
             _inventoryUI.Hide();
         }
 
-        [SerializeField] private ItemSO _item;
         [SerializeField] private MessagesDisplay _messageDisplay;
 
         private ItemSO GetItemByName(string itemName)
