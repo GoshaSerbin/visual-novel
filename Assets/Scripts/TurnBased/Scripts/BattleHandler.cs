@@ -22,13 +22,12 @@ public class BattleHandler : MonoBehaviour
         BATTLEEND,
     };
 
-    private List<EnemyData> _enemyData;
-
     [SerializeField] private List<EnemyData> _enemyDataAll;
     [SerializeField] private MainCharBattle _playerCharacter;
     [SerializeField] private List<EnemyBattle> _enemyCharacters;
-    private CharacterBattle _activeCharacterBattle;
+    [SerializeField] private CharacterBattle _activeCharacterBattle;
     private EnemyBattle _playersTarget;
+    private int _activeEnemyIndex = 0;
 
     private BattleState _state;
 
@@ -57,9 +56,8 @@ public class BattleHandler : MonoBehaviour
     private void Start()
     {
         _state = BattleState.PLAYERTURN;
-        Debug.Log(_state);
         _activeCharacterBattle = _playerCharacter;
-        _playersTarget = _enemyCharacters[0];
+        PlayerTargetSelected(_enemyCharacters[0]);
     }
 
     public void CharacterAttack()
@@ -68,18 +66,23 @@ public class BattleHandler : MonoBehaviour
         {
             _state = BattleState.BUSY;
             Debug.Log(_state);
-            _playerCharacter.Attack(_playersTarget, () => { _UIHandler.UpdateHealth(_playersTarget); ChooseNextActiveCharacter(); });
+            _playerCharacter.Attack(_playersTarget, () => { if (_playersTarget) { _UIHandler.UpdateHealth(_playersTarget); } ChooseNextActiveCharacter(); });
         }
 
     }
 
     private void ChooseNextActiveCharacter()
     {
+        if (_enemyCharacters.Count == 0)
+        {
+            BattleEnd();
+            return;
+        }
         if (_activeCharacterBattle == _playerCharacter)
         {
-            Debug.Log("Choosing active char");
-            SetActiveCharacterBattle(_enemyCharacters[0]);
-            _activeCharacterBattle.Attack(_playerCharacter, () => { _UIHandler.UpdateHealth(_playerCharacter);  ChooseNextActiveCharacter(); });
+            _activeEnemyIndex = (_activeEnemyIndex + 1) % _enemyCharacters.Count;
+            SetActiveCharacterBattle(_enemyCharacters[_activeEnemyIndex]);
+            _activeCharacterBattle.Attack(_playerCharacter, () => { _UIHandler.UpdateHealth(_playerCharacter); ChooseNextActiveCharacter(); });
 
         }
         else
@@ -91,6 +94,47 @@ public class BattleHandler : MonoBehaviour
     private void SetActiveCharacterBattle(CharacterBattle character)
     {
         _activeCharacterBattle = character;
+    }
+
+    public void PlayerTargetSelected(EnemyBattle enemy)
+    {
+        if (_playersTarget == enemy)
+        {
+            return;
+        }
+        if (_playersTarget)
+        {
+            _playersTarget.DeactivateCircle();
+        }
+        _playersTarget = enemy;
+        _playersTarget.ActivateCircle();
+    }
+
+    public EnemyBattle GetPlayerTarget()
+    {
+        return _playersTarget;
+    }
+
+    public void RemoveEnemy(EnemyBattle enemy)
+    {
+        _UIHandler.UpdateHealth(enemy);
+        enemy.gameObject.SetActive(false);
+        _enemyCharacters.Remove(enemy);
+        if (_enemyCharacters.Count > 0)
+        {
+            PlayerTargetSelected(_enemyCharacters[0]);
+        }
+    }
+
+    public void BattleEnd()
+    {
+        Debug.Log("YOU WON");
+    }
+
+    public void PlayerLost()
+    {
+        _UIHandler.UpdateHealth(_playerCharacter);
+        Debug.Log("YOU LOST");
     }
 }
 

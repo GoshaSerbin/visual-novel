@@ -21,6 +21,10 @@ public class MainCharBattle : CharacterBattle
     public override void Attack(CharacterBattle target, Action onAttackComplete)
     {
         target.TakeDamage(_mainCharData.BaseAttack);
+        if (target.IsDead())
+        {
+            BattleHandler.GetInstance().RemoveEnemy(target as EnemyBattle);
+        }
         onAttackComplete();
     }
 }
