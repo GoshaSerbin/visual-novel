@@ -7,9 +7,9 @@ using UnityEngine.Scripting;
 
 public class MouseFollower : MonoBehaviour
 {
-    [SerializeField] private Canvas canvas;
+    private Canvas canvas;
 
-    [SerializeField] private UIInventoryItem _item;
+    private UIInventoryItem _item;
 
     public void Awake()
     {

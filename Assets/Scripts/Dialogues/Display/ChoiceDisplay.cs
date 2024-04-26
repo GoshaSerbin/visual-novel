@@ -9,9 +9,9 @@ using Zenject;
 public class ChoiceDisplay : MonoBehaviour
 {
 
-    [HideInInspector] public GameObject _choiceButtonsPanel;
+    private GameObject _choiceButtonsPanel;
+    private CanvasGroup _group;
 
-    private Button _nextPhraseButton;
     private GameObject _choiceButton;
     private List<TextMeshProUGUI> _choicesText = new();
 
@@ -20,28 +20,37 @@ public class ChoiceDisplay : MonoBehaviour
     {
         _choiceButtonsPanel = dialoguesInstaller.choiceButtonsPanel;
         _choiceButton = dialoguesInstaller.choiceButton;
-        _nextPhraseButton = dialoguesInstaller.nextPhraseButton;
+    }
+
+    private void Awake()
+    {
+        _group = _choiceButtonsPanel.gameObject.GetComponent<CanvasGroup>();
     }
 
     private void OnEnable()
     {
-        Dialogues.OnStoryContinued += DisplayChoice;
-        AIManager.OnAITalkStarted += HideChoice;
+        Narrator.OnChoicesAppeared += DisplayChoice;
+        TalkManager.OnAITalkStarted += HideChoice;
     }
     private void OnDisable()
     {
-        Dialogues.OnStoryContinued -= DisplayChoice;
-        AIManager.OnAITalkStarted -= HideChoice;
+        Narrator.OnChoicesAppeared -= DisplayChoice;
+        TalkManager.OnAITalkStarted -= HideChoice;
     }
 
     private void DisplayChoice(List<Choice> choices)
     {
-        _choiceButtonsPanel.SetActive(choices.Count != 0);
         if (choices.Count <= 0)
         {
+            _choiceButtonsPanel.gameObject.transform.localScale = new Vector3(0, 0, 0);
+            _group.LeanAlpha(0, 0.5f);
             return;
         }
-        _nextPhraseButton.gameObject.SetActive(false);
+        else
+        {
+            _group.LeanAlpha(1, 0.5f);
+            _choiceButtonsPanel.gameObject.transform.localScale = new Vector3(1, 1, 1);
+        }
         _choiceButtonsPanel.transform.Cast<Transform>().ToList().ForEach(child => Destroy(child.gameObject));
         _choicesText.Clear();
         for (int i = 0; i < choices.Count; i++)
@@ -57,7 +66,8 @@ public class ChoiceDisplay : MonoBehaviour
 
     private void HideChoice()
     {
-        _choiceButtonsPanel.SetActive(false);
+        Debug.Log("Hiding choice panel.");
+        _choiceButtonsPanel.gameObject.transform.localScale = new Vector3(0, 0, 0);
     }
 
 }

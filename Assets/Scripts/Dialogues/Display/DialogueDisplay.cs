@@ -22,21 +22,28 @@ public class DialogueDisplay : MonoBehaviour
 
     private void OnEnable()
     {
-        Dialogues.OnCharacterSaid += DisplayReplica;
-        Dialogues.OnDialogueStarted += ShowPanel;
-        Dialogues.OnDialogueStoped += HidePanel;
+        Narrator.OnCharacterSaid += DisplayReplica;
+        Narrator.OnStoryStarted += ShowPanel;
+        Narrator.OnStoryEnded += HidePanel;
+        TalkManager.OnCharacterAnswered += DisplayPhrase;
     }
     private void OnDisable()
     {
-        Dialogues.OnCharacterSaid -= DisplayReplica;
-        Dialogues.OnDialogueStarted -= ShowPanel;
-        Dialogues.OnDialogueStoped -= HidePanel;
+        Narrator.OnCharacterSaid -= DisplayReplica;
+        Narrator.OnStoryStarted -= ShowPanel;
+        Narrator.OnStoryEnded -= HidePanel;
+        TalkManager.OnCharacterAnswered -= DisplayPhrase;
     }
 
-    private void DisplayReplica(Dialogues.Replica replica)
+    private void DisplayReplica(Narrator.Replica replica)
     {
         _dialogueText.gameObject.GetComponent<TextEffects>().Display(replica.Text);
         _characterNameText.text = replica.Name;
+    }
+
+    private void DisplayPhrase(string phrase)
+    {
+        _dialogueText.gameObject.GetComponent<TextEffects>().Display(phrase);
     }
 
     private void ShowPanel()

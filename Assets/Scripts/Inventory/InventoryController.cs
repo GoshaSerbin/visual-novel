@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Inventory.Model;
 using Inventory.UI;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -109,26 +110,64 @@ namespace Inventory
             // string description = PrepareDescription(inventoryItem);
             string description = item.Description;
             _inventoryUI.UpdateDescription(itemIndex, item.ItemImage,
-                item.name, description);
+                item.Name, description);
         }
 
-        public void ShowOrHide()
+        public void Show()
         {
-            if (_inventoryUI.isActiveAndEnabled == false)
+            _inventoryUI.Show();
+            foreach (var item in _inventoryData.GetCurrentInventoryState())
             {
-                _inventoryUI.Show();
-                foreach (var item in _inventoryData.GetCurrentInventoryState())
-                {
-                    _inventoryUI.UpdateData(item.Key,
-                        item.Value.item.ItemImage,
-                        item.Value.quantity);
-                }
+                _inventoryUI.UpdateData(item.Key,
+                    item.Value.item.ItemImage,
+                    item.Value.quantity);
+            }
+        }
+
+        public void Hide()
+        {
+            _inventoryUI.Hide();
+        }
+
+
+
+
+        public int AddItem(string itemName, int amount = 1) // to do: add return
+        {
+            ItemSO item = ItemsManager.GetItemByName(itemName);
+            int reminder = _inventoryData.AddItem(item, amount);
+            if (reminder == 0)
+            {
+                Debug.Log("Added 2 items");
             }
             else
             {
-                _inventoryUI.Hide();
+                Debug.Log($"{reminder} items can not be added because inventory is full");
             }
+            return reminder;
         }
+
+        private void DropItem(int itemIndex, int quantity)
+        {
+            _inventoryData.RemoveItem(itemIndex, quantity);
+            _inventoryUI.ResetSelection();
+        }
+
+        public int RemoveItem(string itemName, int amount = 1)
+        {
+            ItemSO item = ItemsManager.GetItemByName(itemName);
+            var items = _inventoryData.GetCurrentInventoryState();
+            foreach (var (k, v) in items)
+            {
+                if (v.item.Name == itemName)
+                {
+                    DropItem(k, amount);
+                    return 0;
+                }
+            }
+            return 1;
+        }
+
 
     }
 
