@@ -17,4 +17,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/TalkingWithJohn.unity
+    guid: 66fe1c2bd9151964bbf66847f08a8660
+  - enabled: 1
+    path: Assets/Scenes/TalkingWithTom.unity
+    guid: f69f17a2276fc30439b04c502f3adcd6
+  - enabled: 1
+    path: Assets/Scenes/Combat.unity
+    guid: 41d830abebef2524da550b8515015928
   m_configObjects: {}
