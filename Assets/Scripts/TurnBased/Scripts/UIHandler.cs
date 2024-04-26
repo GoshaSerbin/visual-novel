@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEngine.UI;
 using TMPro;
 public class UIHandler : MonoBehaviour
 {
+
     [SerializeField] private GameObject _enemyUIPrefab;
     [SerializeField] private Transform _parentPanel;
 

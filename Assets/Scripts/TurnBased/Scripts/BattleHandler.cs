@@ -15,6 +15,7 @@ public class BattleHandler : MonoBehaviour
     [SerializeField] private GameObject _enemyPrefabNoData;
     [SerializeField] private Transform _enemyLayout;
     [SerializeField] private UIHandler _UIHandler;
+    [SerializeField] private BattleOverHandler _battleOverHandler;
     private enum BattleState
     {
         PLAYERTURN,
@@ -129,12 +130,14 @@ public class BattleHandler : MonoBehaviour
     public void BattleEnd()
     {
         Debug.Log("YOU WON");
+        _battleOverHandler.ChangeToBattleEnd(4);
     }
 
     public void PlayerLost()
     {
         _UIHandler.UpdateHealth(_playerCharacter);
         Debug.Log("YOU LOST");
+        _battleOverHandler.ChangeToBattleEnd(1);
     }
 }
 
