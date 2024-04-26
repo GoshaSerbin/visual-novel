@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class BattleOverHandler : MonoBehaviour
@@ -44,5 +45,10 @@ public class BattleOverHandler : MonoBehaviour
             _skillPointsUsed--;
             _spUsedText.text = "Очков использовано: " + _skillPointsUsed.ToString();
         }
+    }
+
+    public void ExitCombatScreen()
+    {
+        SceneManager.LoadScene("Finale", LoadSceneMode.Single);
     }
 }
