@@ -855,7 +855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 322956cebb022d1469e8dbe83f1f2667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneName: TalkingWithJohn
+  _sceneName: JohnTalk
   _inventoryOnLoc: "\u043D\u0435\u0442"
   _peopleOnLoc: "\u0414\u0436\u043E\u043D \u0438 \u0410\u043D\u043D\u0430"
   _peopleText: {fileID: 29323510}
@@ -1560,7 +1560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 322956cebb022d1469e8dbe83f1f2667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneName: TalkingWithTom
+  _sceneName: TomTalk
   _inventoryOnLoc: "\u041A\u043E\u0444\u0435, \u0447\u0430\u0441\u044B"
   _peopleOnLoc: "\u0422\u043E\u043C"
   _peopleText: {fileID: 29323510}
