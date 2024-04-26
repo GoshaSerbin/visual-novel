@@ -17,12 +17,14 @@ public class PlayerBehavior : MonoBehaviour
     private void OnEnable()
     {
         Narrator.OnItemReceived += ReceiveItem;
+        TalkManager.OnItemReceived += ReceiveItem;
         Narrator.OnItemRemoved += RemoveItem;
     }
 
     private void OnDisable()
     {
         Narrator.OnItemReceived -= ReceiveItem;
+        TalkManager.OnItemReceived -= ReceiveItem;
         Narrator.OnItemRemoved -= RemoveItem;
     }
 

@@ -17,4 +17,7 @@ public class DialoguesInstaller : MonoBehaviour
 
     public GameObject inputFieldPanel;
     public TMP_InputField inputField;
+
+    public GameObject sendPhraseButton;
+    public GameObject loadingIcon;
 }

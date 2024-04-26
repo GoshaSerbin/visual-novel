@@ -85,7 +85,7 @@ public class TalkManager : MonoBehaviour
             Debug.Log("Check itemName " + itemName);
             _aiManager.IsReceived(itemName, answer, () =>
             {
-                OnItemReceived.Invoke(itemName, 1);
+                OnItemReceived?.Invoke(itemName, 1);
             });
         }
         OnCharacterAnswered?.Invoke(TextProcessor.PostProccess(answer));
