@@ -17,7 +17,8 @@ public class BattleOverHandler : MonoBehaviour
     [SerializeField] GameObject _postBattleCanvas;
     void Start()
     {
-        
+        _battleCanvas.SetActive(true);
+        _postBattleCanvas.SetActive(false);
     }
 
     public void ChangeToBattleEnd(int skillPoints)
