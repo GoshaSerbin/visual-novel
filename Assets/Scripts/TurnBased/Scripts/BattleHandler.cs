@@ -5,11 +5,6 @@ using UnityEngine.UI;
 using TMPro;
 public class BattleHandler : MonoBehaviour
 {
-    private enum BattleState
-    {
-        WAITINGFORPLAYER,
-        BUSY
-    }
 
     private static BattleHandler _instance;
     public static BattleHandler GetInstance()
@@ -17,123 +12,156 @@ public class BattleHandler : MonoBehaviour
         return _instance;
     }
 
-    [SerializeField] private Transform _enemyBattlePrefab;
-    [SerializeField] private Transform _enemyUIPrefab;
-    [SerializeField] private Transform _enemyPanel;
+    [SerializeField] private GameObject _enemyPrefabNoData;
+    [SerializeField] private Transform _enemyLayout;
+    [SerializeField] private UIHandler _UIHandler;
+    [SerializeField] private BattleOverHandler _battleOverHandler;
+    private enum BattleState
+    {
+        PLAYERTURN,
+        BUSY,
+        BATTLEEND,
+    };
 
-    private CharacterBattle _playerCharacter;
-    private CharacterBattle _enemyCharacter;
-    private CharacterBattle _activeCharacterBattle;
-
-    [SerializeField] private TextMeshProUGUI _characterHealthText;
-    [SerializeField] private Image _characterHealthBar;
-    [SerializeField] private TextMeshProUGUI _enemyNameText;
-    [SerializeField] private TextMeshProUGUI _enemyHealthText;
-    [SerializeField] private Image _enemyHealthBar;
+    [SerializeField] private List<EnemyData> _enemyDataAll;
+    [SerializeField] private MainCharBattle _playerCharacter;
+    [SerializeField] private List<EnemyBattle> _enemyCharacters;
+    [SerializeField] private CharacterBattle _activeCharacterBattle;
+    private EnemyBattle _playersTarget;
+    private int _activeEnemyIndex = 0;
 
     private BattleState _state;
+
+    void BattleInitialize()
+    {
+        int enemiesCount = Random.Range(1, 5);
+        for (int i = 0; i < enemiesCount; ++i)
+        {
+            int randomIndex = Random.Range(0, _enemyDataAll.Count);
+            var enemyGameObj = Instantiate(_enemyPrefabNoData, _enemyLayout);
+            var enemyBattleComp = enemyGameObj.GetComponent<EnemyBattle>();
+            enemyBattleComp.Setup(_enemyDataAll[randomIndex]);
+            enemyGameObj.GetComponent<SpriteRenderer>().sprite = enemyBattleComp.GetSprite();
+            _enemyCharacters.Add(enemyBattleComp);
+        }
+        _playerCharacter.Setup();
+    }
 
     void Awake()
     {
         _instance = this;
+        BattleInitialize();
+        _UIHandler.SpawnUIs(_enemyCharacters, _playerCharacter);
     }
-    void Start()
+
+    private void Start()
     {
-        _enemyCharacter = SpawnEnemy();
-        _enemyNameText.text = _enemyCharacter.GetComponent<CharacterBase>()._unitName;
-        SetupHealthUI(_enemyCharacter);
-        _state = BattleState.WAITINGFORPLAYER;
-        _playerCharacter = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterBattle>();
+        _state = BattleState.PLAYERTURN;
         _activeCharacterBattle = _playerCharacter;
-        _playerCharacter.Setup();
-        SetupHealthUI(_playerCharacter);
-    }
-
-    private void Update()
-    {
-      
-    }
-
-    private void SetupHealthUI(CharacterBattle character)
-    {
-        var currHP = character.GetCurrentHealth();
-        var maxHP = character.GetMaxHealth();
-        if (character == _playerCharacter)
-        {
-            _characterHealthText.text = currHP.ToString() + "/" + maxHP.ToString();
-            _characterHealthBar.transform.localScale = new Vector3((float)currHP / maxHP, _characterHealthBar.transform.localScale.y, _characterHealthBar.transform.localScale.z);
-        }
-        else
-        {
-            _enemyHealthText.text = currHP.ToString() + "/" + maxHP.ToString(); ;
-            _enemyHealthBar.transform.localScale = new Vector3((float)currHP / maxHP, _enemyHealthBar.transform.localScale.y, _enemyHealthBar.transform.localScale.z);
-        }
+        PlayerTargetSelected(_enemyCharacters[0]);
     }
 
     public void CharacterAttack()
     {
-        if (_state == BattleState.WAITINGFORPLAYER)
-        {
-           _state = BattleState.BUSY;
-           _playerCharacter.Attack(_enemyCharacter, () => { SetupHealthUI(_enemyCharacter); ChooseNextActiveCharacter(); });
-        }
-
-    }
-
-    public void CharacterGuard()
-    {
-        if (_state == BattleState.WAITINGFORPLAYER)
+        if (_state == BattleState.PLAYERTURN)
         {
             _state = BattleState.BUSY;
-            _playerCharacter.Guard(() => { ChooseNextActiveCharacter(); });
+            Debug.Log(_state);
+            _playerCharacter.Attack(_playersTarget, () => { if (_playersTarget) { _UIHandler.UpdateHealth(_playersTarget); } ChooseNextActiveCharacter(); });
         }
 
     }
 
-    private CharacterBattle SpawnEnemy()
+    private void ChooseNextActiveCharacter()
     {
-        Vector3 position = new Vector3(0, 2f, 0);
-        Transform enemyTransform = Instantiate(_enemyBattlePrefab, position, Quaternion.identity);
-        GameObject enemyUI = Instantiate(_enemyUIPrefab, _enemyPanel).gameObject;
-        Debug.Log("EnemyUI spawned" + enemyUI);
-        _enemyNameText = enemyUI.GetComponentInChildren<TextMeshProUGUI>();
-        _enemyHealthBar = enemyUI.GetComponentInChildren<Image>();
-        _enemyHealthText = enemyUI.GetComponentsInChildren<TextMeshProUGUI>()[1];
-        CharacterBattle enemyBattle = enemyTransform.GetComponent<CharacterBattle>();
-        enemyBattle.Setup();
-        return enemyBattle;
-    }
+        if (_enemyCharacters.Count == 0)
+        {
+            BattleEnd();
+            return;
+        }
+        if (_activeCharacterBattle == _playerCharacter)
+        {
+            _activeEnemyIndex = (_activeEnemyIndex + 1) % _enemyCharacters.Count;
+            SetActiveCharacterBattle(_enemyCharacters[_activeEnemyIndex]);
+            _activeCharacterBattle.Attack(_playerCharacter, () => { _UIHandler.UpdateHealth(_playerCharacter); ChooseNextActiveCharacter(); });
 
+        }
+        else
+        {
+            SetActiveCharacterBattle(_playerCharacter);
+            _state = BattleState.PLAYERTURN;
+        }
+    }
     private void SetActiveCharacterBattle(CharacterBattle character)
     {
         _activeCharacterBattle = character;
     }
 
-    void EnemyAttackWithDelay(float delayTime)
+    public void PlayerTargetSelected(EnemyBattle enemy)
     {
-        StartCoroutine(DelayAction(delayTime));
+        if (_playersTarget == enemy)
+        {
+            return;
+        }
+        if (_playersTarget)
+        {
+            _playersTarget.DeactivateCircle();
+        }
+        _playersTarget = enemy;
+        _playersTarget.ActivateCircle();
     }
 
-    IEnumerator DelayAction(float delayTime)
+    public EnemyBattle GetPlayerTarget()
     {
-        yield return new WaitForSeconds(delayTime);
-
-        _enemyCharacter.Attack(_playerCharacter, () => { ChooseNextActiveCharacter(); });
-        SetupHealthUI(_playerCharacter);
+        return _playersTarget;
     }
 
-    private void ChooseNextActiveCharacter()
+    public void RemoveEnemy(EnemyBattle enemy)
     {
-        if (_activeCharacterBattle == _playerCharacter)
+        _UIHandler.UpdateHealth(enemy);
+        enemy.gameObject.SetActive(false);
+        _enemyCharacters.Remove(enemy);
+        if (_enemyCharacters.Count > 0)
         {
-            SetActiveCharacterBattle(_enemyCharacter);
-            _state = BattleState.BUSY;
-            EnemyAttackWithDelay(1.5f);
+            PlayerTargetSelected(_enemyCharacters[0]);
         }
-        else
-        {
-            SetActiveCharacterBattle(_playerCharacter);
-            _state = BattleState.WAITINGFORPLAYER;
-        }
+    }
+
+    public void BattleEnd()
+    {
+        Debug.Log("YOU WON");
+        _battleOverHandler.ChangeToBattleEnd(4);
+    }
+
+    public void PlayerLost()
+    {
+        _UIHandler.UpdateHealth(_playerCharacter);
+        Debug.Log("YOU LOST");
+        _battleOverHandler.ChangeToBattleEnd(1);
     }
 }
+
+//    public void CharacterGuard()
+//    {
+//        if (_state == BattleState.WAITINGFORPLAYER)
+//        {
+//            _state = BattleState.BUSY;
+//            _playerCharacter.Guard(() => { ChooseNextActiveCharacter(); });
+//        }
+
+//    }
+
+
+//    void EnemyAttackWithDelay(float delayTime)
+//    {
+//        StartCoroutine(DelayAction(delayTime));
+//    }
+
+//    IEnumerator DelayAction(float delayTime)
+//    {
+//        yield return new WaitForSeconds(delayTime);
+
+//        _enemyCharacter.Attack(_playerCharacter, () => { ChooseNextActiveCharacter(); });
+//        SetupHealthUI(_playerCharacter);
+//    }
+//}

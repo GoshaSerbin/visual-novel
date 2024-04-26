@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine.Events;
 
 [System.Serializable]
 public class HealthSystem
 {
 
     //public event EventHandler OnHealthChange;
-    //public event EventHandler OnDead;
+   public UnityEvent OnDead;
 
     [SerializeField] private int _maxHP;
     [SerializeField] private int _currentHP;
@@ -24,7 +25,6 @@ public class HealthSystem
     public void SetHealthAmount(int health)
     {
         _currentHP = health;
-        // OnHealthChange(this, EventArgs.Empty);
     }
 
     public int GetCurrentHealth() { return _currentHP; }
@@ -33,10 +33,8 @@ public class HealthSystem
     public void Damage(int amount)
     {
         _currentHP = Mathf.Clamp(_currentHP - amount, 0, _maxHP);
-        // OnHealthChange(this, EventArgs.Empty);
         if (_currentHP == 0)
         {
-            Die();
             Debug.Log("Dead");
         }
     }
@@ -44,12 +42,6 @@ public class HealthSystem
     public void Heal(int amount) 
     {
         _currentHP = Mathf.Clamp(_currentHP + amount, 0, _maxHP);
-        // OnHealthChange(this, EventArgs.Empty);
-    }
-
-    public void Die()
-    {
-        // OnDead(this, EventArgs.Empty);
     }
 
     public bool IsDead()
