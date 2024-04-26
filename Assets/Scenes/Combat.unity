@@ -619,8 +619,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1429222892}
-        m_TargetAssemblyTypeName: UIHandler, Assembly-CSharp
+      - m_Target: {fileID: 372879635}
+        m_TargetAssemblyTypeName: BattleOverHandler, Assembly-CSharp
         m_MethodName: SubtractFromUsedPoints
         m_Mode: 1
         m_Arguments:
@@ -910,8 +910,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1429222892}
-        m_TargetAssemblyTypeName: UIHandler, Assembly-CSharp
+      - m_Target: {fileID: 372879635}
+        m_TargetAssemblyTypeName: BattleOverHandler, Assembly-CSharp
         m_MethodName: AddToUsedPoints
         m_Mode: 1
         m_Arguments:
@@ -1540,8 +1540,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1429222892}
-        m_TargetAssemblyTypeName: UIHandler, Assembly-CSharp
+      - m_Target: {fileID: 372879635}
+        m_TargetAssemblyTypeName: BattleOverHandler, Assembly-CSharp
         m_MethodName: SubtractFromUsedPoints
         m_Mode: 1
         m_Arguments:
@@ -1846,7 +1846,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &565300366
@@ -1980,7 +1980,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &660693787
@@ -2208,8 +2208,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1429222892}
-        m_TargetAssemblyTypeName: UIHandler, Assembly-CSharp
+      - m_Target: {fileID: 372879635}
+        m_TargetAssemblyTypeName: BattleOverHandler, Assembly-CSharp
         m_MethodName: AddToUsedPoints
         m_Mode: 1
         m_Arguments:
@@ -2275,7 +2275,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &818894621
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3053,8 +3053,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1429222892}
-        m_TargetAssemblyTypeName: UIHandler, Assembly-CSharp
+      - m_Target: {fileID: 372879635}
+        m_TargetAssemblyTypeName: BattleOverHandler, Assembly-CSharp
         m_MethodName: AddToUsedPoints
         m_Mode: 1
         m_Arguments:
@@ -3186,8 +3186,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1429222892}
-        m_TargetAssemblyTypeName: UIHandler, Assembly-CSharp
+      - m_Target: {fileID: 372879635}
+        m_TargetAssemblyTypeName: BattleOverHandler, Assembly-CSharp
         m_MethodName: SubtractFromUsedPoints
         m_Mode: 1
         m_Arguments:
@@ -3359,7 +3359,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1135787936
@@ -3785,7 +3785,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1314087704
@@ -3919,7 +3919,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1358381879
@@ -4544,7 +4544,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1690981959
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4920,7 +4920,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1828591140
@@ -5054,7 +5054,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1883084219
@@ -5082,7 +5082,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1900525687
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5216,7 +5216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1902522805
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5416,8 +5416,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1429222892}
-        m_TargetAssemblyTypeName: UIHandler, Assembly-CSharp
+      - m_Target: {fileID: 372879635}
+        m_TargetAssemblyTypeName: BattleOverHandler, Assembly-CSharp
         m_MethodName: SubtractFromUsedPoints
         m_Mode: 1
         m_Arguments:
@@ -5753,7 +5753,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 678, y: -329}
+  m_AnchoredPosition: {x: 657, y: -329}
   m_SizeDelta: {x: 425.9, y: 120.97}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1981507690
@@ -5921,8 +5921,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1429222892}
-        m_TargetAssemblyTypeName: UIHandler, Assembly-CSharp
+      - m_Target: {fileID: 372879635}
+        m_TargetAssemblyTypeName: BattleOverHandler, Assembly-CSharp
         m_MethodName: AddToUsedPoints
         m_Mode: 1
         m_Arguments:
