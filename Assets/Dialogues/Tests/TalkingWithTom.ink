@@ -27,7 +27,7 @@ VAR do_something = "Делать нечего..."
 === talk_with_tom
     ~AITalk("{Tom_description} Ты раздаешь людям кофе. Ты дашь персонажу кофе, но только если он прямо попросит тебя дать ему кофе. Иначе ничего не говори ему о кофе.", 250)
     # {speaker} : Том
-    # may_recieve_items : кофе
+    # {may_receive_items} : кофе
     Привет!
     Увидимся!
     # {speaker} : {None}
