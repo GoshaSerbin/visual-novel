@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Globalization;
 using Inventory;
+using UnityEngine.SceneManagement;
 
 // This class is responsible for reading the ink story and creating relevent events
 public class Narrator : MonoBehaviour
@@ -194,19 +195,11 @@ public class Narrator : MonoBehaviour
             );
 
             OnChoicesAppeared?.Invoke(_inkStory.currentChoices);
-            // OnStoryContinued?.Invoke(_inkStory.currentChoices);
-            // if (_currentTags["AI"] != "TALK")
-            // {
-            //     Debug.Log("display choices");
-            //     OnStoryContinued.Invoke(_inkStory.currentChoices);
-            // }
-            if (_inkStory.canContinue && true) // && not ai talk or what ever
+            if (!_inkStory.canContinue && _inkStory.currentChoices.Count() == 0)
             {
-                // OnStoryCanContinue?.Invoke();
-            }
-            else // if choices appeared
-            {
-                // OnStoryCanNotContinue?.Invoke();/////// blyat game over
+                Debug.Log("Story ended.");
+                OnStoryEnded?.Invoke();
+                SceneManager.LoadScene(1); // всегда карта, потом поменяем
             }
         }
         else
@@ -215,6 +208,7 @@ public class Narrator : MonoBehaviour
             {
                 Debug.Log("Story ended.");
                 OnStoryEnded?.Invoke();
+                SceneManager.LoadScene(1); // всегда карта, потом поменяем
             }
             else
             {
