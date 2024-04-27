@@ -152,8 +152,7 @@ public class BattleHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(delayTime);
         var lastHealth = _playerCharacter.GetCurrentHealth();
-        _activeCharacterBattle.Attack(_playerCharacter, () => { ChooseNextActiveCharacter(); });
-        _UIHandler.UpdateHealth(_playerCharacter, lastHealth);
+        _activeCharacterBattle.Attack(_playerCharacter, () => { if (_playerCharacter) _UIHandler.UpdateHealth(_playerCharacter, lastHealth); ChooseNextActiveCharacter(); });
     }
 }
 

@@ -35,12 +35,12 @@ public class UIHandler : MonoBehaviour
     {
         var currHealth = character.GetCurrentHealth();
         var maxHealth = character.GetMaxHealth();
-        float damage = maxHealth - currHealth;
+        float damage = lastHealth - currHealth;
         if (character == _mainCharBattle)
         {
             _mainCharHealthText.text = currHealth.ToString() + "/" + maxHealth.ToString();
-            //StartCoroutine(SmoothDecreaseHealth(damage, lastHealth, maxHealth));
-            _mainCharHealthBar.localScale = new Vector3((float)currHealth / maxHealth, 1f, 1f);
+            StartCoroutine(SmoothDecreaseHealth(damage, lastHealth, maxHealth));
+            //_mainCharHealthBar.localScale = new Vector3((float)currHealth / maxHealth, 1f, 1f);
             return;
         }
         EnemyBattle enemy = character as EnemyBattle;
