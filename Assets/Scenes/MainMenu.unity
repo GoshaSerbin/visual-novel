@@ -2917,7 +2917,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864da936dbc87d542b1bccf9532bed24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SettingsPanel: {fileID: 0}
+  SettingsPanel: {fileID: 767044808}
 --- !u!4 &1678789985
 Transform:
   m_ObjectHideFlags: 0
@@ -2927,7 +2927,7 @@ Transform:
   m_GameObject: {fileID: 1678789983}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.005477633, y: -0.64741457, z: 0.6345059}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3619,7 +3619,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 156.9075, y: -191.39499}
+  m_AnchoredPosition: {x: 156.90747, y: -191.39499}
   m_SizeDelta: {x: 313.815, y: 382.78998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2139934886

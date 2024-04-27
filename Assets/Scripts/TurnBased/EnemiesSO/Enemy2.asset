@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2011cf6cb29dde4fb6f5b20f98beb65, type: 3}
   m_Name: Enemy2
   m_EditorClassIdentifier: 
-  enemyName: stststst
+  enemyName: Pangu-alpha
   enemyWeakness: 2
   enemyBaseAttack: 23
   enemyHealthMax: 30

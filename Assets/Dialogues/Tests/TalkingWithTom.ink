@@ -4,14 +4,13 @@ INCLUDE ../Base.ink
 
 === start_scene === 
 VAR location_description = "Ну и место..." // описание покажется, если не успеет загрузиться ai ответ
-~ AIGenerateText("location_description", "Опиши в двух коротких предложениях просторную столовую, заполненную шумными людьми.", 150)
+~ AIGenerateText("location_description", "Опиши в двух коротких предложениях просторную столовую, заполненную шумными людьми.", 250)
 VAR do_something = "Делать нечего..."
-~ AIGenerateText("do_something", "Главный герой игры делает что-то в столовой. Придумай и расскажи в двух коротких предложениях.", 150)
+~ AIGenerateText("do_something", "Главный герой игры делает что-то в столовой. Придумай и расскажи в двух коротких предложениях.", 250)
     # {background} : {Сanteen}
     # {reset_characters} : {None}
     # {speaker} : {None}
     Ты заходишь в столовую.
-    # AI : DESCRIBE
     {location_description}
     # {reset_characters} : Том
     Недалеко от себя ты обнаруживаешь Тома.
@@ -20,7 +19,7 @@ VAR do_something = "Делать нечего..."
      + [Поговорить с Томом]->talk_with_tom
      + [Делать всякое]
     {do_something}
-    ~ AIGenerateText("do_something", "Главный герой игры делает что-то в столовой. Придумай и расскажи в двух коротких предложениях.", 150)
+    ~ AIGenerateText("do_something", "Главный герой игры делает что-то в столовой. Придумай и расскажи в двух коротких предложениях.", 250)
     ->start_choices
     + [Уйти]->END
 
