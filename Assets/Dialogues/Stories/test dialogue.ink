@@ -6,6 +6,7 @@ INCLUDE ../Utils/Inventory.ink
 VAR can_go_to_concert = 0
 VAR Женщина_в_форме_рассержена = 0
 
+~doctor_description = "{doctor_description} Ты общаешься с главным героем, которого доставили сюда после боя. Большего ты не знаешь." 
 -> part1
 
 === part1 ===
