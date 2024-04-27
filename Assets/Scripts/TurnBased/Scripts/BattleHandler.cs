@@ -68,7 +68,8 @@ public class BattleHandler : MonoBehaviour
         {
             _state = BattleState.BUSY;
             Debug.Log(_state);
-            _playerCharacter.Attack(_playersTarget, () => { if (_playersTarget) { _UIHandler.UpdateHealth(_playersTarget); } ChooseNextActiveCharacter(); });
+            var lastHealth = _playersTarget.GetCurrentHealth();
+            _playerCharacter.Attack(_playersTarget, () => { if (_playersTarget) { _UIHandler.UpdateHealth(_playersTarget, lastHealth); } ChooseNextActiveCharacter(); });
         }
 
     }
@@ -120,7 +121,7 @@ public class BattleHandler : MonoBehaviour
 
     public void RemoveEnemy(EnemyBattle enemy)
     {
-        _UIHandler.UpdateHealth(enemy);
+        _UIHandler.UpdateHealth(enemy, 0);
         enemy.gameObject.SetActive(false);
         _enemyCharacters.Remove(enemy);
         if (_enemyCharacters.Count > 0)
@@ -137,7 +138,7 @@ public class BattleHandler : MonoBehaviour
 
     public void PlayerLost()
     {
-        _UIHandler.UpdateHealth(_playerCharacter);
+        _UIHandler.UpdateHealth(_playerCharacter, 0);
         Debug.Log("YOU LOST");
         _battleOverHandler.ChangeToBattleEnd(1);
     }
@@ -150,9 +151,9 @@ public class BattleHandler : MonoBehaviour
     IEnumerator DelayAction(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
-
+        var lastHealth = _playerCharacter.GetCurrentHealth();
         _activeCharacterBattle.Attack(_playerCharacter, () => { ChooseNextActiveCharacter(); });
-        _UIHandler.UpdateHealth(_playerCharacter);
+        _UIHandler.UpdateHealth(_playerCharacter, lastHealth);
     }
 }
 

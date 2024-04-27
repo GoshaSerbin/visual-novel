@@ -26,12 +26,12 @@ public class UIHandler : MonoBehaviour
             var newUIComps = newUI.GetComponent<EnemyUIComponents>();
             newUIComps.NameText.text = enemyData[i].GetEnemyName();
             _enemyUIs.Add(enemyData[i], newUIComps);
-            UpdateHealth(enemyData[i]);
+            UpdateHealth(enemyData[i], enemyData[i].GetMaxHealth());
         }
         _mainCharBattle = mainChar;
-        UpdateHealth(_mainCharBattle);
+        UpdateHealth(_mainCharBattle, _mainCharBattle.GetMaxHealth());
     }
-    public void UpdateHealth(CharacterBattle character)
+    public void UpdateHealth(CharacterBattle character, float lastHealth)
     {
         var currHealth = character.GetCurrentHealth();
         var maxHealth = character.GetMaxHealth();
@@ -39,7 +39,8 @@ public class UIHandler : MonoBehaviour
         if (character == _mainCharBattle)
         {
             _mainCharHealthText.text = currHealth.ToString() + "/" + maxHealth.ToString();
-            StartCoroutine(SmoothDecreaseHealth(damage, currHealth, maxHealth));
+            //StartCoroutine(SmoothDecreaseHealth(damage, lastHealth, maxHealth));
+            _mainCharHealthBar.localScale = new Vector3((float)currHealth / maxHealth, 1f, 1f);
             return;
         }
         EnemyBattle enemy = character as EnemyBattle;
@@ -49,7 +50,7 @@ public class UIHandler : MonoBehaviour
     }
 
 
-    private IEnumerator SmoothDecreaseHealth(float damage, float currHealth, int cHealth)
+    private IEnumerator SmoothDecreaseHealth(float damage, float currHealth, int maxHealth)
     {
         float damagePerTick = damage / _smoothDecreaseDuration;
         float elapsedTime = 0f;
@@ -61,8 +62,8 @@ public class UIHandler : MonoBehaviour
             float currentDamage = damagePerTick * Time.deltaTime;  
             currentHealth -= currentDamage;
             elapsedTime += Time.deltaTime;
-            Debug.Log(currentHealth / cHealth);
-            _mainCharHealthBar.localScale = new Vector3(currentHealth / cHealth, 1f, 1f);
+            Debug.Log(currentHealth / maxHealth);
+            _mainCharHealthBar.localScale = new Vector3(currentHealth / maxHealth, 1f, 1f);
             if (currentHealth <= 0)
             {
                 _mainCharHealthBar.localScale = new Vector3(0f, 1f, 1f);
