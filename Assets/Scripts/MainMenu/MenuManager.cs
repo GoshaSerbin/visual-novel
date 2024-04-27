@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
+
+    [SerializeField] private GameObject SettingsPanel;
     public void StartNewGame()
     {
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
@@ -17,13 +19,18 @@ public class MenuManager : MonoBehaviour
 
     }
 
-    public void OpenSettings()
-    {
-
-    }
-
     public void Quit()
     {
         Application.Quit();
+    }
+
+    public void OpenSettings()
+    {
+        SettingsPanel.SetActive(true);
+    }
+
+    public void CloseSettings()
+    {
+        SettingsPanel.SetActive(false);
     }
 }
