@@ -83,7 +83,8 @@ public class BattleHandler : MonoBehaviour
         {
             _activeEnemyIndex = (_activeEnemyIndex + 1) % _enemyCharacters.Count;
             SetActiveCharacterBattle(_enemyCharacters[_activeEnemyIndex]);
-            _activeCharacterBattle.Attack(_playerCharacter, () => { _UIHandler.UpdateHealth(_playerCharacter); ChooseNextActiveCharacter(); });
+            //_activeCharacterBattle.Attack(_playerCharacter, () => { _UIHandler.UpdateHealth(_playerCharacter); ChooseNextActiveCharacter(); });
+            EnemyAttackWithDelay(1f);
 
         }
         else
@@ -138,6 +139,19 @@ public class BattleHandler : MonoBehaviour
         _UIHandler.UpdateHealth(_playerCharacter);
         Debug.Log("YOU LOST");
         _battleOverHandler.ChangeToBattleEnd(1);
+    }
+
+    void EnemyAttackWithDelay(float delayTime)
+    {
+        StartCoroutine(DelayAction(delayTime));
+    }
+
+    IEnumerator DelayAction(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+
+        _activeCharacterBattle.Attack(_playerCharacter, () => { ChooseNextActiveCharacter(); });
+        _UIHandler.UpdateHealth(_playerCharacter);
     }
 }
 
