@@ -1731,6 +1731,26 @@ PrefabInstance:
       propertyPath: _messageDisplay
       value: 
       objectReference: {fileID: 1362648047}
+    - target: {fileID: 7982946112394759252, guid: 71a9676354abdb345b118c33b23677f0, type: 3}
+      propertyPath: initialItems.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7982946112394759252, guid: 71a9676354abdb345b118c33b23677f0, type: 3}
+      propertyPath: initialItems.Array.data[2].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 8057e72924a6b8a47b3a7f1bfad081c7, type: 2}
+    - target: {fileID: 7982946112394759252, guid: 71a9676354abdb345b118c33b23677f0, type: 3}
+      propertyPath: initialItems.Array.data[3].item
+      value: 
+      objectReference: {fileID: 11400000, guid: d617cef14dc95bc4292324a7e33bf3f9, type: 2}
+    - target: {fileID: 7982946112394759252, guid: 71a9676354abdb345b118c33b23677f0, type: 3}
+      propertyPath: initialItems.Array.data[4].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 8a1be19c1168fba48aafcadde58d455c, type: 2}
+    - target: {fileID: 7982946112394759252, guid: 71a9676354abdb345b118c33b23677f0, type: 3}
+      propertyPath: initialItems.Array.data[0].quantity
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

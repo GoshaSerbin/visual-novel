@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2011cf6cb29dde4fb6f5b20f98beb65, type: 3}
-  m_Name: Enemy1
+  m_Name: Enemy6
   m_EditorClassIdentifier: 
-  enemyName: Nok-3310
-  enemyWeakness: 0
-  enemyBaseAttack: 10
-  enemyHealthMax: 12
-  enemySprite: {fileID: 21300000, guid: 32db310d571380742946de9947048255, type: 3}
+  enemyName: ROB v.12
+  enemyWeakness: 3
+  enemyBaseAttack: 23
+  enemyHealthMax: 30
+  enemySprite: {fileID: 21300000, guid: b694d0ee1b43c8247b425d484b787f42, type: 3}

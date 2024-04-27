@@ -16,28 +16,29 @@ namespace Inventory
         [SerializeField]
         private InventorySO _inventoryData;
 
-        public List<InventoryItem> initialItems = new List<InventoryItem>();
+        // public List<InventoryItem> initialItems = new List<InventoryItem>();
 
         void Start()
         {
             PrepareUI();
 
             PrepareInventoryData();
+            UpdateInventoryUI(_inventoryData.GetCurrentInventoryState());
         }
 
         private void PrepareInventoryData()
         {
-            _inventoryData.Initialize();
+            // _inventoryData.Initialize();
             _inventoryData.OnInventoryUpdated += UpdateInventoryUI;
-            foreach (InventoryItem item in initialItems)
-            {
-                if (item.IsEmpty)
-                {
-                    continue;
-                }
+            // foreach (InventoryItem item in initialItems)
+            // {
+            //     if (item.IsEmpty)
+            //     {
+            //         continue;
+            //     }
 
-                _inventoryData.AddItem(item);
-            }
+            //     _inventoryData.AddItem(item);
+            // }
         }
 
         private void UpdateInventoryUI(Dictionary<int, InventoryItem> inventoryState)

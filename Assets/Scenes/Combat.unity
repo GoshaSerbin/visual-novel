@@ -705,6 +705,10 @@ MonoBehaviour:
   _enemyDataAll:
   - {fileID: 11400000, guid: 7ffaea5a28a2e7849af233de610e6f99, type: 2}
   - {fileID: 11400000, guid: 22f62e900953fb6499c1b7caff442eec, type: 2}
+  - {fileID: 11400000, guid: e270f992b0cdedf49a86f4dce8b5f32e, type: 2}
+  - {fileID: 11400000, guid: 2a20538691f0d954aa60030a61950cb2, type: 2}
+  - {fileID: 11400000, guid: 1cbf208f72c046a4883343c07b02e642, type: 2}
+  - {fileID: 11400000, guid: d1572fecd340dd34a9bbda99a6a052bc, type: 2}
   _playerCharacter: {fileID: 1645652472}
   _enemyCharacters: []
   _activeCharacterBattle: {fileID: 0}
