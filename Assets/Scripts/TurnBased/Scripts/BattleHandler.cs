@@ -34,7 +34,8 @@ public class BattleHandler : MonoBehaviour
 
     void BattleInitialize()
     {
-        int enemiesCount = Random.Range(1, 5);
+        //int enemiesCount = Random.Range(1, 5);
+        int enemiesCount = 4;
         for (int i = 0; i < enemiesCount; ++i)
         {
             int randomIndex = Random.Range(0, _enemyDataAll.Count);
@@ -165,17 +166,3 @@ public class BattleHandler : MonoBehaviour
 
 //    }
 
-
-//    void EnemyAttackWithDelay(float delayTime)
-//    {
-//        StartCoroutine(DelayAction(delayTime));
-//    }
-
-//    IEnumerator DelayAction(float delayTime)
-//    {
-//        yield return new WaitForSeconds(delayTime);
-
-//        _enemyCharacter.Attack(_playerCharacter, () => { ChooseNextActiveCharacter(); });
-//        SetupHealthUI(_playerCharacter);
-//    }
-//}
