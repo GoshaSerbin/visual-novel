@@ -108,11 +108,6 @@ public class Narrator : MonoBehaviour
         _inkStory.BindExternalFunction("AITalk", (string system, int maxTokens) =>
         {
             Debug.Log($"AI talk with system: {system}, tokens: {maxTokens}");
-            Debug.Log("TRANSMIT ");
-            foreach (var s in _inkStory.currentTags)
-            {
-                Debug.Log("s " + s);
-            }
             _talkManager.StartAITalk(
                 system,
                 maxTokens,
