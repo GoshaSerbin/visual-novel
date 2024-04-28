@@ -18,6 +18,17 @@ namespace Inventory
 
         // public List<InventoryItem> initialItems = new List<InventoryItem>();
 
+
+        void OnEnable()
+        {
+            _inventoryData.OnInventoryUpdated += UpdateInventoryUI;
+        }
+
+        void OnDisable()
+        {
+            _inventoryData.OnInventoryUpdated -= UpdateInventoryUI;
+        }
+
         void Start()
         {
             PrepareUI();
@@ -29,7 +40,7 @@ namespace Inventory
         private void PrepareInventoryData()
         {
             // _inventoryData.Initialize();
-            _inventoryData.OnInventoryUpdated += UpdateInventoryUI;
+
             // foreach (InventoryItem item in initialItems)
             // {
             //     if (item.IsEmpty)
