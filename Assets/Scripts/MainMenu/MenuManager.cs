@@ -7,6 +7,12 @@ public class MenuManager : MonoBehaviour
 {
 
     [SerializeField] private GameObject SettingsPanel;
+
+
+    private void Start()
+    {
+        FindAnyObjectByType<AudioManager>()?.Play("Demo");
+    }
     public void StartNewGame()
     {
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
