@@ -16,20 +16,16 @@ public class PlayerBehavior : MonoBehaviour
     }
     private void OnEnable()
     {
-        Narrator.OnItemReceived += ReceiveItem;
-        TalkManager.OnItemReceived += ReceiveItem;
-        Narrator.OnItemRemoved += RemoveItem;
+        TalkManager.OnItemReceived += AddItemWithoutCheck;
     }
 
     private void OnDisable()
     {
-        Narrator.OnItemReceived -= ReceiveItem;
-        TalkManager.OnItemReceived -= ReceiveItem;
-        Narrator.OnItemRemoved -= RemoveItem;
+        TalkManager.OnItemReceived -= AddItemWithoutCheck;
     }
 
 
-    private void ReceiveItem(string name, int count)
+    public int AddItem(string name, int count)
     {
         int reminder = _inventory.AddItem(name, count);
 
@@ -38,10 +34,22 @@ public class PlayerBehavior : MonoBehaviour
             Sprite sprite = ItemsManager.GetItemByName(name).ItemImage;
             _messageDisplay.ShowMessage("Новый предмет: " + name, sprite);
         }
+
+        return reminder;
     }
 
-    private void RemoveItem(string name, int count)
+    public void AddItemWithoutCheck(string name, int count)
     {
-        _inventory.RemoveItem(name, count);
+        AddItem(name, count);
+    }
+
+    public int RemoveItem(string name, int count)
+    {
+        return _inventory.RemoveItem(name, count);
+    }
+
+    public int HowManyItems(string name)
+    {
+        return _inventory.HowMany(name);
     }
 }

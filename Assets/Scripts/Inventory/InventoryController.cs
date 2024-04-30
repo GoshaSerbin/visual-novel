@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Inventory.Model;
@@ -169,15 +170,34 @@ namespace Inventory
         {
             ItemSO item = ItemsManager.GetItemByName(itemName);
             var items = _inventoryData.GetCurrentInventoryState();
+            int reminder = amount;
             foreach (var (k, v) in items)
             {
                 if (v.item.Name == itemName)
                 {
+                    reminder = Math.Max(0, reminder - v.quantity);
                     DropItem(k, amount);
-                    return 0;
+                    if (reminder == 0)
+                    {
+                        return 0;
+                    }
                 }
             }
             return 1;
+        }
+
+        public int HowMany(string itemName)
+        {
+            var items = _inventoryData.GetCurrentInventoryState();
+            int result = 0;
+            foreach (var (k, v) in items)
+            {
+                if (v.item.Name == itemName)
+                {
+                    result += v.quantity;
+                }
+            }
+            return result;
         }
 
 
