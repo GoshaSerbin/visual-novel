@@ -48,7 +48,7 @@ public class Narrator : MonoBehaviour
     private AIManager _aiManager;
     private TalkManager _talkManager;
 
-    private InventoryController _inventory;
+    private PlayerBehavior _player; // TODO: rename
 
     [Inject]
     public void Construct(DialoguesInstaller dialoguesInstaller)
@@ -61,7 +61,7 @@ public class Narrator : MonoBehaviour
         _inkStory = new Story(_inkJson.text); // TO DO: can use different stories and reseting them dynamically
         _aiManager = FindObjectOfType<AIManager>();
         _talkManager = FindObjectOfType<TalkManager>();
-        _inventory = FindObjectOfType<InventoryController>(); // TO DO: can use different inventories and reseting them dynamically
+        _player = FindObjectOfType<PlayerBehavior>();
     }
 
     public void ChangeVariableState(string varName, string value)
@@ -135,16 +135,19 @@ public class Narrator : MonoBehaviour
         _inkStory.BindExternalFunction("AddToInventory", (string itemName, int count) =>
         {
             Debug.Log($"AddToInventory {count} {itemName}");
-            // _inventory.AddItem(itemName);
-            // return _inventory.AddItem(itemName);
-            OnItemReceived?.Invoke(itemName, count); // TO DO: on success?
+            return _player.AddItem(itemName, count);
         });
 
         _inkStory.BindExternalFunction("RemoveFromInventory", (string itemName, int count) =>
         {
             Debug.Log($"RemoveFromInventory {count} {itemName}");
-            // return _inventory.RemoveItem(itemName, count);
-            OnItemRemoved?.Invoke(itemName, count);
+            return _player.RemoveItem(itemName, count);
+        });
+
+        _inkStory.BindExternalFunction("HowManyItems", (string itemName) =>
+        {
+            Debug.Log($"ItemsNumInInventory {itemName}");
+            return _player.HowManyItems(itemName);
         });
     }
 
