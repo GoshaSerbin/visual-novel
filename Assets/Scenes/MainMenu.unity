@@ -1678,10 +1678,10 @@ RectTransform:
   - {fileID: 1164719554}
   m_Father: {fileID: 1514993454}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &606330657
 GameObject:
@@ -3056,7 +3056,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1164719555
 MonoBehaviour:
@@ -3410,7 +3410,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1514993453
 GameObject:
@@ -3460,7 +3460,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1514993453}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 68673da5cc3a6c74e9e7365e658bb514, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -4339,6 +4339,42 @@ MonoBehaviour:
     pitchVariance: 0
     loop: 1
     mixerGroup: {fileID: -7892869685380107600, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: ButtonClick
+    clip: {fileID: 8300000, guid: 03e2b1ed39a16c646a47588a8cbb35ac, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: -4244998174623549127, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: ReceiveItem
+    clip: {fileID: 8300000, guid: e809dd487c2128246b6c08608c65fd2d, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: -4244998174623549127, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: Consequence
+    clip: {fileID: 8300000, guid: 384c282f0a525764a8bfb4e15b5bb58f, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: -4244998174623549127, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: NewQuest
+    clip: {fileID: 8300000, guid: 5a8d9adfeecb1024e9fc2bd84a216a94, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: -4244998174623549127, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
     source: {fileID: 0}
 --- !u!4 &1869517429
 Transform:

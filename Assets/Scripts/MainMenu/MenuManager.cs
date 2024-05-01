@@ -15,6 +15,7 @@ public class MenuManager : MonoBehaviour
     }
     public void StartNewGame()
     {
+        FindAnyObjectByType<AudioManager>()?.Play("ButtonClick");
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         SceneManager.LoadScene(nextSceneIndex);
     }
@@ -32,11 +33,13 @@ public class MenuManager : MonoBehaviour
 
     public void OpenSettings()
     {
+        FindAnyObjectByType<AudioManager>()?.Play("ButtonClick");
         SettingsPanel.SetActive(true);
     }
 
     public void CloseSettings()
     {
+        FindAnyObjectByType<AudioManager>()?.Play("ButtonClick");
         SettingsPanel.SetActive(false);
     }
 }
