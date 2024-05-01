@@ -8,11 +8,14 @@ public class TextEffects : MonoBehaviour
 {
     private TMP_Text _textComponent;
 
+    public bool IsAnimatingText { get; private set; }
+
     [SerializeField] private float _secondsForOneSymbol = 0.02f;
 
     private void Awake()
     {
         _textComponent = GetComponent<TMP_Text>();
+        IsAnimatingText = false;
     }
 
 
@@ -57,8 +60,14 @@ public class TextEffects : MonoBehaviour
 
     public void Display(string text)
     {
+        IsAnimatingText = true;
         StopAllCoroutines(); // is it ok?
         StartCoroutine(TypeSentence(text));
+    }
+
+    public void CompleteDisplay()
+    {
+        IsAnimatingText = false;
     }
 
     IEnumerator TypeSentence(string sentence)
@@ -68,7 +77,11 @@ public class TextEffects : MonoBehaviour
         {
             _textComponent.text += letter;
             UpdateMesh();
-            yield return new WaitForSeconds(_secondsForOneSymbol);
+            if (IsAnimatingText)
+            {
+                yield return new WaitForSeconds(_secondsForOneSymbol);
+            }
         }
+        IsAnimatingText = false;
     }
 }

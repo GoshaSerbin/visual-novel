@@ -10,11 +10,25 @@ public class NextPhraseButton : MonoBehaviour
 {
 
     private Button _nextPhraseButton;
+    private DialogueDisplay _dialogueDisplay;
 
     void Awake()
     {
         _nextPhraseButton = GetComponent<Button>();
-        _nextPhraseButton.onClick.AddListener(FindObjectOfType<Narrator>().ContinueStory);
+        _nextPhraseButton.onClick.AddListener(ContinueStoryOrCompletePhrase);
+        _dialogueDisplay = FindAnyObjectByType<DialogueDisplay>();
+    }
+
+    void ContinueStoryOrCompletePhrase()
+    {
+        if (_dialogueDisplay.IsAnimatingText())
+        {
+            _dialogueDisplay.CompletePhrase();
+        }
+        else
+        {
+            FindObjectOfType<Narrator>().ContinueStory();
+        }
     }
 
     private void OnEnable()

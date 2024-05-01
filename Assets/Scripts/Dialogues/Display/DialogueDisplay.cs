@@ -41,9 +41,19 @@ public class DialogueDisplay : MonoBehaviour
         _characterNameText.text = replica.Name;
     }
 
+    public bool IsAnimatingText()
+    {
+        return _dialogueText.gameObject.GetComponent<TextEffects>().IsAnimatingText;
+    }
+
     private void DisplayPhrase(string phrase)
     {
         _dialogueText.gameObject.GetComponent<TextEffects>().Display(phrase);
+    }
+
+    public void CompletePhrase()
+    {
+        _dialogueText.gameObject.GetComponent<TextEffects>().CompleteDisplay();
     }
 
     private void ShowPanel()
