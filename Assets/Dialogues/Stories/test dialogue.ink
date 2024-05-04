@@ -1,6 +1,7 @@
 INCLUDE ../Base.ink
 INCLUDE ../Backgrounds/Backgrounds.ink
 INCLUDE ../Utils/Inventory.ink
+INCLUDE ../Utils/Sounds.ink
 
 // event variables
 VAR can_go_to_concert = 0
@@ -25,6 +26,8 @@ VAR s = ""
     ~AddToInventory("Крепкий кофе", 1)
     Маловато.
 }
+~PlaySound("Demo")
+
 Твоя рука автоматически тянется к месту удара, и ты аккуратно касаешься затылка, резко ощущая пронзившую голову боль.
 Осторожно поднимаясь, ты садишься на кровати, пытаясь сморгнуть накатившую разом усталость и оглядываешь комнату.
 

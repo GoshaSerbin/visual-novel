@@ -5,7 +5,7 @@ EXTERNAL AITalk(system, max_tokens)
 
 // these are global vars, change them before calling a function
 VAR ai_temperature = 1.2
-VAR ai_style = "DEFAULT"
+VAR ai_style = "ANIME"
 VAR ai_may_receive_items = ()
 
 // ~ai_may_receive_items += "деньги"

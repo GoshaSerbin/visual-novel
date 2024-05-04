@@ -35,8 +35,14 @@ public class AudioManager : MonoBehaviour
 	public const string MUSIC_KEY = "MusicVolume";
 	public const string SFX_KEY = "SFXVolume";
 
-	void Start()
+	void OnEnable()
 	{
+		Narrator.OnSoundPlayed += Play;
+	}
+
+	void OnDisable()
+	{
+		Narrator.OnSoundPlayed -= Play;
 	}
 
 	public void Play(string sound)

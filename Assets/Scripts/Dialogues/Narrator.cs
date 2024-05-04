@@ -42,6 +42,8 @@ public class Narrator : MonoBehaviour
     public static event Action<string, int> OnItemRemoved;
     public static event Action OnStoryAffected;
 
+    public static event Action<string> OnSoundPlayed;
+
     private Story _inkStory;
     private UnityEngine.TextAsset _inkJson;
     private StoryParser _storyParser = new();
@@ -151,6 +153,17 @@ public class Narrator : MonoBehaviour
         });
     }
 
+    private void BindSoundFunctionality()
+    {
+        _inkStory.BindExternalFunction("PlaySound", (string name) =>
+        {
+            Debug.Log($"PlaySound {name}");
+            OnSoundPlayed?.Invoke(name);
+        });
+
+    }
+
+
     private void Start()
     {
         StartStory();
@@ -160,6 +173,7 @@ public class Narrator : MonoBehaviour
     {
         BindAIFunctionality();
         BindInventoryFunctionality();
+        BindSoundFunctionality();
         OnStoryStarted?.Invoke();
         ContinueStory();
     }

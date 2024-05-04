@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &925253350846064570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7067504294014959443}
+  - component: {fileID: 8675543658718582527}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7067504294014959443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925253350846064570}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8675543658718582527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925253350846064570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b1960e84cb1393468a135c56da0437c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mixer: {fileID: 24100000, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+  sounds:
+  - name: Demo
+    clip: {fileID: 8300000, guid: ebdaea56ed4a65e4fa3cb670fb24a5b1, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: -7892869685380107600, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: ButtonClick
+    clip: {fileID: 8300000, guid: 03e2b1ed39a16c646a47588a8cbb35ac, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: -4244998174623549127, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: ReceiveItem
+    clip: {fileID: 8300000, guid: e809dd487c2128246b6c08608c65fd2d, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: -4244998174623549127, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: Consequence
+    clip: {fileID: 8300000, guid: 384c282f0a525764a8bfb4e15b5bb58f, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: -4244998174623549127, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: NewQuest
+    clip: {fileID: 8300000, guid: 5a8d9adfeecb1024e9fc2bd84a216a94, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: -4244998174623549127, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
