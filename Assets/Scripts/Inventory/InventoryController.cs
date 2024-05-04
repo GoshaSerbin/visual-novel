@@ -128,6 +128,7 @@ namespace Inventory
 
         public void Show()
         {
+            FindObjectOfType<AudioManager>()?.Play("ButtonClick");
             _inventoryUI.Show();
             foreach (var item in _inventoryData.GetCurrentInventoryState())
             {
@@ -139,6 +140,7 @@ namespace Inventory
 
         public void Hide()
         {
+            FindObjectOfType<AudioManager>()?.Play("ButtonClick");
             _inventoryUI.Hide();
         }
 
