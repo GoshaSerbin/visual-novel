@@ -7,6 +7,7 @@ public class MenuManager : MonoBehaviour
 {
 
     [SerializeField] private GameObject SettingsPanel;
+    [SerializeField] private GameObject ButtonsPanel;
 
 
     private void Start()
@@ -35,11 +36,13 @@ public class MenuManager : MonoBehaviour
     {
         FindAnyObjectByType<AudioManager>()?.Play("ButtonClick");
         SettingsPanel.SetActive(true);
+        ButtonsPanel.SetActive(false);
     }
 
     public void CloseSettings()
     {
         FindAnyObjectByType<AudioManager>()?.Play("ButtonClick");
         SettingsPanel.SetActive(false);
+        ButtonsPanel.SetActive(true);
     }
 }
