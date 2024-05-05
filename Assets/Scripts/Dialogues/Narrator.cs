@@ -210,7 +210,6 @@ public class Narrator : MonoBehaviour
             {
                 Debug.Log("Story ended.");
                 OnStoryEnded?.Invoke();
-                SceneManager.LoadScene(1); // всегда карта, потом поменяем
             }
         }
         else
@@ -219,7 +218,6 @@ public class Narrator : MonoBehaviour
             {
                 Debug.Log("Story ended.");
                 OnStoryEnded?.Invoke();
-                SceneManager.LoadScene(1); // всегда карта, потом поменяем
             }
             else
             {
