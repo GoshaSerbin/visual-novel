@@ -21,10 +21,6 @@ MonoBehaviour:
     item: {fileID: 11400000, guid: 8057e72924a6b8a47b3a7f1bfad081c7, type: 2}
   - quantity: 1
     item: {fileID: 11400000, guid: 8a1be19c1168fba48aafcadde58d455c, type: 2}
-  - quantity: 3
-    item: {fileID: 11400000, guid: d617cef14dc95bc4292324a7e33bf3f9, type: 2}
-  - quantity: 3
-    item: {fileID: 11400000, guid: d617cef14dc95bc4292324a7e33bf3f9, type: 2}
   - quantity: 0
     item: {fileID: 0}
   - quantity: 0
@@ -53,4 +49,4 @@ MonoBehaviour:
     item: {fileID: 0}
   - quantity: 0
     item: {fileID: 0}
-  <Size>k__BackingField: 20
+  <Size>k__BackingField: 18

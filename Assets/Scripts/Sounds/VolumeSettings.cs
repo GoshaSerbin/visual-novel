@@ -13,8 +13,8 @@ public class VolumeSettings : MonoBehaviour
 
     private void Awake()
     {
-        _musicSlider.onValueChanged.AddListener(SetMusicVolume);
-        _sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+        _musicSlider?.onValueChanged.AddListener(SetMusicVolume);
+        _sfxSlider?.onValueChanged.AddListener(SetSFXVolume);
     }
 
     private void Start()

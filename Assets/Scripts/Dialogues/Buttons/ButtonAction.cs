@@ -14,7 +14,11 @@ public class ButtonAction : MonoBehaviour
     {
         _button = GetComponent<Button>();
         _narrator = FindObjectOfType<Narrator>(); // must be single on scene
-        _clickAction = new UnityAction(() => _narrator.ChooseChoiceIndex(index));
+        _clickAction = new UnityAction(() =>
+        {
+            FindObjectOfType<AudioManager>()?.Play("ChoosePhrase");
+            _narrator.ChooseChoiceIndex(index);
+        });
         _button.onClick.AddListener(_clickAction);
     }
 }

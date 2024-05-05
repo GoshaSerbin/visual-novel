@@ -82,6 +82,15 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: -4244998174623549127, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
     source: {fileID: 0}
+  - name: ChoosePhrase
+    clip: {fileID: 8300000, guid: 2c87d675e8078fe4bb2aeea7c6dd0925, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: -4244998174623549127, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
   - name: NewQuest
     clip: {fileID: 8300000, guid: 5a8d9adfeecb1024e9fc2bd84a216a94, type: 3}
     volume: 1
