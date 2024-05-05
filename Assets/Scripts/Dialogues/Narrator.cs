@@ -159,10 +159,35 @@ public class Narrator : MonoBehaviour
             Debug.Log($"PlaySound {name}");
             OnSoundPlayed?.Invoke(name);
         });
-
     }
 
-
+    private void BindPlayerPrefsFunctionality()
+    {
+        _inkStory.BindExternalFunction("SetInt", (string name, int value) =>
+        {
+            PlayerPrefs.SetInt(name, value);
+        });
+        _inkStory.BindExternalFunction("SetFloat", (string name, float value) =>
+        {
+            PlayerPrefs.SetFloat(name, value);
+        });
+        _inkStory.BindExternalFunction("SetString", (string name, string value) =>
+        {
+            PlayerPrefs.SetString(name, value);
+        });
+        _inkStory.BindExternalFunction("GetInt", (string name, int defaultValue) =>
+        {
+            return PlayerPrefs.GetInt(name, defaultValue);
+        });
+        _inkStory.BindExternalFunction("GetFloat", (string name, float defaultValue) =>
+        {
+            return PlayerPrefs.GetFloat(name, defaultValue);
+        });
+        _inkStory.BindExternalFunction("GetString", (string name, string defaultValue) =>
+        {
+            return PlayerPrefs.GetString(name, defaultValue);
+        });
+    }
     private void Start()
     {
         StartStory();
@@ -173,6 +198,7 @@ public class Narrator : MonoBehaviour
         BindAIFunctionality();
         BindInventoryFunctionality();
         BindSoundFunctionality();
+        BindPlayerPrefsFunctionality();
         OnStoryStarted?.Invoke();
         ContinueStory();
     }

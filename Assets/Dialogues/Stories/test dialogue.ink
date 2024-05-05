@@ -2,6 +2,7 @@ INCLUDE ../Base.ink
 INCLUDE ../Backgrounds/Backgrounds.ink
 INCLUDE ../Utils/Inventory.ink
 INCLUDE ../Utils/Sounds.ink
+INCLUDE ../Utils/PlayerPrefs.ink
 
 // event variables
 VAR can_go_to_concert = 0
@@ -29,6 +30,10 @@ VAR s = ""
 ~PlaySound("Demo")
 
 Твоя рука автоматически тянется к месту удара, и ты аккуратно касаешься затылка, резко ощущая пронзившую голову боль.
+~SetInt("is_started", 1)
+VAR nums = ""
+~ nums = GetInt("is_started", 2)
+{nums}
 Осторожно поднимаясь, ты садишься на кровати, пытаясь сморгнуть накатившую разом усталость и оглядываешь комнату.
 
 # {background} : InfirmaryBG
