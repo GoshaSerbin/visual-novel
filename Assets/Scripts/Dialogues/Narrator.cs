@@ -28,7 +28,6 @@ public class Narrator : MonoBehaviour
     }
 
     public static event Action<string> OnBackgroundChanged;
-    public static event Action<Sprite> OnBackgroundSpriteChanged;
 
     public static event Action<Replica> OnCharacterSaid;
     public static event Action OnStoryStarted;

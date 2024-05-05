@@ -28,9 +28,12 @@ namespace Inventory.UI
 
         private int currentlyDraggedItemIndex = -1;
 
+        private PlayerProfilePicture _playerProfilePicture;
+
         private void Awake()
         {
             _mouseFollower = FindObjectOfType<MouseFollower>();
+            _playerProfilePicture = FindObjectOfType<PlayerProfilePicture>();
 
             _mouseFollower.Toggle(false);
             _itemDescription.ResetDescription();
@@ -138,8 +141,9 @@ namespace Inventory.UI
 
         public void Show()
         {
+            // to do: actually `\o-o/`, for extensibility this should be not in this script. because
             gameObject.GetComponent<InventoryAnimation>().Open();
-            // gameObject.SetActive(true);
+            _playerProfilePicture.UpdatePicture();
 
             ResetSelection();
         }

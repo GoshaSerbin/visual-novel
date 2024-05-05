@@ -162,6 +162,10 @@ public class AIManager : MonoBehaviour
     {
         string filePath = Application.persistentDataPath + "/" + name + ".png";
         byte[] bytes;
+        if (!File.Exists(filePath))
+        {
+            return null;
+        }
         try
         {
             bytes = File.ReadAllBytes(filePath);

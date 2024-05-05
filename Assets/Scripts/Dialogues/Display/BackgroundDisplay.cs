@@ -31,19 +31,11 @@ public class BackgroundDisplay : MonoBehaviour
     private void OnEnable()
     {
         Narrator.OnBackgroundChanged += Updatebackground;
-        Narrator.OnBackgroundSpriteChanged += UpdatebackgroundSprite;
     }
 
     private void OnDisable()
     {
         Narrator.OnBackgroundChanged -= Updatebackground;
-        Narrator.OnBackgroundSpriteChanged -= UpdatebackgroundSprite;
-    }
-
-    private void UpdatebackgroundSprite(Sprite sprite)
-    {
-        _currentBackground = new Background(new(), sprite);
-        LeanTween.value(_backgroundImage.gameObject, SetColorCallback, _backgroundImage.color, new Color(0, 0, 0), _animationTime).setOnComplete(UpdateSpriteAndFadeOut);
     }
 
     private void Updatebackground(string name)
@@ -54,10 +46,14 @@ public class BackgroundDisplay : MonoBehaviour
         }
         Debug.Log(name);
 
-        _currentBackground = FindBackgroundByName(name);
+        _currentBackground.sprite = AIManager.LoadSpriteFromPNG(name); // TO DO: move from ai manager
         if (_currentBackground.sprite == null)
         {
-            _currentBackground.sprite = AIManager.LoadSpriteFromPNG(name); // TO DO: move from ai manager
+            _currentBackground = FindBackgroundByName(name);
+            if (_currentBackground.sprite == null)
+            {
+                Debug.LogError($"Can not find background {name} anywhere!");
+            }
         }
 
         LeanTween.value(_backgroundImage.gameObject, SetColorCallback, _backgroundImage.color, new Color(0, 0, 0), _animationTime).setOnComplete(UpdateSpriteAndFadeOut);

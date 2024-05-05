@@ -6,11 +6,10 @@ using UnityEngine.InputSystem;
 public class DialoguesInputReader : MonoBehaviour, Controls.IDialogueActions
 {
     Controls _inputActions;
-    Dialogues _dialogues;
     AIManager _aiManager;
     private void OnEnable()
     {
-        _dialogues = FindObjectOfType<Dialogues>();
+
         _aiManager = FindObjectOfType<AIManager>();
         if (_inputActions != null)
         {
