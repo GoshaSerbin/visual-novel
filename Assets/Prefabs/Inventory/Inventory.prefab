@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3326861516048204924}
   - component: {fileID: 7982946112394759252}
+  - component: {fileID: 1360639032804115146}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
@@ -46,16 +47,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inventoryUI: {fileID: 0}
   _inventoryData: {fileID: 11400000, guid: d94507d1245a1c840803577016897bf4, type: 2}
-  initialItems:
-  - quantity: 1
-    item: {fileID: 11400000, guid: b2c33045925edb34d98c17729bbacdd4, type: 2}
-  - quantity: 1
-    item: {fileID: 11400000, guid: d6882adeaafe88f48b983a2dcc0d55c7, type: 2}
-  - quantity: 1
-    item: {fileID: 11400000, guid: d6882adeaafe88f48b983a2dcc0d55c7, type: 2}
-  - quantity: 1
-    item: {fileID: 11400000, guid: 8057e72924a6b8a47b3a7f1bfad081c7, type: 2}
-  - quantity: 1
-    item: {fileID: 11400000, guid: d617cef14dc95bc4292324a7e33bf3f9, type: 2}
-  _item: {fileID: 11400000, guid: b2c33045925edb34d98c17729bbacdd4, type: 2}
+--- !u!114 &1360639032804115146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4143012805865810799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6ff205d6c3ec72439da6f89241fe93b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _messageDisplay: {fileID: 0}

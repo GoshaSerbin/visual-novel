@@ -40,6 +40,7 @@ public class MenuManager : MonoBehaviour
         {
             _heroDescriptionInputField.text = "стильная брутальная девушка в очках и черном смокинге";
         }
+        PlayerPrefs.SetString("PlayerDescription", _heroDescriptionInputField.text);
         _aiManager.GenerateImage(_heroDescriptionInputField.text, 720, 1280, "ANIME", "PlayerProfilePicture");
         _audioManger?.Play("ButtonClick");
 
