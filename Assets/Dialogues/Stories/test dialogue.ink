@@ -30,10 +30,9 @@ VAR s = ""
 ~PlaySound("Demo")
 
 Твоя рука автоматически тянется к месту удара, и ты аккуратно касаешься затылка, резко ощущая пронзившую голову боль.
-~SetInt("is_started", 1)
-VAR nums = ""
-~ nums = GetInt("is_started", 2)
-{nums}
+VAR player_descr = ""
+~player_descr = GetString("PlayerDescription", "чел ты...")
+{player_descr}
 Осторожно поднимаясь, ты садишься на кровати, пытаясь сморгнуть накатившую разом усталость и оглядываешь комнату.
 
 # {background} : InfirmaryBG
