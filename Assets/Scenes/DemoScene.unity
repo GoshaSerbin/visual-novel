@@ -4388,6 +4388,9 @@ MonoBehaviour:
   - Names:
     - Concert
     sprite: {fileID: 21300000, guid: d905b10f5b64cbc4285b2aee94ccabf0, type: 3}
+  - Names:
+    - CommanderOffice
+    sprite: {fileID: 21300000, guid: 40f1f5a4f4d76744a8f78b581616afcc, type: 3}
   _backgroundImage: {fileID: 1025167071}
   _animationTime: 1
 --- !u!114 &1362648051

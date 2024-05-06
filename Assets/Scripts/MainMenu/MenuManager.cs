@@ -14,7 +14,8 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] private AudioMixer _mixer;
 
-    [SerializeField] private TMP_InputField _heroDescriptionInputField;
+    [SerializeField] private TMP_InputField _playerDescriptionInputField;
+    [SerializeField] private TMP_InputField _playerNameInputField;
 
     private AudioManager _audioManger;
     private AIManager _aiManager;
@@ -36,12 +37,13 @@ public class MenuManager : MonoBehaviour
     }
     public void StartNewGame()
     {
-        if (_heroDescriptionInputField.text == "")
+        if (_playerDescriptionInputField.text == "" || _playerNameInputField.text == "")
         {
-            _heroDescriptionInputField.text = "стильная брутальная девушка в очках и черном смокинге";
+            return;
         }
-        PlayerPrefs.SetString("PlayerDescription", _heroDescriptionInputField.text);
-        _aiManager.GenerateImage(_heroDescriptionInputField.text, 720, 1280, "ANIME", "PlayerProfilePicture");
+        PlayerPrefs.SetString("PlayerDescription", _playerDescriptionInputField.text);
+        PlayerPrefs.SetString("PlayerName", _playerNameInputField.text);
+        _aiManager.GenerateImage(_playerDescriptionInputField.text, 720, 1280, "ANIME", "PlayerProfilePicture");
         _audioManger?.Play("ButtonClick");
 
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;

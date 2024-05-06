@@ -23,6 +23,7 @@ VAR password = 0
 VAR is_alone = 0
 VAR informed_about_scientist = 0
 # reset_characters : Командир 
+# background : CommanderOffice
 # speaker : Командир
 ~player_name = GetString("PlayerName", "товарищ")
 Приветствую, {player_name}! Я тебя ждал. Как твои дела?
@@ -168,6 +169,7 @@ VAR forest_philosophy = "..."
 -
 # speaker : 
 # background : {Camp}
+# reset_characters : 
 Ты покидаешь кабинет своего командира.
 
 VAR olivia_agreed = 0
@@ -213,6 +215,7 @@ VAR olivia_agreed = 0
         Привет, Том
         TODO прописать диалог небольшой
 }
+# speaker : 
 Делать нечего, и  {is_alone : ты отправляешься | вы отправляетесь} по указанному адресу.
 Путешествие начинается. 
 {commrad_name != "" : Вы двигатесь по лесу со своим напарником | Ты двигаешься в одиночку по лесу}.
