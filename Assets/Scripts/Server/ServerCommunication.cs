@@ -47,14 +47,14 @@ public class ServerCommunication : MonoBehaviour
 
             if (www.result == UnityWebRequest.Result.Success)
             {
-                string response = www.downloadHandler.text;
+                string response = TextProcessor.PostProccess(www.downloadHandler.text);
                 Debug.Log("Server response: " + response);
                 callback(response);
             }
             else
             {
                 Debug.Log(www.error);
-                callback("заглушка"); // TO DO: return null and then handle it
+                callback("..."); // TO DO: return null and then handle it
             }
         }
     }

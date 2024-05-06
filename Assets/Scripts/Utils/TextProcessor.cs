@@ -6,7 +6,7 @@ public static class TextProcessor
 {
     public static string PostProccess(string aiAnswer)
     {
-        var charsToRemove = new string[] { "\n" };
+        var charsToRemove = new string[] { "\n", "\"" };
         foreach (var c in charsToRemove)
         {
             aiAnswer = aiAnswer.Replace(c, string.Empty);
