@@ -68,7 +68,7 @@ public class ServerCommunication : MonoBehaviour
     {
         using (UnityWebRequest www = UnityWebRequest.Post(serverURL + "/image", form))
         {
-            www.timeout = 100; //sec
+            www.timeout = 300; //sec
             yield return www.SendWebRequest();
 
             if (www.result == UnityWebRequest.Result.Success)

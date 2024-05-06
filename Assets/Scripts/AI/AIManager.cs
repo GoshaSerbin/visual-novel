@@ -14,8 +14,19 @@ public class AIManager : MonoBehaviour
 {
     private ServerCommunication _server;
 
+    public static AIManager instance;
+
     private void Awake()
     {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
         _server = GetComponent<ServerCommunication>();
     }
     private WWWForm GetWWWForm(List<ServerCommunication.Message> messages, int maxTokens, float temperature)
