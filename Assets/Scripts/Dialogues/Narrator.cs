@@ -116,10 +116,10 @@ public class Narrator : MonoBehaviour
                 _storyParser.GetMayReceiveItems());
         });
 
-        _inkStory.BindExternalFunction("AIGenerateImage", (string varName, string prompt, int h, int w) =>
+        _inkStory.BindExternalFunction("AIGenerateImage", (string varName, string prompt, int w, int h) =>
         {
             string style = (string)_inkStory.variablesState["ai_style"];
-            Debug.Log($"AI generating image {varName} with prompt: {prompt}, {h}, {w}");
+            Debug.Log($"AI generating image {varName} with prompt: {prompt}, {w}, {h}");
             _aiManager.GenerateImage(
                 prompt,
                 w,

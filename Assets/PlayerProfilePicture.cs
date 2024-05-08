@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class PlayerProfilePicture : MonoBehaviour
 
     private Image _playerProfilePicture;
     [SerializeField] private Sprite _fallbackPicture;
+    [SerializeField] private TextMeshProUGUI _playerNameText;
 
     void Awake()
     {
@@ -21,9 +23,10 @@ public class PlayerProfilePicture : MonoBehaviour
         UpdatePicture();
     }
 
-    public void UpdatePicture()
+    public void UpdatePicture() // and name
     {
         _playerProfilePicture.sprite = AIManager.LoadSpriteFromPNG("PlayerProfilePicture");
+        _playerNameText.text = PlayerPrefs.GetString("PlayerName", "Игрок");
         if (_playerProfilePicture.sprite == null)
         {
             _playerProfilePicture.sprite = _fallbackPicture;
