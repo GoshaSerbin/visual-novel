@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Soup
   m_EditorClassIdentifier: 
   <IsStackable>k__BackingField: 1
-  <MaxStackSize>k__BackingField: 5
-  <Name>k__BackingField: "\u0416\u0435\u0442\u043E\u043D"
-  <Description>k__BackingField: "\u041D\u0435\u043F\u043E\u043D\u044F\u0442\u043D\u043E
-    \u043E\u0442\u043A\u0443\u0434\u0430 \u043E\u043D...."
-  <ItemImage>k__BackingField: {fileID: 21300000, guid: ad0e18ffe2637784891189da7d82609d, type: 3}
+  <MaxStackSize>k__BackingField: 1
+  <Name>k__BackingField: "\u0421\u0443\u043F \u0438\u0437 \u0441\u0442\u043E\u043B\u043E\u0432\u043E\u0439"
+  <Description>k__BackingField: "\u041C\u043C\u043C...***"
+  <ItemImage>k__BackingField: {fileID: 21300000, guid: 90d2b8b8e0df95b4e92d1e208f8442ab, type: 3}
