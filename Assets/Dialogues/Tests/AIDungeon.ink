@@ -23,7 +23,6 @@ VAR choice2 = "выбор2"
 VAR choices = ""
 
 VAR player_choice = "Ищем приключения"
-Начнем!
 -> dungeon
 === dungeon ===
 # {background} : {Barracks}
@@ -31,19 +30,16 @@ VAR player_choice = "Ищем приключения"
 # barrier : story
 Генерируем историю...
 ~AIGenerateText("choices", "Дай 3 ОЧЕНЬ КОРОТКИХ вариантов ответа, что может сделать игрок в такой ситуации: {story}. Перечисли их, пронумеровав.", 200)
-{story}
 # barrier : choices
 Генерируем продолжения...
-вкик
-Привет!
-+ [1. {GetChoice("{choices}", 1)}]
+{story}
++ [{GetChoice("{choices}", 1)}]
     ~player_choice = GetChoice("{choices}", 1)
-+ [2. {GetChoice("{choices}", 2)}]
++ [{GetChoice("{choices}", 2)}]
     ~player_choice = GetChoice("{choices}", 2)
-+ [3. {GetChoice("{choices}", 3)}]
++ [{GetChoice("{choices}", 3)}]
     ~player_choice = GetChoice("{choices}", 3)
 -  
 ~AIGenerateText("story", "История: \"{story}\". Действие героя: \"{player_choice}\". Продолжи историю КОРОТКО в двух предложениях. История не должна закончиться.", 200)
-{player_choice}
 ->dungeon
 ->END

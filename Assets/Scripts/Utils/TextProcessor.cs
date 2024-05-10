@@ -8,11 +8,12 @@ public static class TextProcessor
     public static int MaxLength = 300;
     public static string PostProccess(string aiAnswer)
     {
-        var charsToRemove = new string[] { "\"" };
-        foreach (var c in charsToRemove)
-        {
-            aiAnswer = aiAnswer.Replace(c, string.Empty);
-        }
+        // var charsToRemove = new string[] { "\"" };
+        // foreach (var c in charsToRemove)
+        // {
+        //     aiAnswer = aiAnswer.Replace(c, string.Empty);
+        // }
+        aiAnswer = aiAnswer.Trim('\"');
         aiAnswer = aiAnswer.Replace('\n', ' ');
         while (aiAnswer.Length > MaxLength)
         {

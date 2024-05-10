@@ -70,12 +70,12 @@ public class Narrator : MonoBehaviour
 
     void OnEnable()
     {
-        BarrierSynchronizer.OnWaitEnded += ToldStoryAndContinue;
+        BarrierSynchronizer.OnWaitEnded += ContinueStory;
     }
 
     void OnDisable()
     {
-        BarrierSynchronizer.OnWaitEnded -= ToldStoryAndContinue;
+        BarrierSynchronizer.OnWaitEnded -= ContinueStory;
     }
 
     private void ToldStoryAndContinue()
@@ -249,6 +249,8 @@ public class Narrator : MonoBehaviour
             _inkStory.Continue();
             _storyParser.UpdateCurrentTags(_inkStory.currentTags);
             _storyParser.UpdateCurrentText(_inkStory.currentText);
+            Debug.Log("No blocking variables currently");
+            ToldStory();
             List<string> BlockingNames = _storyParser.GetBlockingNames(_inkStory.currentTags);
             if (BlockingNames.Count > 0)
             {
@@ -257,14 +259,12 @@ public class Narrator : MonoBehaviour
                     Debug.Log("Will wait for var " + name);
                     _synchronizer.AddBlockingVariable(name);
                 }
-                if (_synchronizer.IsBlocked())
-                {
-                    _synchronizer.Barrier();
-                    return;
-                }
+                _synchronizer.Barrier();
+                // if (_synchronizer.IsBlocked())
+                // {
+
+                // }
             }
-            Debug.Log("No blocking variables currently");
-            ToldStory();
         }
         else
         {
