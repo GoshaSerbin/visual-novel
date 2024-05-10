@@ -49,9 +49,6 @@ public class AIManager : MonoBehaviour
         return form;
     }
 
-    // public static event Action<string> OnAIRecievedItem;
-    // public static event Action<string> OnAIAffectedStory;
-
     public void GenerateText(string prompt, Action<string> callback, int maxTokens, float temperature)
     {
         prompt = prompt.Trim('\n');
@@ -106,7 +103,7 @@ public class AIManager : MonoBehaviour
                 systemMsg,
                 new("user", "Следует ли напрямую из фразы, что игрок получил от персонажа предмет \"" + item + "\"?"),
             };
-        var form = GetWWWForm(messages, 400, 0);
+        var form = GetWWWForm(messages, 300, 0);
         _server.SendRequestToServer(form, (string response) =>
         {
             Debug.Log("ai answer to get item: " + response);

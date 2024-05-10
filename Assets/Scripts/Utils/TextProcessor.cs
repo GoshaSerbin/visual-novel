@@ -5,26 +5,26 @@ using UnityEngine;
 public static class TextProcessor
 {
 
-    public static int MaxLength = 400;
+    public static int MaxLength = 300;
     public static string PostProccess(string aiAnswer)
     {
-        var charsToRemove = new string[] { "\n", "\"" };
+        var charsToRemove = new string[] { "\"" };
         foreach (var c in charsToRemove)
         {
             aiAnswer = aiAnswer.Replace(c, string.Empty);
         }
         aiAnswer = aiAnswer.Replace('\n', ' ');
-        while (aiAnswer.Length > 400)
+        while (aiAnswer.Length > MaxLength)
         {
             Debug.LogWarning("To much content...Will reduce it");
             int index = aiAnswer.LastIndexOf('.');
             if (index >= 0)
             {
-                aiAnswer = aiAnswer.Substring(0, index + 1);
+                aiAnswer = aiAnswer.Substring(0, index - 1);
             }
             else
             {
-                aiAnswer = aiAnswer.Substring(0, MaxLength) + "...";
+                aiAnswer = aiAnswer.Substring(0, MaxLength - 5) + "...";
                 break;
             }
         }
@@ -34,5 +34,31 @@ public static class TextProcessor
     public static string PreProccess(string prompt)
     {
         return prompt.TrimEnd('\n');
+    }
+
+    public static string GetChoice(string aiAnswer, int choice)
+    {
+        string separator;
+        if (aiAnswer.Contains("1.") && aiAnswer.Contains("2.") && aiAnswer.Contains("3."))
+        {
+            separator = ".";
+        }
+        else if (aiAnswer.Contains("1)") && aiAnswer.Contains("2)") && aiAnswer.Contains("3)"))
+        {
+            separator = ")";
+        }
+        else
+        {
+            Debug.LogWarning("Все пошло не по плану))))");
+            return "Ошибочка....";
+        }
+        var BeginInd = aiAnswer.IndexOf(choice + separator) + 2;
+        var EndInd = aiAnswer.IndexOf(choice + 1 + separator);
+        if (EndInd > 0)
+        {
+            string answer = aiAnswer.Substring(BeginInd, EndInd - BeginInd);
+            return answer;
+        }
+        return aiAnswer.Substring(BeginInd);
     }
 }

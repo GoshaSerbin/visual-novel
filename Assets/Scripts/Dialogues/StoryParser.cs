@@ -54,6 +54,27 @@ public class StoryParser
         return _currentTags["background"] != _previousTags["background"];
     }
 
+    // only this getter can be called without UpdateTags
+    public List<string> GetBlockingNames(List<string> tags)
+    {
+        var BlockingNames = new List<string>();
+        foreach (string tag in tags)
+        {
+            if (tag.StartsWith("barrier"))
+            {
+                string[] parts = tag.Split(':', 2);
+                string[] names = parts[1].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 0; i < names.Count(); ++i)
+                {
+                    BlockingNames.Add(names[i].Trim(' '));
+                    Debug.Log("parsed blocking var " + names[i]);
+                }
+            }
+        }
+
+        return BlockingNames;
+    }
+
     public string GetCurrentBackGround()
     {
         return _currentTags["background"];

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Globalization;
 using Inventory;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 // This class is responsible for reading the ink story and creating relevent events
 public class Narrator : MonoBehaviour
@@ -51,6 +52,8 @@ public class Narrator : MonoBehaviour
 
     private PlayerBehavior _player; // TODO: rename
 
+    private BarrierSynchronizer _synchronizer = new BarrierSynchronizer();
+
     [Inject]
     public void Construct(DialoguesInstaller dialoguesInstaller)
     {
@@ -63,6 +66,22 @@ public class Narrator : MonoBehaviour
         _aiManager = FindObjectOfType<AIManager>();
         _talkManager = FindObjectOfType<TalkManager>();
         _player = FindObjectOfType<PlayerBehavior>();
+    }
+
+    void OnEnable()
+    {
+        BarrierSynchronizer.OnWaitEnded += ToldStoryAndContinue;
+    }
+
+    void OnDisable()
+    {
+        BarrierSynchronizer.OnWaitEnded -= ToldStoryAndContinue;
+    }
+
+    private void ToldStoryAndContinue()
+    {
+        ToldStory();
+        ContinueStory();
     }
 
     public void ChangeVariableState(string varName, string value)
@@ -85,9 +104,14 @@ public class Narrator : MonoBehaviour
         {
             float temperature = (float)_inkStory.variablesState["ai_temperature"];
             Debug.Log($"AI generating {varName} with {prompt}, {maxTokens}, {temperature}");
+            _synchronizer.AddProcessingVariable(varName);
             _aiManager.GenerateText(
                 prompt,
-                (string value) => { ChangeVariableState(varName, value); },
+                (string value) =>
+                {
+                    ChangeVariableState(varName, value);
+                    _synchronizer.RemoveProcessingVariable(varName);
+                },
                 maxTokens,
                 temperature
             );
@@ -97,10 +121,15 @@ public class Narrator : MonoBehaviour
         {
             float temperature = (float)_inkStory.variablesState["ai_temperature"];
             Debug.Log($"AI answering {varName} with system: {system}, prompt: {prompt}, {maxTokens}, {temperature}");
+            _synchronizer.AddProcessingVariable(varName);
             _aiManager.Answer(
                 system,
                 prompt,
-                (string value) => { ChangeVariableState(varName, value); },
+                (string value) =>
+                {
+                    ChangeVariableState(varName, value);
+                    _synchronizer.RemoveProcessingVariable(varName);
+                },
                 maxTokens,
                 temperature
             );
@@ -128,10 +157,18 @@ public class Narrator : MonoBehaviour
                 varName
             );
         });
-
     }
 
-    private void BindInventoryFunctionality() // TO DO
+    private void BindUtilsFunctionality()
+    {
+        _inkStory.BindExternalFunction("GetChoice", (string choices, int choice) =>
+        {
+            Debug.Log($"GetChoice!!!!! {choices} ; {choice}");
+            return TextProcessor.GetChoice(choices, choice);
+        });
+    }
+
+    private void BindInventoryFunctionality()
     {
         _inkStory.BindExternalFunction("AddToInventory", (string itemName, int count) =>
         {
@@ -199,10 +236,12 @@ public class Narrator : MonoBehaviour
         BindInventoryFunctionality();
         BindSoundFunctionality();
         BindPlayerPrefsFunctionality();
+        BindUtilsFunctionality();
         OnStoryStarted?.Invoke();
         ContinueStory();
     }
 
+    // have _inkStory.Continue();
     public void ContinueStory()
     {
         if (_inkStory.canContinue)
@@ -210,33 +249,22 @@ public class Narrator : MonoBehaviour
             _inkStory.Continue();
             _storyParser.UpdateCurrentTags(_inkStory.currentTags);
             _storyParser.UpdateCurrentText(_inkStory.currentText);
-
-            if (_storyParser.IsCharactersReset())
+            List<string> BlockingNames = _storyParser.GetBlockingNames(_inkStory.currentTags);
+            if (BlockingNames.Count > 0)
             {
-                Debug.Log("Characters reset.");
-                OnCharactersReset?.Invoke(_storyParser.GetCurrentCharacterNames());
+                foreach (var name in BlockingNames)
+                {
+                    Debug.Log("Will wait for var " + name);
+                    _synchronizer.AddBlockingVariable(name);
+                }
+                if (_synchronizer.IsBlocked())
+                {
+                    _synchronizer.Barrier();
+                    return;
+                }
             }
-
-            if (_storyParser.IsBackgroundChanged())
-            {
-                Debug.Log($"Background changed to {_storyParser.GetCurrentBackGround()}");
-                OnBackgroundChanged?.Invoke(_storyParser.GetCurrentBackGround());
-            }
-
-            OnCharacterSaid?.Invoke(
-                new Replica(
-                    _storyParser.GetCurrentSpeaker(),
-                    _storyParser.GetCurrentText(),
-                    (TalkAnimations.EmotionState)Convert.ToInt32(_storyParser.GetCurrentEmotion())
-                )
-            );
-
-            OnChoicesAppeared?.Invoke(_inkStory.currentChoices);
-            if (!_inkStory.canContinue && _inkStory.currentChoices.Count() == 0)
-            {
-                Debug.Log("Story ended.");
-                OnStoryEnded?.Invoke();
-            }
+            Debug.Log("No blocking variables currently");
+            ToldStory();
         }
         else
         {
@@ -249,6 +277,38 @@ public class Narrator : MonoBehaviour
             {
                 OnChoicesAppeared?.Invoke(_inkStory.currentChoices);
             }
+        }
+    }
+
+    // doesnt have _inkStory.Continue();
+    public void ToldStory()
+    {
+        Debug.Log("Start tolding story");
+        if (_storyParser.IsCharactersReset())
+        {
+            Debug.Log("Characters reset.");
+            OnCharactersReset?.Invoke(_storyParser.GetCurrentCharacterNames());
+        }
+
+        if (_storyParser.IsBackgroundChanged())
+        {
+            Debug.Log($"Background changed to {_storyParser.GetCurrentBackGround()}");
+            OnBackgroundChanged?.Invoke(_storyParser.GetCurrentBackGround());
+        }
+
+        OnCharacterSaid?.Invoke(
+            new Replica(
+                _storyParser.GetCurrentSpeaker(),
+                _storyParser.GetCurrentText(),
+                (TalkAnimations.EmotionState)Convert.ToInt32(_storyParser.GetCurrentEmotion())
+            )
+        );
+
+        OnChoicesAppeared?.Invoke(_inkStory.currentChoices);
+        if (!_inkStory.canContinue && _inkStory.currentChoices.Count() == 0)
+        {
+            Debug.Log("Story ended.");
+            OnStoryEnded?.Invoke();
         }
     }
 

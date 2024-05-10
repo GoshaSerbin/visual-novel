@@ -42,7 +42,7 @@ public class ServerCommunication : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Post(serverURL + "/talk", form))
         {
             www.SetRequestHeader("Access-Control-Allow-Origin", "*");
-            www.timeout = 10; //sec
+            www.timeout = 20; //sec
             yield return www.SendWebRequest();
 
             if (www.result == UnityWebRequest.Result.Success)

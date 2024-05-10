@@ -37,6 +37,8 @@ public class NextPhraseButton : MonoBehaviour
         Narrator.OnChoiceChosen += Show;
         TalkManager.OnAITalkStarted += Hide;
         TalkManager.OnAITalkStopped += Show;
+        BarrierSynchronizer.OnWaitStarted += Hide;
+        BarrierSynchronizer.OnWaitEnded += Show;
     }
 
     private void OnDisable()
@@ -45,6 +47,8 @@ public class NextPhraseButton : MonoBehaviour
         Narrator.OnChoiceChosen -= Show;
         TalkManager.OnAITalkStarted -= Hide;
         TalkManager.OnAITalkStopped -= Show;
+        BarrierSynchronizer.OnWaitStarted -= Hide;
+        BarrierSynchronizer.OnWaitEnded -= Show;
     }
 
     private void ShowOrHide(List<Ink.Runtime.Choice> choices)
