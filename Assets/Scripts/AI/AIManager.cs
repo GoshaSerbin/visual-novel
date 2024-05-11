@@ -125,7 +125,7 @@ public class AIManager : MonoBehaviour
                 systemMsg,
                 new("user", "Следует ли напрямую из фразы, что произошло событие \"" + varDescription + "\"?"),
             };
-        var form = GetWWWForm(messages, 400, 0);
+        var form = GetWWWForm(messages, 300, 0);
         _server.SendRequestToServer(form, (string response) =>
         {
             Debug.Log($"ai answer to affected story {varName}: {response}");
