@@ -7,6 +7,7 @@ using TMPro;
 using System;
 using UnityEditor;
 using Inventory;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
@@ -36,7 +37,13 @@ public class MenuManager : MonoBehaviour
         int SavedStoryProgress = PlayerPrefs.GetInt("SavedStoryProgress", 0);
         if (SavedStoryProgress != 0)
         {
-            ContinueButton.SetActive(true);
+            Debug.Log("Can continue Story");
+            ContinueButton.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            Debug.Log("Can not continue Story");
+            ContinueButton.GetComponent<Button>().interactable = false;
         }
     }
 

@@ -8,19 +8,15 @@ using UnityEngine;
 // This class is responsible for parsing inkStory (mainly tags) and understanding what is going on.
 public class StoryParser
 {
-    public string _currentText;
-    private Dictionary<string, string> _currentTags = new Dictionary<string, string>(){
+    public Dictionary<string, string> _currentTags = new Dictionary<string, string>(){
             {"speaker", ""},
-            {"emotion", "0"},
-            {"temperature", "1.2"},
             {"background", ""},
             {"reset_characters", ""},
             {"may_receive_items", ""}
         };
-    private Dictionary<string, string> _previousTags;
+    public Dictionary<string, string> _previousTags;
     private readonly List<string> _validTags = new List<string>
     {
-        "ai",
         "speaker",
         "emotion",
         "barrier",
@@ -30,7 +26,6 @@ public class StoryParser
         "reset_characters",
         "may_receive_items",
         "may_affect",
-        "temperature"
     };
 
     private Dictionary<string, string> _currentAffects = new Dictionary<string, string>(); // {eventDescription, varName}
@@ -41,33 +36,22 @@ public class StoryParser
         return _currentTags["reset_characters"] != _previousTags["reset_characters"];
     }
 
-    // public void Save()
-    // {
-    //     List<string> data = new();
-    //     foreach (KeyValuePair<string, string> entry in _currentTags)
-    //     {
+    public void Save()
+    {
+        PlayerPrefs.SetString("CurrentBackground", GetCurrentBackGround());
+        PlayerPrefs.SetString("CurrentText", GetCurrentText());
+        PlayerPrefs.SetString("CurrentSpeaker", GetCurrentSpeaker());
+        PlayerPrefs.SetString("CurrentCharacters", _currentTags["reset_characters"]);
+    }
 
-    //         PlayerPrefs.SetString("STORYPARSER__" + entry.Key);
-    //     }
-    //     CurrentTags = _currentTags;
-    //     PreviousTags = _previousTags;
-    //     string jsonString = JsonSerializer.Serialize(dictionary);
-    //     Console.WriteLine(jsonString);
-    //     // string CurrentTags = _currentTags.ToString();
-    //     string PreviouesTags = _previousTags.ToString();
-    //     string[] result = { CurrentTags, PreviouesTags, _currentText };
-    //     CurrentTags.ToDictionary();
-    //     return data;
-    // }
-
-    // public void Load(string[] data)
-    // {
-    //     _currentTags = data[0].ToDictionary();
-    //     string PreviouesTags = _previousTags.ToString();
-    //     string[] result = { CurrentTags, PreviouesTags, _currentText };
-
-    //     return result;
-    // }
+    public void Load()
+    {
+        _currentTags["background"] = PlayerPrefs.GetString("CurrentBackground");
+        _currentText = PlayerPrefs.GetString("CurrentText");
+        _currentTags["speaker"] = PlayerPrefs.GetString("CurrentSpeaker");
+        _currentTags["reset_characters"] = PlayerPrefs.GetString("CurrentCharacters");
+        _previousTags = new Dictionary<string, string>(_currentTags);
+    }
 
     public string[] GetCurrentCharacterNames()
     {
@@ -112,11 +96,9 @@ public class StoryParser
     // This tags are cleared on every update
     private void ResetUncacheableTags()
     {
-        _currentTags["AI"] = "";
-        _currentTags["max_tokens"] = "";
-        _currentTags["may_receive_items"] = "";
-        _currentTags["may_affect"] = "";
-        _currentTags["barrier"] = "";
+        _currentTags.Remove("may_receive_items");
+        _currentTags.Remove("may_affect");
+        _currentTags.Remove("barrier");
     }
     public void UpdateCurrentTags(List<string> tags)
     {
@@ -156,22 +138,29 @@ public class StoryParser
 
         }
 
-        Debug.Log("may_receive_items:" + _currentTags["may_receive_items"]);
-        string[] items = _currentTags["may_receive_items"].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-        for (int i = 0; i < items.Count(); ++i)
+        if (_currentTags.ContainsKey("may_receive_items"))
         {
-            _currentItems.Add(items[i].Trim(' '));
-            Debug.Log("Can receive item " + items[i]);
+            string[] items = _currentTags["may_receive_items"].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < items.Count(); ++i)
+            {
+                _currentItems.Add(items[i].Trim(' '));
+                Debug.Log("Can receive item " + items[i]);
+            }
         }
 
-        string[] names = _currentTags["barrier"].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-        for (int i = 0; i < names.Count(); ++i)
+        if (_currentTags.ContainsKey("barrier"))
         {
-            _currentBlockingNames.Add(names[i].Trim(' '));
-            Debug.Log("parsed blocking var " + names[i]);
+            string[] names = _currentTags["barrier"].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < names.Count(); ++i)
+            {
+                _currentBlockingNames.Add(names[i].Trim(' '));
+                Debug.Log("parsed blocking var " + names[i]);
+            }
         }
+
     }
 
+    private string _currentText;
     public void UpdateCurrentText(string text)
     {
         _currentText = text;
@@ -183,6 +172,13 @@ public class StoryParser
     }
     public string GetCurrentEmotion()
     {
-        return _currentTags["emotion"];
+        if (_currentTags.ContainsKey("emotion"))
+        {
+            return _currentTags["emotion"];
+        }
+        else
+        {
+            return "0";
+        }
     }
 }

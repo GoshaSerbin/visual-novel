@@ -57,6 +57,8 @@ public class Narrator : MonoBehaviour
         _inkJson = dialoguesInstaller.inkJson;
     }
 
+    private bool fromSave = false;
+
     private void Awake()
     {
         string SavedJsonStory = PlayerPrefs.GetString(SceneManager.GetActiveScene().name, "");
@@ -64,7 +66,10 @@ public class Narrator : MonoBehaviour
         if (SavedJsonStory != "")
         {
             _inkStory.state.LoadJson(SavedJsonStory);
-            _storyParser = JsonUtility.FromJson<StoryParser>(PlayerPrefs.GetString("StoryParserState", ""));
+            string StoryParserState = PlayerPrefs.GetString("StoryParserState");
+            Debug.Log(StoryParserState);
+            Debug.Log("From Save!");
+            fromSave = true;
         }
         _aiManager = FindObjectOfType<AIManager>();
         _talkManager = FindObjectOfType<TalkManager>();
@@ -86,7 +91,7 @@ public class Narrator : MonoBehaviour
         string savedJson = _inkStory.state.ToJson();
         PlayerPrefs.SetString(SceneManager.GetActiveScene().name, savedJson);
         PlayerPrefs.SetString("SavedScene", SceneManager.GetActiveScene().name);
-        PlayerPrefs.SetString("StoryParserState", JsonUtility.ToJson(_storyParser));
+        _storyParser.Save();
         PlayerPrefs.SetInt("SavedStoryProgress", 1);
     }
 
@@ -185,6 +190,9 @@ public class Narrator : MonoBehaviour
 
     private void LoadNextScene()
     {
+        //delete savings if it was => will start this scene from the begining if player came here after a while
+        PlayerPrefs.SetString(SceneManager.GetActiveScene().name, "");
+
         string name = (string)_inkStory.variablesState["NEXT_SCENE_NAME"];
         SceneManager.LoadScene(name, LoadSceneMode.Single);
     }
@@ -249,10 +257,28 @@ public class Narrator : MonoBehaviour
         BindPlayerPrefsFunctionality();
         BindUtilsFunctionality();
         OnStoryStarted?.Invoke();
-        ContinueStory();
+        if (fromSave)
+        {
+            _storyParser.Load();
+            ForcedDisplayUpdate();
+            ToldStory();
+        }
+        else
+        {
+            ContinueStory();
+        }
     }
 
-    // have _inkStory.Continue();
+    private void ForcedDisplayUpdate()
+    {
+        Debug.Log("ForcedDisplayUpdate!");
+        OnCharactersReset?.Invoke(_storyParser.GetCurrentCharacterNames());
+        Debug.Log(_storyParser.GetCurrentBackGround());
+        OnBackgroundChanged?.Invoke(_storyParser.GetCurrentBackGround());
+    }
+
+    // have _inkStory.Continue(); 
+    // ForcedDisplayUpdate - to update display after loading
     public void ContinueStory()
     {
         if (_inkStory.canContinue)

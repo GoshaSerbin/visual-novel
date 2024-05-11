@@ -15,7 +15,7 @@ public class InventoryAnimation : MonoBehaviour
     private void Awake()
     {
         _inventoryPanel = transform;
-        Vector3 screenPos = new Vector3(0.5f, -0.5f, 10);
+        Vector3 screenPos = new Vector3(0.5f, -0.9f, 10);
         _hiddenPosition = Camera.main.ViewportToWorldPoint(screenPos);
         _inventoryPanel.transform.position = _hiddenPosition;
     }
