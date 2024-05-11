@@ -54,7 +54,7 @@ public class ServerCommunication : MonoBehaviour
             else
             {
                 Debug.Log(www.error);
-                callback("..."); // TO DO: return null and then handle it
+                callback("SERVER ERROR: PLEASE CONTACT THE DEVELOPERS"); // TO DO: return null and then handle it
             }
         }
     }
