@@ -33,4 +33,13 @@ public class SendPhraseButton : MonoBehaviour
     {
         _talkManager.SendPlayerPhrase(_inputField.text);
     }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            Debug.Log("Enter pressed");
+            SendPhrase();
+        }
+    }
 }

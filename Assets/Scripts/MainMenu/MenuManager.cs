@@ -67,7 +67,15 @@ public class MenuManager : MonoBehaviour
 
     private void DeleteAllProgress()
     {
+        // only settings that remains
+        float musicVolume = PlayerPrefs.GetFloat(AudioManager.MUSIC_KEY, 1f);
+        float sfxVolume = PlayerPrefs.GetFloat(AudioManager.SFX_KEY, 1f);
+
         PlayerPrefs.DeleteAll();
+
+        PlayerPrefs.SetFloat(AudioManager.MUSIC_KEY, musicVolume);
+        PlayerPrefs.SetFloat(AudioManager.SFX_KEY, sfxVolume);
+
         FileUtil.DeleteFileOrDirectory(Application.persistentDataPath);
         _playerInventoryData.Initialize();
     }

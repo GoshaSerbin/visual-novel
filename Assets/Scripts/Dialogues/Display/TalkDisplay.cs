@@ -47,6 +47,8 @@ public class TalkDisplay : MonoBehaviour
         Debug.Log("Showing input fieldPanel.");
         _inputFieldPanel.SetActive(true);
         _inputField.enabled = true;
+        _inputField.text = "";
+        _inputField.caretPosition = 0;
         _inputField.ActivateInputField();
         _loadingIcon.SetActive(false);
         _sendPhraseButton.transform.localScale = new Vector3(1, 1, 1);

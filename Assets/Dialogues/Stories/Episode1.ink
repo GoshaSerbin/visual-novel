@@ -1,5 +1,5 @@
 INCLUDE ../Base.ink
-INCLUDE ../Backgrounds/Backgrounds.ink
+INCLUDE ../Utils/AI.ink
 INCLUDE ../Utils/Inventory.ink
 INCLUDE ../Utils/Sounds.ink
 INCLUDE ../Utils/SceneManagement.ink
@@ -20,9 +20,6 @@ INCLUDE ../Utils/PlayerPrefs.ink
 Ты просыпаешься, медленно открывая глаза, и ощущаешь легкое покалывание в голове.
 
 Твоя рука автоматически тянется к месту удара, и ты аккуратно касаешься затылка, резко ощущая пронзившую голову боль.
-VAR player_descr = ""
-~player_descr = GetString("PlayerDescription", "чел ты...")
-{player_descr}
 Осторожно поднимаясь, ты садишься на кровати, пытаясь сморгнуть накатившую разом усталость и оглядываешь комнату.
 
 # {background} : InfirmaryBG
@@ -32,6 +29,10 @@ VAR player_descr = ""
 
 VAR location_description = "Ну и место..."
 ~ AIGenerateText("location_description", "Опиши лазарет, в котором очнулся главный герой. В помещении только два человека: ты сидишь на кровати и незнакомец сидит за столом неподалеку от тебя. Лазарет похож на большую палатку. Напиши 2 небольших предложения, без действий.", 100)
+VAR player_descr = ""
+~player_descr = GetString("PlayerDescription", "Молодой человек")
+VAR comment_on_player = "Ну и вид у тебя..."
+~ AIGenerateText("comment_on_player", "Напиши язвительный комментарий на человека с таким образом \"{player_descr}\"", 100)
 # {speaker} : {Незнакомец}
 # {emotion} : {DEFAULT}
 Проснулся? Отлично.
@@ -45,6 +46,7 @@ VAR location_description = "Ну и место..."
 До этого молчавший незнакомец тяжело вздыхает.
 
 # {speaker} : {Незнакомец}
+{comment_on_player}
 Ты так и будешь тут сидеть?
 Если ничего не болит, то поднимай свою задницу с кровати и проваливай.
 * [Кто ты такой?]

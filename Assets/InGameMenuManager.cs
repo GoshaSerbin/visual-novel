@@ -45,4 +45,13 @@ public class InGameMenuManager : MonoBehaviour
         _audioManger?.Play("ButtonClick");
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("Escape pressed");
+            OpenMenu();
+        }
+    }
 }
