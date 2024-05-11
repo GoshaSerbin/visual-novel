@@ -109,3 +109,12 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: -4244998174623549127, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
     source: {fileID: 0}
+  - name: OnMouseEnter
+    clip: {fileID: 8300000, guid: 0b583c480820d144d90303dc7f0b68f2, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: -4244998174623549127, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}

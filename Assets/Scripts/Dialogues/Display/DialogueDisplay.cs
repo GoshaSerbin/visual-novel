@@ -12,6 +12,8 @@ public class DialogueDisplay : MonoBehaviour
 
     private GameObject _dialoguePanel;
 
+    [SerializeField] private GameObject _CharacterNamePanel;
+
     [Inject]
     public void Construct(DialoguesInstaller dialoguesInstaller)
     {
@@ -39,6 +41,14 @@ public class DialogueDisplay : MonoBehaviour
     {
         _dialogueText.gameObject.GetComponent<TextEffects>().Display(replica.Text);
         _characterNameText.text = replica.Name;
+        if (replica.Name == "")
+        {
+            _CharacterNamePanel.gameObject.transform.localScale = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            _CharacterNamePanel.gameObject.transform.localScale = new Vector3(1, 1, 1);
+        }
     }
 
     public bool IsAnimatingText()

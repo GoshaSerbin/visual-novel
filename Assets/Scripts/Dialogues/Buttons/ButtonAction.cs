@@ -19,6 +19,12 @@ public class ButtonAction : MonoBehaviour
             FindObjectOfType<AudioManager>()?.Play("ChoosePhrase");
             _narrator.ChooseChoiceIndex(index);
         });
+
         _button.onClick.AddListener(_clickAction);
+    }
+    void OnMouseEnter()
+    {
+        // FindObjectOfType<AudioManager>()?.Play("OnMouseEnter");
+        Debug.Log("OnMouseEnter");
     }
 }
