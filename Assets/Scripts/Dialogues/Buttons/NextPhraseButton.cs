@@ -12,11 +12,18 @@ public class NextPhraseButton : MonoBehaviour
     private Button _nextPhraseButton;
     private DialogueDisplay _dialogueDisplay;
 
+    private AudioManager _audioManager;
+
     void Awake()
     {
         _nextPhraseButton = GetComponent<Button>();
-        _nextPhraseButton.onClick.AddListener(ContinueStoryOrCompletePhrase);
+        _audioManager = FindObjectOfType<AudioManager>();
         _dialogueDisplay = FindAnyObjectByType<DialogueDisplay>();
+    }
+
+    void Start()
+    {
+        _nextPhraseButton.onClick.AddListener(ContinueStoryOrCompletePhrase);
     }
 
     void ContinueStoryOrCompletePhrase()
@@ -27,6 +34,7 @@ public class NextPhraseButton : MonoBehaviour
         }
         else
         {
+            _audioManager?.Play("ButtonClick2");
             FindObjectOfType<Narrator>().ContinueStory();
         }
     }
