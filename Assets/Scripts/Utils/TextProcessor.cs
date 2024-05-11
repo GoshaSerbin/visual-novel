@@ -17,7 +17,7 @@ public static class TextProcessor
         aiAnswer = aiAnswer.Replace('\n', ' ');
         while (aiAnswer.Length > MaxLength)
         {
-            Debug.LogWarning("To much content...Will reduce it");
+            Debug.LogWarning("To much content...Will reduce it. FullMessage: " + aiAnswer);
             int index = aiAnswer.LastIndexOf('.');
             if (index >= 0)
             {

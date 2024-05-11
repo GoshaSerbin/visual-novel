@@ -2,6 +2,7 @@ INCLUDE ../Base.ink
 INCLUDE ../Backgrounds/Backgrounds.ink
 INCLUDE ../Utils/Inventory.ink
 INCLUDE ../Utils/Sounds.ink
+INCLUDE ../Utils/SceneManagement.ink
 INCLUDE ../Utils/PlayerPrefs.ink
 
 ~doctor_description = "{doctor_description} Ты общаешься с главным героем, которого доставили сюда после боя. Большего ты не знаешь." 

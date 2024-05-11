@@ -20,13 +20,11 @@ public class MessagesDisplay : MonoBehaviour
 
     private void OnEnable()
     {
-        Narrator.OnStoryAffected += ShowConsequenceMessage;
         TalkManager.OnStoryAffected += ShowConsequenceMessage;
     }
 
     private void OnDisable()
     {
-        Narrator.OnStoryAffected -= ShowConsequenceMessage;
         TalkManager.OnStoryAffected -= ShowConsequenceMessage;
     }
 

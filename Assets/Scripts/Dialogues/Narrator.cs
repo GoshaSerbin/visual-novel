@@ -36,11 +36,8 @@ public class Narrator : MonoBehaviour
 
     public static event Action<List<Choice>> OnChoicesAppeared;
     public static event Action<string[]> OnCharactersReset;
-    public static event Action<string> OnStoryContinued;
     public static event Action OnChoiceChosen;
     public static event Action<string, int> OnItemReceived;
-    public static event Action<string, int> OnItemRemoved;
-    public static event Action OnStoryAffected;
 
     public static event Action<string> OnSoundPlayed;
 
@@ -62,7 +59,13 @@ public class Narrator : MonoBehaviour
 
     private void Awake()
     {
-        _inkStory = new Story(_inkJson.text); // TO DO: can use different stories and reseting them dynamically
+        string SavedJsonStory = PlayerPrefs.GetString(SceneManager.GetActiveScene().name, "");
+        _inkStory = new Story(_inkJson.text);
+        if (SavedJsonStory != "")
+        {
+            _inkStory.state.LoadJson(SavedJsonStory);
+            _storyParser = JsonUtility.FromJson<StoryParser>(PlayerPrefs.GetString("StoryParserState", ""));
+        }
         _aiManager = FindObjectOfType<AIManager>();
         _talkManager = FindObjectOfType<TalkManager>();
         _player = FindObjectOfType<PlayerBehavior>();
@@ -78,19 +81,25 @@ public class Narrator : MonoBehaviour
         BarrierSynchronizer.OnWaitEnded -= ContinueStory;
     }
 
-    private void ToldStoryAndContinue()
+    public void SaveStoryProgress()
     {
-        ToldStory();
-        ContinueStory();
+        string savedJson = _inkStory.state.ToJson();
+        PlayerPrefs.SetString(SceneManager.GetActiveScene().name, savedJson);
+        PlayerPrefs.SetString("SavedScene", SceneManager.GetActiveScene().name);
+        PlayerPrefs.SetString("StoryParserState", JsonUtility.ToJson(_storyParser));
+        PlayerPrefs.SetInt("SavedStoryProgress", 1);
     }
 
     public void ChangeVariableState(string varName, string value)
     {
         _inkStory.variablesState[varName] = value;
     }
-    public void ChangeVariableState(string varName, int value)
+    //returns whether the value change its previous value
+    public bool ChangeVariableState(string varName, int value)
     {
+        int oldValue = (int)_inkStory.variablesState[varName];
         _inkStory.variablesState[varName] = value;
+        return oldValue != value;
     }
 
     public void AddItem(string name, int count)
@@ -166,6 +175,18 @@ public class Narrator : MonoBehaviour
             Debug.Log($"GetChoice!!!!! {choices} ; {choice}");
             return TextProcessor.GetChoice(choices, choice);
         });
+
+        _inkStory.BindExternalFunction("PlaySound", (string name) =>
+        {
+            Debug.Log($"PlaySound {name}");
+            OnSoundPlayed?.Invoke(name);
+        });
+    }
+
+    private void LoadNextScene()
+    {
+        string name = (string)_inkStory.variablesState["NEXT_SCENE_NAME"];
+        SceneManager.LoadScene(name, LoadSceneMode.Single);
     }
 
     private void BindInventoryFunctionality()
@@ -186,15 +207,6 @@ public class Narrator : MonoBehaviour
         {
             Debug.Log($"ItemsNumInInventory {itemName}");
             return _player.HowManyItems(itemName);
-        });
-    }
-
-    private void BindSoundFunctionality()
-    {
-        _inkStory.BindExternalFunction("PlaySound", (string name) =>
-        {
-            Debug.Log($"PlaySound {name}");
-            OnSoundPlayed?.Invoke(name);
         });
     }
 
@@ -234,7 +246,6 @@ public class Narrator : MonoBehaviour
     {
         BindAIFunctionality();
         BindInventoryFunctionality();
-        BindSoundFunctionality();
         BindPlayerPrefsFunctionality();
         BindUtilsFunctionality();
         OnStoryStarted?.Invoke();
@@ -251,7 +262,7 @@ public class Narrator : MonoBehaviour
             _storyParser.UpdateCurrentText(_inkStory.currentText);
             Debug.Log("No blocking variables currently");
             ToldStory();
-            List<string> BlockingNames = _storyParser.GetBlockingNames(_inkStory.currentTags);
+            List<string> BlockingNames = _storyParser.GetBlockingNames();
             if (BlockingNames.Count > 0)
             {
                 foreach (var name in BlockingNames)
@@ -260,10 +271,6 @@ public class Narrator : MonoBehaviour
                     _synchronizer.AddBlockingVariable(name);
                 }
                 _synchronizer.Barrier();
-                // if (_synchronizer.IsBlocked())
-                // {
-
-                // }
             }
         }
         else
@@ -272,6 +279,7 @@ public class Narrator : MonoBehaviour
             {
                 Debug.Log("Story ended.");
                 OnStoryEnded?.Invoke();
+                LoadNextScene();
             }
             else
             {
@@ -309,6 +317,7 @@ public class Narrator : MonoBehaviour
         {
             Debug.Log("Story ended.");
             OnStoryEnded?.Invoke();
+            LoadNextScene();
         }
     }
 

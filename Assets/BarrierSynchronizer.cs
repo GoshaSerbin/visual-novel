@@ -54,8 +54,7 @@ public class BarrierSynchronizer
     {
         if (_blockingVariables.Count == 0)
         {
-            // it is better to first check this by IsBlocked to not do unnessecery movements
-            Debug.LogWarning("No blocking variables currently");
+            Debug.Log("No blocking variables currently");
             OnWaitStarted?.Invoke();
             OnWaitEnded?.Invoke();
             return;

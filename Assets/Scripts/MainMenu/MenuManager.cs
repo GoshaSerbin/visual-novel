@@ -4,6 +4,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.Audio;
 using TMPro;
+using System;
+using UnityEditor;
+using Inventory;
 
 public class MenuManager : MonoBehaviour
 {
@@ -17,14 +20,24 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private TMP_InputField _playerDescriptionInputField;
     [SerializeField] private TMP_InputField _playerNameInputField;
 
+    [SerializeField] private Inventory.Model.InventorySO _playerInventoryData;
+
     private AudioManager _audioManger;
     private AIManager _aiManager;
+
+
+    [SerializeField] private GameObject ContinueButton;
 
 
     private void Awake()
     {
         _aiManager = FindObjectOfType<AIManager>();
         _audioManger = FindObjectOfType<AudioManager>();
+        int SavedStoryProgress = PlayerPrefs.GetInt("SavedStoryProgress", 0);
+        if (SavedStoryProgress != 0)
+        {
+            ContinueButton.SetActive(true);
+        }
     }
 
     private void Start()
@@ -41,19 +54,28 @@ public class MenuManager : MonoBehaviour
         {
             return;
         }
+        DeleteAllProgress();
         PlayerPrefs.SetString("PlayerDescription", _playerDescriptionInputField.text);
         PlayerPrefs.SetString("PlayerName", _playerNameInputField.text);
         _aiManager.GenerateImage(_playerDescriptionInputField.text, 720, 1280, "ANIME", "PlayerProfilePicture");
         _audioManger?.Play("ButtonClick");
 
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        PlayerPrefs.SetInt("SavedStoryProgress", 0);
         SceneManager.LoadScene(nextSceneIndex);
     }
 
+    private void DeleteAllProgress()
+    {
+        PlayerPrefs.DeleteAll();
+        FileUtil.DeleteFileOrDirectory(Application.persistentDataPath);
+        _playerInventoryData.Initialize();
+    }
 
     public void ContinueGame()
     {
-
+        string SavedScene = PlayerPrefs.GetString("SavedScene", "");
+        SceneManager.LoadScene(SavedScene);
     }
 
     public void Quit()

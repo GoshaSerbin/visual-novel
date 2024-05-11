@@ -2,6 +2,7 @@ INCLUDE ../Base.ink
 INCLUDE ../Utils/Inventory.ink
 INCLUDE ../Utils/Sounds.ink
 INCLUDE ../Utils/PlayerPrefs.ink
+INCLUDE ../Utils/SceneManagement.ink
 INCLUDE ../Utils/AI.ink
 
 ->main
@@ -258,11 +259,13 @@ VAR have_rest = 0
         # speaker : 
         Вы делаете перерыв
         ~have_rest=1
-    + {not is_alone}[Двигаться дальше]
+    + [Двигаться дальше]
+    { not is_alone :
         # speaker : 
         Мы не можем тут оставаться, это опасно
         # speaker : {commrad_name}
         Ну ладно
+    }
     -
 # speaker : {commrad_name}
 Нужно определиться с тем какой дорогой пойти.

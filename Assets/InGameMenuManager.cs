@@ -41,6 +41,7 @@ public class InGameMenuManager : MonoBehaviour
     {
         // save 
         //to do maybe we can load and save with num of turns variable in ink story + scene number
+        FindObjectOfType<Narrator>()?.SaveStoryProgress();
         _audioManger?.Play("ButtonClick");
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }

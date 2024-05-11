@@ -774,51 +774,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &295899580
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 295899582}
-  - component: {fileID: 295899581}
-  m_Layer: 0
-  m_Name: StoryFinalizator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &295899581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 295899580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acbdfb2e2f3f6d14d87c7366f62fb57e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NextSceneName: MapScene
---- !u!4 &295899582
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 295899580}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &315197404
 GameObject:
   m_ObjectHideFlags: 0
@@ -2031,7 +1986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bcb67747ca8d6a4fb03cdf38a76bc9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inkJson: {fileID: 4900000, guid: 80515d3a64db2784596e82fd26bd01d2, type: 3}
+  inkJson: {fileID: 4900000, guid: 0ee1d2234d0f8154397464c07c29b3e3, type: 3}
   dialoguePanel: {fileID: 1871276209}
   dialogueText: {fileID: 961720872}
   nameText: {fileID: 393925718}
@@ -2897,7 +2852,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7187423277194127837, guid: d0be4bc5179593249b4bace5c1bf74da, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 448.81747
+      value: 448.8175
       objectReference: {fileID: 0}
     - target: {fileID: 7187423277194127837, guid: d0be4bc5179593249b4bace5c1bf74da, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -5052,19 +5007,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3152511498736156085, guid: 816ae3f3bb4bce34188bb449797b7dd2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3152511498736156085, guid: 816ae3f3bb4bce34188bb449797b7dd2, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3152511498736156085, guid: 816ae3f3bb4bce34188bb449797b7dd2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 13.672899
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3152511498736156085, guid: 816ae3f3bb4bce34188bb449797b7dd2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -10.76385
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5485741525621927536, guid: 816ae3f3bb4bce34188bb449797b7dd2, type: 3}
       propertyPath: m_Pivot.x
@@ -5462,7 +5417,7 @@ Transform:
   m_GameObject: {fileID: 1740979977}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7422012, y: 0.656715, z: -4.7749915}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5492,7 +5447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52ccf2d64dc1f141a7bd052ea206850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverURL: http://146.185.211.97:8080
+  serverURL: http://146.185.211.97:8081
 --- !u!1 &1774075941
 GameObject:
   m_ObjectHideFlags: 0
@@ -6404,4 +6359,3 @@ SceneRoots:
   - {fileID: 294357944}
   - {fileID: 1385770528}
   - {fileID: 1857666783}
-  - {fileID: 295899582}

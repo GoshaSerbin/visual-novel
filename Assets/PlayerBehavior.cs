@@ -32,6 +32,8 @@ public class PlayerBehavior : MonoBehaviour
         if (reminder == 0)
         {
             Sprite sprite = ItemsManager.GetItemByName(name).ItemImage;
+            FindObjectOfType<AudioManager>()?.Play("ReceiveItem");
+            FindObjectOfType<Narrator>().SaveStoryProgress();
             _messageDisplay.ShowMessage("Новый предмет: " + name, sprite);
         }
 

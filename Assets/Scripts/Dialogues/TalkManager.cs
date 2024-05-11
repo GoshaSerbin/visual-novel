@@ -76,8 +76,12 @@ public class TalkManager : MonoBehaviour
             Debug.Log("Check varName " + varName);
             _aiManager.IsAffected(varName, answer, eventDescription, () =>
             {
-                _narrator.ChangeVariableState(varName, 1);
-                OnStoryAffected.Invoke();
+                bool hasChanged = _narrator.ChangeVariableState(varName, 1);
+                if (hasChanged)
+                {
+                    FindObjectOfType<AudioManager>()?.Play("Consequence");
+                    OnStoryAffected?.Invoke();
+                }
             });
         }
         foreach (var itemName in _currentItems)

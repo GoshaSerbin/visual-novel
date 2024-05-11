@@ -461,6 +461,8 @@ MonoBehaviour:
   _mixer: {fileID: 24100000, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
   _playerDescriptionInputField: {fileID: 1770993698}
   _playerNameInputField: {fileID: 59702564}
+  _playerInventoryData: {fileID: 11400000, guid: d94507d1245a1c840803577016897bf4, type: 2}
+  ContinueButton: {fileID: 606330657}
 --- !u!4 &98692718
 Transform:
   m_ObjectHideFlags: 0
@@ -1022,7 +1024,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 82.872505, y: -94.908035}
+  m_AnchoredPosition: {x: 82.8725, y: -94.908035}
   m_SizeDelta: {x: 165.74501, y: 189.81607}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &319495284
