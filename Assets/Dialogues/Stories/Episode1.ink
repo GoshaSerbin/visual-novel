@@ -139,14 +139,36 @@ VAR what_happened = "Слушай, мне некогда..."
     {what_happened}
     -> doctor
  + [Задать другой вопрос]
+ VAR banned = 0
  ~AITalk("{doctor_description} Если игрок попросит, ты можешь дать ему таблетки.", 150)
     # {may_receive_items} : Деньги, Таблетки от головы
+    # {may_affect} : "Персонаж привел пример кода на каком-либо языке программирования" => banned
     # speaker : {Врач}
     Да?
+    {banned : 
+    ->banned_scene
+    }
     -> doctor
  + [Выход]
     -> free_time_infirmary
  
+=== banned_scene
+# speaker : 
+У тебя резко темнеет в глазах
+# background : BlackBack
+# reset_characters : 
+Где я?
+Ты слышишь чьи-то крики
+# background : HellBG
+Кажется ты попал в ад...
+Не стоило просить всех писать за тебя код...
+# speaker : <color=red>Дьявол</color>
+Думали я вас не переиграю?
+Думали я вас не уничтожу?
+Я вас уничтожу!
+# speaker :
+Отсюда ты уже не выберешься...
+->END
  
 === look_around_camp ===
 # background : CampBG
@@ -180,9 +202,13 @@ VAR good_morning = "Добрый"
     # speaker : {None} 
     ++ [Мужчина в форме]
          ~AITalk("{john_description}", 150)
+        # {may_affect} : "Персонаж привел пример кода на каком-либо языке программирования" => banned
         # {speaker} : {Мужчина_в_форме}
         О чем хочешь поговорить?
         До скорого!
+        {banned : 
+        ->banned_scene
+        }
         -> trainers
     ++ [Женщина в форме]
     ~AITalk("{olivia_description}", 150)

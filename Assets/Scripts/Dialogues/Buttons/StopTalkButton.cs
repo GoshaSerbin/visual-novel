@@ -10,6 +10,10 @@ public class StopTalkButton : MonoBehaviour
     {
         var stopTalkButton = GetComponent<Button>();
         var talkManager = FindObjectOfType<TalkManager>();
-        stopTalkButton.onClick.AddListener(talkManager.StopAITalk);
+        stopTalkButton.onClick.AddListener(() =>
+        {
+            FindObjectOfType<AudioManager>()?.Play("ButtonClick");
+            talkManager.StopAITalk();
+        });
     }
 }

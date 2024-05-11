@@ -96,7 +96,7 @@ public class AIManager : MonoBehaviour
     public void IsReceived(string item, string npcAnswer, Action callback)
     {
 
-        var systemMsg = new ServerCommunication.Message("system", "Персонаж в игре сказал игроку следующую фразу: \"" + npcAnswer + "\". Тебе нужно отвечать \"Да\" или \"Нет\" на вопросы, исходя из его фразы.");
+        var systemMsg = new ServerCommunication.Message("system", "Персонаж в игре сказал игроку следующую фразу: \"" + npcAnswer + "\". Тебе нужно отвечать только \"Да\" или \"Нет\" на вопросы, исходя из его фразы.");
 
         var messages = new List<ServerCommunication.Message>
             {
