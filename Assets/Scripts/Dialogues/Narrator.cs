@@ -162,13 +162,16 @@ public class Narrator : MonoBehaviour
         _inkStory.BindExternalFunction("AIGenerateImage", (string varName, string prompt, int w, int h) =>
         {
             string style = (string)_inkStory.variablesState["ai_style"];
-            Debug.Log($"AI generating image {varName} with prompt: {prompt}, {w}, {h}");
+            bool allowCensored = ((int)_inkStory.variablesState["ai_allow_censored_images"]) != 0;
+            Debug.Log("Parsed allowCensored : " + allowCensored);
+            Debug.Log($"AI generating image {varName} with prompt: {prompt}, {w}, {h}, {style}");
             _aiManager.GenerateImage(
                 prompt,
                 w,
                 h,
                 style,
-                varName
+                varName,
+                allowCensored
             );
         });
     }

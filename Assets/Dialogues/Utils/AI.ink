@@ -6,4 +6,5 @@ EXTERNAL AIWaitFor(varName)
 
 // these are global vars, change them before calling a function
 VAR ai_temperature = 1.2
-VAR ai_style = "DEFAULT"
+VAR ai_style = "ANIME"
+VAR ai_allow_censored_images = 0

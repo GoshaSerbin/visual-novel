@@ -17,11 +17,14 @@ INCLUDE ../Utils/PlayerPrefs.ink
 # {background} : {BlackBack}
 # {reset_characters} : {None}
 # {speaker} : {None}
+~AIGenerateImage("StyleImageBG","Задний фон для игры, преисподня", 1024, 576)
 Ты просыпаешься, медленно открывая глаза, и ощущаешь легкое покалывание в голове.
 ~SetInt("SavedStoryProgress", 1)
 
 Твоя рука автоматически тянется к месту удара, и ты аккуратно касаешься затылка, резко ощущая пронзившую голову боль.
 Осторожно поднимаясь, ты садишься на кровати, пытаясь сморгнуть накатившую разом усталость и оглядываешь комнату.
+# {background} : StyleImageBG
+ад
 
 # {background} : InfirmaryBG
 # {reset_characters} : {None}, {Незнакомец}

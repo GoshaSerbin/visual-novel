@@ -37,6 +37,23 @@ public class ServerCommunication : MonoBehaviour
         return jsonMessages;
     }
 
+    public class ImageResponse
+    {
+        public ImageResponse(string Data, bool Censored)
+        {
+            data = Data;
+            censored = Censored;
+        }
+        public string data;
+        public bool censored;
+    }
+
+    static public ImageResponse FromJSON(string json)
+    {
+        ImageResponse response = JsonUtility.FromJson<ImageResponse>(json);
+        return response;
+    }
+
     IEnumerator SendMessage(WWWForm form, Action<string> callback)
     {
         using (UnityWebRequest www = UnityWebRequest.Post(serverURL + "/talk", form))
@@ -59,12 +76,12 @@ public class ServerCommunication : MonoBehaviour
         }
     }
 
-    public void SendImageRequestToServer(WWWForm form, Action<Sprite> callback)
+    public void SendImageRequestToServer(WWWForm form, Action<Sprite, bool> callback)
     {
         StartCoroutine(GetSprite(form, callback));
     }
 
-    IEnumerator GetSprite(WWWForm form, Action<Sprite> callback)
+    IEnumerator GetSprite(WWWForm form, Action<Sprite, bool> callback)
     {
         using (UnityWebRequest www = UnityWebRequest.Post(serverURL + "/image", form))
         {
@@ -73,17 +90,20 @@ public class ServerCommunication : MonoBehaviour
 
             if (www.result == UnityWebRequest.Result.Success)
             {
-                byte[] rawImage = www.downloadHandler.data;
+                Debug.Log("Server received image");
+                ImageResponse response = FromJSON(www.downloadHandler.text);
+                byte[] rawImage = System.Convert.FromBase64String(response.data);
+                bool status = response.censored;
+                Debug.Log("Image censored? " + response.censored);
                 Texture2D texture = new Texture2D(1, 1);
                 texture.LoadImage(rawImage);
                 var sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
-                Debug.Log("Server received image");
-                callback(sprite);
+                callback(sprite, status);
             }
             else
             {
                 Debug.Log(www.error);
-                callback(null); // TO DO: return null and then handle it
+                callback(null, false); // TO DO: return null and then handle it
             }
         }
     }

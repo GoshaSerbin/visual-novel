@@ -64,7 +64,7 @@ public class MenuManager : MonoBehaviour
         DeleteAllProgress();
         PlayerPrefs.SetString("PlayerDescription", _playerDescriptionInputField.text);
         PlayerPrefs.SetString("PlayerName", _playerNameInputField.text);
-        _aiManager.GenerateImage(_playerDescriptionInputField.text, 720, 1280, "ANIME", "PlayerProfilePicture");
+        _aiManager.GenerateImage(_playerDescriptionInputField.text, 720, 1280, "ANIME", "PlayerProfilePicture", true);
         _audioManger?.Play("ButtonClick");
 
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;

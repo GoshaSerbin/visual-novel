@@ -84,7 +84,7 @@ public class AIManager : MonoBehaviour
         _server.SendRequestToServer(form, callback);
         Debug.Log("AIManager sent request to server");
     }
-    public void Show(string prompt, Action<Sprite> callback, int width = 1280, int height = 720, string style = "DEFAULT")
+    public void Show(string prompt, Action<Sprite, bool> callback, int width = 1280, int height = 720, string style = "DEFAULT")
     {
         prompt = prompt.TrimEnd('\n');
         Debug.Log($"AIManager started showing: {prompt}");
@@ -148,11 +148,11 @@ public class AIManager : MonoBehaviour
         Debug.Log("Sprite saved to: " + filePath);
     }
 
-    public void GenerateImage(string prompt, int w, int h, string style, string name)
+    public void GenerateImage(string prompt, int w, int h, string style, string name, bool allowCensored)
     {
         prompt = prompt.Trim('\n');
         var form = GetImageWWWForm(prompt, w, h, style);
-        _server.SendImageRequestToServer(form, (Sprite sprite) =>
+        _server.SendImageRequestToServer(form, (Sprite sprite, bool isCensored) =>
         {
             if (sprite == null)
             {
@@ -160,6 +160,10 @@ public class AIManager : MonoBehaviour
             }
             else
             {
+                if (!allowCensored && isCensored)
+                {
+                    return;
+                }
                 SaveSpriteToPNG(sprite, name);
             }
         });
