@@ -71,6 +71,10 @@ public class Narrator : MonoBehaviour
             Debug.Log("From Save!");
             fromSave = true;
         }
+        else
+        {
+            fromSave = false;
+        }
         _aiManager = FindObjectOfType<AIManager>();
         _talkManager = FindObjectOfType<TalkManager>();
         _player = FindObjectOfType<PlayerBehavior>();
@@ -260,14 +264,17 @@ public class Narrator : MonoBehaviour
         BindPlayerPrefsFunctionality();
         BindUtilsFunctionality();
         OnStoryStarted?.Invoke();
+        Debug.Log("StartingStory!!");
         if (fromSave)
         {
+            Debug.Log("fromSave");
             _storyParser.Load();
             ForcedDisplayUpdate();
-            ToldStory();
+            TellStory();
         }
         else
         {
+            Debug.Log("not from save");
             ContinueStory();
         }
     }
@@ -287,10 +294,12 @@ public class Narrator : MonoBehaviour
         if (_inkStory.canContinue)
         {
             _inkStory.Continue();
+            Debug.Log("current tags " + _inkStory.currentTags);
+            Debug.Log("current text " + _inkStory.currentText);
             _storyParser.UpdateCurrentTags(_inkStory.currentTags);
             _storyParser.UpdateCurrentText(_inkStory.currentText);
             Debug.Log("No blocking variables currently");
-            ToldStory();
+            TellStory();
             List<string> BlockingNames = _storyParser.GetBlockingNames();
             if (BlockingNames.Count > 0)
             {
@@ -318,7 +327,7 @@ public class Narrator : MonoBehaviour
     }
 
     // doesnt have _inkStory.Continue();
-    public void ToldStory()
+    public void TellStory()
     {
         Debug.Log("Start tolding story");
         if (_storyParser.IsCharactersReset())
@@ -333,6 +342,7 @@ public class Narrator : MonoBehaviour
             OnBackgroundChanged?.Invoke(_storyParser.GetCurrentBackGround());
         }
 
+        Debug.Log(_storyParser.GetCurrentSpeaker() + " SAYS " + _storyParser.GetCurrentText());
         OnCharacterSaid?.Invoke(
             new Replica(
                 _storyParser.GetCurrentSpeaker(),
