@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class MessagesDisplay : MonoBehaviour
 {
     private float _animationTime = 0.5f;
-    private float _showTime = 7.5f;
+    [SerializeField] private float _showTime = 6f;
     private Queue<Message> _messageQueue = new Queue<Message>();
     private bool _isShowingMessage = false;
 
