@@ -6,6 +6,8 @@ using UnityEngine.UIElements;
 
 public class InGameMenuManager : MonoBehaviour
 {
+
+    private bool IsMenuOpened = false;
     private AudioManager _audioManger;
     [SerializeField] private GameObject _menuPanel;
     [SerializeField] private GameObject _settingsPanel;
@@ -16,12 +18,14 @@ public class InGameMenuManager : MonoBehaviour
 
     public void OpenMenu()
     {
+        IsMenuOpened = true;
         _audioManger?.Play("ButtonClick");
         _menuPanel.SetActive(true);
     }
 
     public void ContinueGame()
     {
+        IsMenuOpened = false;
         _audioManger?.Play("ButtonClick");
         _menuPanel.SetActive(false);
     }
@@ -43,6 +47,7 @@ public class InGameMenuManager : MonoBehaviour
         //to do maybe we can load and save with num of turns variable in ink story + scene number
         FindObjectOfType<Narrator>()?.SaveStoryProgress();
         _audioManger?.Play("ButtonClick");
+        IsMenuOpened = false;
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 
@@ -51,7 +56,14 @@ public class InGameMenuManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("Escape pressed");
-            OpenMenu();
+            if (IsMenuOpened)
+            {
+                ContinueGame();
+            }
+            else
+            {
+                OpenMenu();
+            }
         }
     }
 }
