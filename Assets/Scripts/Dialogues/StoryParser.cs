@@ -77,6 +77,10 @@ public class StoryParser
     {
         return _currentTags["background"];
     }
+    public void SetCurrentBackGround(string name)
+    {
+        _currentTags["background"] = name;
+    }
 
     public string GetCurrentSpeaker()
     {

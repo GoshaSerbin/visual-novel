@@ -178,6 +178,29 @@ public class Narrator : MonoBehaviour
                 allowCensored
             );
         });
+
+
+        _inkStory.BindExternalFunction("AIChangeBackground", (string varName, string prompt, int w, int h) =>
+        {
+            string style = (string)_inkStory.variablesState["ai_style"];
+            bool allowCensored = ((int)_inkStory.variablesState["ai_allow_censored_images"]) != 0;
+            Debug.Log($"AIChangeBackground with prompt: {prompt}, {w}, {h}, {style}");
+            _aiManager.GenerateImage(
+                prompt,
+                w,
+                h,
+                style,
+                varName,
+                allowCensored,
+                () =>
+                {
+                    _storyParser.SetCurrentBackGround(varName);
+                    OnBackgroundChanged?.Invoke(_storyParser.GetCurrentBackGround());
+                }
+            );
+        });
+
+
     }
 
     private void BindUtilsFunctionality()

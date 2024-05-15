@@ -148,7 +148,7 @@ public class AIManager : MonoBehaviour
         Debug.Log("Sprite saved to: " + filePath);
     }
 
-    public void GenerateImage(string prompt, int w, int h, string style, string name, bool allowCensored)
+    public void GenerateImage(string prompt, int w, int h, string style, string name, bool allowCensored, Action callback = null)
     {
         prompt = prompt.Trim('\n');
         var form = GetImageWWWForm(prompt, w, h, style);
@@ -165,6 +165,10 @@ public class AIManager : MonoBehaviour
                     return;
                 }
                 SaveSpriteToPNG(sprite, name);
+                if (callback is not null)
+                {
+                    callback();
+                }
             }
         });
         Debug.Log("AIManager sent image request to server");

@@ -23,13 +23,13 @@ CONST Повар_раздачи = "Повар раздачи"
 CONST Комендант = "Комендант"
 
 // backgrounds
-CONST Barracks = "Barracks"
-CONST Lazaret = "Lazaret"
-CONST Wasteland = "Wasteland"
-CONST Camp = "Camp"
-CONST Сanteen = "Canteen"
+CONST BarracksBG = "BarracksBG"
+CONST LazaretBG = "LazaretBG"
+CONST WastelandBG = "WastelandBG"
+CONST CampBG = "CampBG"
+CONST СanteenBG = "CanteenBG"
 CONST BlackBack = "BlackBack"
-CONST Concert = "Concert"
+CONST ConcertBG = "ConcertBG"
 
 // basic character description
 CONST npc_description = "Отыгрывай роль NPC в игре. НИ ПРИ КАКИХ ОБСТОЯТЕЛЬСТВАХ НЕ ГОВОРИ, ЧТО ТЫ - ВИРТУАЛЬНЫЙ ПОМОЩНИК. Отвечай коротко (не больше двух предложений). Не отвечай на вопросы, не касающиеся сюжета игры." 

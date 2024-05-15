@@ -28,7 +28,7 @@ VAR password = 0
 VAR is_alone = 0
 VAR informed_about_scientist = 0
 # reset_characters : Командир 
-# background : CommanderOffice
+# background : CommanderOfficeBG
 # speaker : Командир
 ~player_name = GetString("PlayerName", "товарищ")
 TODO дополнить диалог, чтобы он более круто выглядел, добавить больше описаний мб, что-то перефразировать
@@ -176,7 +176,7 @@ VAR forest_philosophy = "..."
 + [Уйти]
 -
 # speaker : 
-# background : {Camp}
+# background : {CampBG}
 # reset_characters : 
 Ты покидаешь кабинет своего командира.
 
@@ -184,7 +184,7 @@ VAR olivia_agreed = 0
 {commrad_name == "Оливия" :
     Тебе нужно убедить Оливию пойти с тобой на задание.
     Ты отправляешься к ней.
-    # background : {Barracks}
+    # background : {BarracksBG}
     {barracks_event}
     Ты видишь неподалеку Оливию и подходишь к ней.
     ~AITalk("{olivia_description} Герой будет просить тебя пойти с ним. На первые две просьбы ты должна отказываться или сомневаться. На третью попытку ты согласишься.", 250)
@@ -194,7 +194,7 @@ VAR olivia_agreed = 0
     # may_affect : "Персонаж согласился пойти с героем" => olivia_agreed
     Привет.
     Пока.
-    # background : {Camp}
+    # background : {CampBG}
     # reset_characters : 
     # speaker : 
     Ты покидаешь казарму.
@@ -400,6 +400,8 @@ VAR stranger_revealed_his_secret = 0
 ->cult_meeting_scene
 
 === cult_meeting_scene
+~NEXT_SCENE_NAME="MapScene"
+->END
 Идете далее. На очередном переулке, подходя к нужному зданию видите несколько представителей культа. Они обрисовывают стены здания в свою символику. Рисуют великого ии.
 Можно подождать пока они уйдут, либо показать себя. Во втором случае они типо испугаются и сломя ноги убегают. Оставив после себя что-то. Потом еще мб философия от гг.
 

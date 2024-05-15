@@ -1,8 +1,8 @@
 EXTERNAL AIAnswer(varName, system, question, max_tokens)
 EXTERNAL AIGenerateText(varName, prompt, max_tokens)
-EXTERNAL AIGenerateImage(varName, prompt, w, h)
 EXTERNAL AITalk(system, max_tokens)
-EXTERNAL AIWaitFor(varName)
+EXTERNAL AIGenerateImage(varName, prompt, w, h)
+EXTERNAL AIChangeBackground(varName, prompt, w, h)
 
 // these are global vars, change them before calling a function
 VAR ai_temperature = 1.2

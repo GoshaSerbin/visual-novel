@@ -21,13 +21,21 @@ public static class TextProcessor
             int index = aiAnswer.LastIndexOf('.');
             if (index >= 0)
             {
-                aiAnswer = aiAnswer.Substring(0, index - 1);
+                if (index < aiAnswer.Length - 1)
+                {
+                    aiAnswer = aiAnswer.Substring(0, index + 1);
+                }
+                else
+                {
+                    aiAnswer = aiAnswer.Substring(0, index);
+                }
             }
             else
             {
                 aiAnswer = aiAnswer.Substring(0, MaxLength - 5) + "...";
                 break;
             }
+
         }
         return aiAnswer;
     }
