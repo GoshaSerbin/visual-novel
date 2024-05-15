@@ -267,19 +267,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 243760814595081156, guid: e4c75a6d4b8de01429bef9439e6b690d, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 243760814595081156, guid: e4c75a6d4b8de01429bef9439e6b690d, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 243760814595081156, guid: e4c75a6d4b8de01429bef9439e6b690d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 382.84
       objectReference: {fileID: 0}
     - target: {fileID: 243760814595081156, guid: e4c75a6d4b8de01429bef9439e6b690d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 170.32666
       objectReference: {fileID: 0}
     - target: {fileID: 243760814595081156, guid: e4c75a6d4b8de01429bef9439e6b690d, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -288,6 +288,10 @@ PrefabInstance:
     - target: {fileID: 723964345851029489, guid: e4c75a6d4b8de01429bef9439e6b690d, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -8.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2661429938643251626, guid: e4c75a6d4b8de01429bef9439e6b690d, type: 3}
+      propertyPath: m_Color.a
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2782329174527769708, guid: e4c75a6d4b8de01429bef9439e6b690d, type: 3}
       propertyPath: m_AnchorMax.y
@@ -344,7 +348,7 @@ PrefabInstance:
     - target: {fileID: 3033649940781106394, guid: e4c75a6d4b8de01429bef9439e6b690d, type: 3}
       propertyPath: _fallbackPicture
       value: 
-      objectReference: {fileID: 21300000, guid: f5cbeb8804f7e29418c2bbede41299ab, type: 3}
+      objectReference: {fileID: 21300000, guid: b63bac564ac8a9343b784b92fc7b9856, type: 3}
     - target: {fileID: 3375147145692958995, guid: e4c75a6d4b8de01429bef9439e6b690d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -449,6 +453,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4401605883863627325, guid: e4c75a6d4b8de01429bef9439e6b690d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b63bac564ac8a9343b784b92fc7b9856, type: 3}
     - target: {fileID: 4794536938830544325, guid: e4c75a6d4b8de01429bef9439e6b690d, type: 3}
       propertyPath: _inventoryBackground
       value: 
