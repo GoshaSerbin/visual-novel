@@ -27,7 +27,7 @@ CONST BarracksBG = "BarracksBG"
 CONST LazaretBG = "LazaretBG"
 CONST WastelandBG = "WastelandBG"
 CONST CampBG = "CampBG"
-CONST СanteenBG = "CanteenBG"
+CONST CanteenBG = "CanteenBG"
 CONST BlackBack = "BlackBack"
 CONST ConcertBG = "ConcertBG"
 
