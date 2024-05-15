@@ -27,6 +27,7 @@ public class BackgroundDisplay : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Image _backgroundImage;
 
     [SerializeField] private float _animationTime;
+    [SerializeField] private Sprite _fallbackSprite;
 
     private void OnEnable()
     {
@@ -81,6 +82,6 @@ public class BackgroundDisplay : MonoBehaviour
             }
         }
         Debug.Log($"Can not find background {name} among not generated backgrounds");
-        return new Background(new List<string>() { }, null);
+        return new Background(new List<string>() { }, _fallbackSprite);
     }
 }

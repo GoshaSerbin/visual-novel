@@ -267,19 +267,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 243760814595081156, guid: e4c75a6d4b8de01429bef9439e6b690d, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 243760814595081156, guid: e4c75a6d4b8de01429bef9439e6b690d, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 243760814595081156, guid: e4c75a6d4b8de01429bef9439e6b690d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 382.84
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 243760814595081156, guid: e4c75a6d4b8de01429bef9439e6b690d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 170.32666
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 243760814595081156, guid: e4c75a6d4b8de01429bef9439e6b690d, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2852,7 +2852,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 22.37799, y: 22.377983}
+  m_AnchoredPosition: {x: 22.37799, y: 22.37799}
   m_SizeDelta: {x: 44.755245, y: 44.755245}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &963166795
@@ -4418,6 +4418,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 21c9a37ebc78d3b4b85f81459f407ff9, type: 3}
   _backgroundImage: {fileID: 1025167071}
   _animationTime: 1
+  _fallbackSprite: {fileID: 21300000, guid: b2eacb2ab03a07945b8ef73285fd528e, type: 3}
 --- !u!114 &1362648051
 MonoBehaviour:
   m_ObjectHideFlags: 0
