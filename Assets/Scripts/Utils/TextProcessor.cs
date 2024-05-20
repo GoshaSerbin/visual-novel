@@ -48,11 +48,11 @@ public static class TextProcessor
     public static string GetChoice(string aiAnswer, int choice)
     {
         string separator;
-        if (aiAnswer.Contains("1.") && aiAnswer.Contains("2.") && aiAnswer.Contains("3."))
+        if (aiAnswer.Contains("1.") && aiAnswer.Contains("2."))
         {
             separator = ".";
         }
-        else if (aiAnswer.Contains("1)") && aiAnswer.Contains("2)") && aiAnswer.Contains("3)"))
+        else if (aiAnswer.Contains("1)") && aiAnswer.Contains("2)"))
         {
             separator = ")";
         }

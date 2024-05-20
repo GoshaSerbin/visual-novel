@@ -24,6 +24,7 @@ CONST Комендант = "Комендант"
 
 // backgrounds
 CONST BarracksBG = "BarracksBG"
+CONST EarthBG = "EarthBG"
 CONST LazaretBG = "LazaretBG"
 CONST WastelandBG = "WastelandBG"
 CONST CampBG = "CampBG"

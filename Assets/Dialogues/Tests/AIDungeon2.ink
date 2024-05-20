@@ -20,7 +20,7 @@ VAR story = ""
 
 VAR choices = ""
 VAR player_choice = ""
-# {background} : {BlackBack}
+# {background} : {EarthBG}
 Начинаем!
 -> dungeon
 === dungeon ===
