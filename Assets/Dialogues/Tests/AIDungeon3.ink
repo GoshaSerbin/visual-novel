@@ -32,7 +32,7 @@ VAR background_descr = ""
 // Привет!!! {TURNS_SINCE(-> dungeon)}
 // ~AISum("story", "{story}. {player_choice}. {new_story}", 250)
 ~AIGenerateText("background_descr", "Дай короткое (одно предложение) визуальное описание фона на котором происходят события: {new_story}", 200)
-~AIAnswer("choices", "{narrator_system}", "Дай игроку 2 альтернативных варианта действий. Перечисли их парой слов, пронумеровав. История: \"{story}. {new_story}\".", 250)
+~AIAnswer("choices", "{narrator_system}", "Дай игроку 2 альтернативных варианта действий. Перечисли их парой слов, пронумеровав. История: \"{story}. {new_story}\".", 200)
 # barrier : story, background_descr
 Анализируем происходящее...
 ~AIChangeBackground("DungeonBG", "{background_descr}", 1024, 576)
