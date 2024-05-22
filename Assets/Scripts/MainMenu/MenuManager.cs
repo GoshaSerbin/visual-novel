@@ -83,7 +83,7 @@ public class MenuManager : MonoBehaviour
         PlayerPrefs.SetFloat(AudioManager.MUSIC_KEY, musicVolume);
         PlayerPrefs.SetFloat(AudioManager.SFX_KEY, sfxVolume);
 
-        FileUtil.DeleteFileOrDirectory(Application.persistentDataPath);
+        // FileUtil.DeleteFileOrDirectory(Application.persistentDataPath);
         _playerInventoryData.Initialize();
     }
 
