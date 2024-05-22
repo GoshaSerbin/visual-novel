@@ -40,6 +40,7 @@ public class Narrator : MonoBehaviour
     public static event Action<string, int> OnItemReceived;
 
     public static event Action<string> OnSoundPlayed;
+    public static event Action<string> OnPlayerAsked;
 
     private Story _inkStory;
     private UnityEngine.TextAsset _inkJson;
@@ -215,6 +216,12 @@ public class Narrator : MonoBehaviour
         {
             Debug.Log($"PlaySound {name}");
             OnSoundPlayed?.Invoke(name);
+        });
+
+        _inkStory.BindExternalFunction("AskPlayer", (string name) =>
+        {
+            Debug.Log($"PlayerAsk {name}");
+            OnPlayerAsked?.Invoke(name);
         });
     }
 

@@ -59,7 +59,7 @@ public static class TextProcessor
         else
         {
             Debug.LogWarning("Все пошло не по плану))))");
-            return "Ошибочка....";
+            return "ОШИБКА. Обратитесь к администратору.";
         }
         var BeginInd = aiAnswer.IndexOf(choice + separator) + 2;
         var EndInd = aiAnswer.IndexOf(choice + 1 + separator);

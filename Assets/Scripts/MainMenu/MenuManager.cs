@@ -125,4 +125,10 @@ public class MenuManager : MonoBehaviour
         SettingsPanel.SetActive(false);
         ButtonsPanel.SetActive(true);
     }
+
+    public void StartPlayAIDungeon()
+    {
+        _audioManger?.Play("ButtonClick");
+        SceneManager.LoadScene("AIDungeon");
+    }
 }
