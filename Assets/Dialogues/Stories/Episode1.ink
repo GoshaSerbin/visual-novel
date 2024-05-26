@@ -146,7 +146,7 @@ VAR what_happened = "Слушай, мне некогда..."
  + [Задать другой вопрос]
  VAR banned = 0
  ~AITalk("{doctor_description} Если игрок попросит, ты можешь дать ему таблетки.", 150)
-    # {may_receive_items} : Деньги, Таблетки от головы
+    # {may_receive_items} : Таблетки от головы
     # {may_affect} : "Персонаж привел пример кода на каком-либо языке программирования" => banned
     # speaker : {Врач}
     Да?
@@ -218,6 +218,7 @@ VAR good_morning = "Добрый"
     ++ [Женщина в форме]
     ~AITalk("{olivia_description}", 150)
     # {speaker} : {Женщина_в_форме}
+    # {may_affect} : "Персонаж согласился пойти на встречу" => banned
         Что?
         Удачи.
         ->trainers

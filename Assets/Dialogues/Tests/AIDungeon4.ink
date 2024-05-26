@@ -20,7 +20,9 @@ VAR prompt = "Скажи кем является главный герой и п
 
 VAR story = ""
 VAR new_story = ""
+VAR story_intro = ""
 ~AIAnswer("new_story", "{narrator_system}", "{prompt}", 200)
+
 
 VAR choices = ""
 VAR player_choice = ""
@@ -31,8 +33,11 @@ VAR background_descr = ""
 # {speaker} : {None}
 # barrier : new_story
 Развиваем историю...
+{TURNS_SINCE(->dungeon) == 0 : 
+    ~story_intro = new_story
+}
 ~AIGenerateText("background_descr", "Дай короткое (одно предложение) визуальное описание фона на котором происходят события: {new_story}", 200)
-~AIAnswer("choices", "{narrator_system}", "Дай игроку 2 различных варианта действий. Перечисли их парой слов, пронумеровав. История: \"{story}. {new_story}\".", 250)
+~AIAnswer("choices", "{narrator_system}", "История: \"{story}. {new_story}\". Дай игроку 2 различных побудительных варианта действий на основе истории. Перечисли их парой слов, пронумеровав.", 250)
 # barrier : story, background_descr
 Анализируем происходящее...
 ~AIChangeBackground("DungeonBG", "{background_descr}", 1024, 576)

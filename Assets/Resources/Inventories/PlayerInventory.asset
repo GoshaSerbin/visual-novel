@@ -16,15 +16,15 @@ MonoBehaviour:
   - quantity: 1
     item: {fileID: 11400000, guid: d617cef14dc95bc4292324a7e33bf3f9, type: 2}
   - quantity: 1
-    item: {fileID: 0}
-  - quantity: 0
-    item: {fileID: 0}
-  - quantity: 0
-    item: {fileID: 0}
-  - quantity: 0
-    item: {fileID: 0}
-  - quantity: 0
-    item: {fileID: 0}
+    item: {fileID: 11400000, guid: b2c33045925edb34d98c17729bbacdd4, type: 2}
+  - quantity: 1
+    item: {fileID: 11400000, guid: d6882adeaafe88f48b983a2dcc0d55c7, type: 2}
+  - quantity: 1
+    item: {fileID: 11400000, guid: 8057e72924a6b8a47b3a7f1bfad081c7, type: 2}
+  - quantity: 1
+    item: {fileID: 11400000, guid: 8a1be19c1168fba48aafcadde58d455c, type: 2}
+  - quantity: 1
+    item: {fileID: 11400000, guid: 5b3ae96806987164d9ccbbce2cc96153, type: 2}
   - quantity: 0
     item: {fileID: 0}
   - quantity: 0
