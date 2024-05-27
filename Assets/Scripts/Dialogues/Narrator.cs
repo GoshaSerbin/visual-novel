@@ -382,12 +382,12 @@ public class Narrator : MonoBehaviour
         );
 
         OnChoicesAppeared?.Invoke(_inkStory.currentChoices);
-        if (!_inkStory.canContinue && _inkStory.currentChoices.Count() == 0)
-        {
-            Debug.Log("Story ended.");
-            OnStoryEnded?.Invoke();
-            LoadNextScene();
-        }
+        // if (!_inkStory.canContinue && _inkStory.currentChoices.Count() == 0)
+        // {
+        //     Debug.Log("Story ended.");
+        //     OnStoryEnded?.Invoke();
+        //     LoadNextScene();
+        // }
     }
 
     public void ChooseChoiceIndex(int choiceIndex)
