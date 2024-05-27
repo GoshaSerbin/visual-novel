@@ -47,7 +47,8 @@ public class AskManager : MonoBehaviour
         {
             return;
         }
-        FindObjectOfType<Narrator>().ChangeVariableState(_varNameToSet, _inputField.text);
+        Debug.Log("INPUT " + _inputField.text);
+        FindObjectOfType<Narrator>().ChangeVariableState(_varNameToSet, _inputField.text.TrimEnd('\n'));
         _inputFieldPanel.SetActive(false);
         OnPlayerAnaswered.Invoke();
         FindObjectOfType<Narrator>().ContinueStory();

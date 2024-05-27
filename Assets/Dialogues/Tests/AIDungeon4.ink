@@ -4,9 +4,7 @@ INCLUDE ../Utils/Sounds.ink
 INCLUDE ../Utils/PlayerPrefs.ink
 INCLUDE ../Utils/AI.ink
 INCLUDE ../Utils/SceneManagement.ink
-
-EXTERNAL GetChoice(choices, num)
-EXTERNAL AskPlayer(varName)
+INCLUDE ../Utils/Methods.ink
 
 VAR game_theme = "Пиратство"
 ~AskPlayer("game_theme")
