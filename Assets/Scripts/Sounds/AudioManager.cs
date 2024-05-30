@@ -37,7 +37,10 @@ public class AudioManager : MonoBehaviour
 
 	void OnEnable()
 	{
-		Narrator.OnSoundPlayed += Play;
+		Narrator.OnSoundPlayed += PlaySound;
+		Narrator.OnSoundStoped += StopSounds;
+		Narrator.OnMusicPlayed += PlayMusic;
+		Narrator.OnMusicStoped += StopMusic;
 	}
 
 	void OnDisable()
@@ -53,7 +56,38 @@ public class AudioManager : MonoBehaviour
 			Debug.LogWarning("Sound: " + name + " not found!");
 			return;
 		}
+		s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
+		s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
 
+		s.source.Play();
+	}
+
+
+	//for ink, silinces previous sounds
+	public void PlaySound(string sound)
+	{
+		StopSounds();
+		Sound s = Array.Find(sounds, item => item.name == sound);
+		if (s == null)
+		{
+			Debug.LogWarning("Sound: " + name + " not found!");
+			return;
+		}
+		s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
+		s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
+
+		s.source.Play();
+	}
+
+	public void PlayMusic(string sound)
+	{
+		StopMusic();
+		Sound s = Array.Find(sounds, item => item.name == sound);
+		if (s == null)
+		{
+			Debug.LogWarning("Sound: " + name + " not found!");
+			return;
+		}
 		s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
 		s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
 
@@ -66,6 +100,52 @@ public class AudioManager : MonoBehaviour
 		float sfxVolume = PlayerPrefs.GetFloat(SFX_KEY, 1f);
 		_mixer.SetFloat(VolumeSettings.MIXER_MUSIC, Mathf.Log10(musicVolume) * 20);
 		_mixer.SetFloat(VolumeSettings.MIXER_SFX, Mathf.Log10(sfxVolume * 20));
+	}
+
+	void StopSound(string sound)
+	{
+		Sound s = Array.Find(sounds, item => item.name == sound);
+		if (s == null)
+		{
+			Debug.LogWarning("Sound: " + name + " not found!");
+			return;
+		}
+
+		s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
+		s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
+
+		s.source.Stop();
+	}
+
+	void StopSounds()
+	{
+		Debug.Log("STOP ALL SOUNDS!");
+		foreach (var s in sounds)
+		{
+			if (s.mixerGroup.name == "SFX")
+			{
+				s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
+				s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
+				s.source.Stop();
+			}
+		}
+
+	}
+
+	void StopMusic()
+	{
+		foreach (var s in sounds)
+		{
+			if (s.mixerGroup.name == "Music")
+			{
+				s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
+				s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
+
+				s.source.Stop();
+			}
+
+		}
+
 	}
 
 }

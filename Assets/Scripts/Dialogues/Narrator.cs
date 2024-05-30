@@ -40,6 +40,9 @@ public class Narrator : MonoBehaviour
     public static event Action<string, int> OnItemReceived;
 
     public static event Action<string> OnSoundPlayed;
+    public static event Action<string> OnMusicPlayed;
+    public static event Action OnMusicStoped;
+    public static event Action OnSoundStoped;
     public static event Action<string> OnPlayerAsked;
 
     private Story _inkStory;
@@ -216,6 +219,19 @@ public class Narrator : MonoBehaviour
         {
             Debug.Log($"PlaySound {name}");
             OnSoundPlayed?.Invoke(name);
+        });
+
+        _inkStory.BindExternalFunction("StopSounds", () =>
+        {
+            OnSoundStoped?.Invoke();
+        });
+        _inkStory.BindExternalFunction("StopMusic", () =>
+        {
+            OnMusicStoped?.Invoke();
+        });
+        _inkStory.BindExternalFunction("PlayMusic", (string name) =>
+        {
+            OnMusicPlayed?.Invoke(name);
         });
 
         _inkStory.BindExternalFunction("AskPlayer", (string name) =>

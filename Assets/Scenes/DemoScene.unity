@@ -834,7 +834,7 @@ Transform:
   m_GameObject: {fileID: 265242494}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -79.09, z: -4051.512}
+  m_LocalPosition: {x: 0, y: -33.62, z: -4051.512}
   m_LocalScale: {x: 75, y: 75, z: 75}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1245,7 +1245,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 182.31, y: -80.43274}
+  m_AnchoredPosition: {x: 182.31, y: -118.16442}
   m_SizeDelta: {x: 336.25, y: 62.38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &359371557
@@ -2304,7 +2304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bcb67747ca8d6a4fb03cdf38a76bc9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inkJson: {fileID: 4900000, guid: 0ee1d2234d0f8154397464c07c29b3e3, type: 3}
+  inkJson: {fileID: 4900000, guid: 2f98c5ac9ad312248867cb6107d6e353, type: 3}
   dialoguePanel: {fileID: 1871276209}
   dialogueText: {fileID: 961720872}
   nameText: {fileID: 1429462923}
@@ -3348,7 +3348,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 22.37799, y: 22.37799}
+  m_AnchoredPosition: {x: 22.37799, y: 22.377983}
   m_SizeDelta: {x: 44.755245, y: 44.755245}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &963166795
@@ -4836,7 +4836,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 182.31, y: -165.98274}
+  m_AnchoredPosition: {x: 182.31, y: -203.71442}
   m_SizeDelta: {x: 141.56, y: 49.36}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1343349609
