@@ -6,7 +6,6 @@ INCLUDE ../Utils/SceneManagement.ink
 INCLUDE ../Utils/AI.ink
 INCLUDE ../Utils/Methods.ink
 
-->stranger_talk_scene.stranger_farewell
 ->main
 
 
@@ -29,7 +28,7 @@ VAR commrad_description = ""
 VAR password = 0
 VAR is_alone = 0
 VAR informed_about_scientist = 0
-# reset_characters : Командир 
+# reset_characters : , Командир 
 # background : CommanderOfficeBG
 # speaker : Командир
 ~player_name = GetString("PlayerName", "товарищ")
