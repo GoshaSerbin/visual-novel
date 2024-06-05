@@ -43,6 +43,8 @@ public class NextPhraseButton : MonoBehaviour
     {
         Narrator.OnChoicesAppeared += ShowOrHide;
         Narrator.OnChoiceChosen += Show;
+        Narrator.OnPlayerAsked += Hide;
+        AskManager.OnPlayerAnaswered += Show;
         TalkManager.OnAITalkStarted += Hide;
         TalkManager.OnAITalkStopped += Show;
         BarrierSynchronizer.OnWaitStarted += Hide;
@@ -53,6 +55,8 @@ public class NextPhraseButton : MonoBehaviour
     {
         Narrator.OnChoicesAppeared -= ShowOrHide;
         Narrator.OnChoiceChosen -= Show;
+        Narrator.OnPlayerAsked -= Hide;
+        AskManager.OnPlayerAnaswered -= Show;
         TalkManager.OnAITalkStarted -= Hide;
         TalkManager.OnAITalkStopped -= Show;
         BarrierSynchronizer.OnWaitStarted -= Hide;
@@ -65,6 +69,11 @@ public class NextPhraseButton : MonoBehaviour
         {
             Hide();
         }
+    }
+
+    void Hide(string _)
+    {
+        Hide();
     }
 
     void Show()

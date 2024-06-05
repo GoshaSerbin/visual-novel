@@ -51,7 +51,7 @@ public class BackgroundDisplay : MonoBehaviour
         if (_currentBackground.sprite == null)
         {
             _currentBackground = FindBackgroundByName(name);
-            if (_currentBackground.sprite == null)
+            if (_currentBackground.Names.Count == 0)
             {
                 Debug.LogError($"Can not find background {name} anywhere!");
             }

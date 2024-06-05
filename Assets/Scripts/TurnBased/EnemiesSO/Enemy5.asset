@@ -15,5 +15,7 @@ MonoBehaviour:
   enemyName: ROB v.12
   enemyWeakness: 3
   enemyBaseAttack: 23
-  enemyHealthMax: 30
+  enemyHealthMax: 38
   enemySprite: {fileID: 21300000, guid: 1ed4debaad104924bbf0516f601e3d8d, type: 3}
+  possibleLoot:
+  - {fileID: 11400000, guid: cb6fbc05153897f49b5ac8200ce22034, type: 2}

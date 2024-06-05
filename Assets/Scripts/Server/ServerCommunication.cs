@@ -71,7 +71,7 @@ public class ServerCommunication : MonoBehaviour
             else
             {
                 Debug.Log(www.error);
-                callback("SERVER ERROR: PLEASE CONTACT THE DEVELOPERS"); // TO DO: return null and then handle it
+                callback("ОШИБКА СЕРВЕРА. Обратитесь к администратору."); // TO DO: return null and then handle it
             }
         }
     }

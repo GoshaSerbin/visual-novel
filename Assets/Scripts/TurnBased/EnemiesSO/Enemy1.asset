@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Enemy1
   m_EditorClassIdentifier: 
   enemyName: Nok-3310
-  enemyWeakness: 0
+  enemyWeakness: 5
   enemyBaseAttack: 10
-  enemyHealthMax: 12
+  enemyHealthMax: 30
   enemySprite: {fileID: 21300000, guid: 32db310d571380742946de9947048255, type: 3}
+  possibleLoot:
+  - {fileID: 11400000, guid: cb6fbc05153897f49b5ac8200ce22034, type: 2}

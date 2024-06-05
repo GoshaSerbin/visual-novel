@@ -10,12 +10,11 @@ public class EnemyBattle : CharacterBattle
     public override bool AttackBuffActive { get; set; }
     public override bool DefenseBuffActive { get; set; }
 
-    public static Color circleInactive = new(255, 255, 255, 36);
-    public static Color circleActive = new(255, 255, 255, 180);
-
     public override HealthSystem HealthComponent { get; set; }
 
     [SerializeField] private GameObject _enemyCircle;
+
+    [field: SerializeField] public List<BattleItemSO> ThisEnemyLoot { get; set; }
 
     public Sprite GetSprite()
     {
@@ -31,19 +30,31 @@ public class EnemyBattle : CharacterBattle
         HealthComponent = new HealthSystem(enemyData.EnemyHealthMax);
         AttackBuffActive = false;
         DefenseBuffActive = false;
+        DetermineObtainableItems();
     }
 
-    public override void Attack(CharacterBattle target, Action onAttackComplete)
+    private void DetermineObtainableItems()
+    {
+        System.Random rnd = new();
+        foreach (BattleItemSO item in _enemyData.PossibleLoot)
+        {
+            var prob = rnd.NextDouble();
+            if (prob < item.AppearanceProbability)
+            {
+                ThisEnemyLoot.Add(item);
+            }
+        }
+    }
+
+    public override void Attack(CharacterBattle target, float damage, Action onAttackComplete)
     {
         target.TakeDamage(_enemyData.EnemyBaseAttack);
         if (target.IsDead())
         {
             BattleHandler.GetInstance().PlayerLost();
+            return;
         }
-        else
-        {
-            onAttackComplete();
-        }
+        onAttackComplete();
     }
 
     public void OnMouseEnter()
@@ -74,4 +85,5 @@ public class EnemyBattle : CharacterBattle
     {
         _enemyCircle.SetActive(false);
     }
+
 }

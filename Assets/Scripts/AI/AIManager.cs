@@ -123,7 +123,7 @@ public class AIManager : MonoBehaviour
         var messages = new List<ServerCommunication.Message>
             {
                 systemMsg,
-                new("user", "Следует ли напрямую из фразы, что произошло событие \"" + varDescription + "\"?"),
+                new("user", "Событие \"" + varDescription + "\" НАПРЯМУЮ СЛЕДУЕТ из фразы?"),
             };
         var form = GetWWWForm(messages, 300, 0);
         _server.SendRequestToServer(form, (string response) =>

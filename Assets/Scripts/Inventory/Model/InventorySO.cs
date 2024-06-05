@@ -28,23 +28,6 @@ namespace Inventory.Model
 
         public int AddItem(ItemSO item, int quantity)//, List<ItemParameter> itemState = null
         {
-            if (item.IsStackable == false)
-            {
-                for (int i = 0; i < inventoryItems.Count; ++i)
-                {
-                    while (quantity > 0 && IsInventoryFull() == false)
-                    {
-                        quantity -= AddItemToFirstFreeSlot(item, 1);//, itemState
-                    }
-                    InformAboutChange();
-                    return quantity;
-                    // if (inventoryItems[i].IsEmpty)
-                    // {
-                    //     inventoryItems[i] = new InventoryItem { item = item, quantity = quantity };
-                    //     return quantity;
-                    // }
-                }
-            }
             quantity = AddStackableItem(item, quantity);
             InformAboutChange();
             return quantity;
@@ -52,7 +35,7 @@ namespace Inventory.Model
 
         private int AddItemToFirstFreeSlot(ItemSO item, int quantity)//, List<ItemParameter> itemState = null
         {
-            InventoryItem newItem = new InventoryItem
+            InventoryItem newItem = new()
             {
                 item = item,
                 quantity = quantity,
@@ -136,7 +119,7 @@ namespace Inventory.Model
 
         public Dictionary<int, InventoryItem> GetCurrentInventoryState()
         {
-            Dictionary<int, InventoryItem> returnValue = new Dictionary<int, InventoryItem>();
+            Dictionary<int, InventoryItem> returnValue = new();
 
             for (int i = 0; i < inventoryItems.Count; i++)
             {
@@ -154,9 +137,7 @@ namespace Inventory.Model
 
         public void SwapItems(int itemIndex_1, int itemIndex_2)
         {
-            InventoryItem item1 = inventoryItems[itemIndex_1];
-            inventoryItems[itemIndex_1] = inventoryItems[itemIndex_2];
-            inventoryItems[itemIndex_2] = item1;
+            (inventoryItems[itemIndex_2], inventoryItems[itemIndex_1]) = (inventoryItems[itemIndex_1], inventoryItems[itemIndex_2]);
             InformAboutChange();
         }
 
@@ -172,7 +153,7 @@ namespace Inventory.Model
         public int quantity;
         public ItemSO item;
         // public List<ItemParameter> itemState;
-        public bool IsEmpty => item == null;
+        public readonly bool IsEmpty => item == null;
 
         public InventoryItem ChangeQuantity(int newQuantity)
         {
@@ -185,7 +166,7 @@ namespace Inventory.Model
         }
 
         public static InventoryItem GetEmptyItem()
-            => new InventoryItem
+            => new()
             {
                 item = null,
                 quantity = 0,

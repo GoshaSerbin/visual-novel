@@ -15,5 +15,6 @@ MonoBehaviour:
   enemyName: AE-36
   enemyWeakness: 1
   enemyBaseAttack: 23
-  enemyHealthMax: 30
+  enemyHealthMax: 35
   enemySprite: {fileID: 21300000, guid: cf57b917e786b564896182e453704774, type: 3}
+  possibleLoot: []

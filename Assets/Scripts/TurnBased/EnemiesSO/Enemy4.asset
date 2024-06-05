@@ -15,5 +15,6 @@ MonoBehaviour:
   enemyName: AI-12
   enemyWeakness: 0
   enemyBaseAttack: 23
-  enemyHealthMax: 30
+  enemyHealthMax: 54
   enemySprite: {fileID: 21300000, guid: 7f4ef36f6ba68a54ab63ba67355205dc, type: 3}
+  possibleLoot: []

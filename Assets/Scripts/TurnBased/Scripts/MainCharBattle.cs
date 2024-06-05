@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using static UnityEngine.GraphicsBuffer;
 
 public class MainCharBattle : CharacterBattle
 {
@@ -18,13 +19,22 @@ public class MainCharBattle : CharacterBattle
         AttackBuffActive = false;
         DefenseBuffActive = false;
     }
-    public override void Attack(CharacterBattle target, Action onAttackComplete)
+    public override void Attack(CharacterBattle target, float damage, Action onAttackComplete)
     {
-        target.TakeDamage(_mainCharData.BaseAttack);
-        if (target.IsDead())
-        {
-            BattleHandler.GetInstance().RemoveEnemy(target as EnemyBattle);
-        }
+        target.TakeDamage(_mainCharData.BaseAttack * Mathf.CeilToInt(damage));
         onAttackComplete();
+        if (target.IsDead())
+            EnemyDieWithDelay(target, 0.5f);
+    }
+
+    void EnemyDieWithDelay(CharacterBattle target, float delayTime)
+    {
+        StartCoroutine(DelayAction(target, delayTime));
+    }
+
+    IEnumerator DelayAction(CharacterBattle target, float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        BattleHandler.GetInstance().RemoveEnemy(target as EnemyBattle);
     }
 }

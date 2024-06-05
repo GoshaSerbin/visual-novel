@@ -4,6 +4,7 @@ INCLUDE ../Utils/Sounds.ink
 INCLUDE ../Utils/PlayerPrefs.ink
 INCLUDE ../Utils/SceneManagement.ink
 INCLUDE ../Utils/AI.ink
+INCLUDE ../Utils/Methods.ink
 
 ->main
 
@@ -27,7 +28,7 @@ VAR commrad_description = ""
 VAR password = 0
 VAR is_alone = 0
 VAR informed_about_scientist = 0
-# reset_characters : Командир 
+# reset_characters : , Командир 
 # background : CommanderOfficeBG
 # speaker : Командир
 ~player_name = GetString("PlayerName", "товарищ")
@@ -271,9 +272,9 @@ VAR have_rest = 0
 Нужно определиться с тем какой дорогой пойти.
 
 VAR landscape_description = "По всюду виднеются разрушенные здания"
-~AIGenerateText("landscape_description", "Опиши коротко вид разрушенных городских зданий", 150)
+~AIGenerateText("landscape_description", "Опиши коротко вид разрушенных городских зданий.", 150)
 VAR landscape_philosophy = "..."
-~AIGenerateText("landscape_philosophy", "пофилосовствуй на тему разрушенных зданий двумя короткими предложениями", 150)
+~AIGenerateText("landscape_philosophy", "пофилосовствуй на тему разрушенных зданий двумя короткими предложениями.", 150)
  + [По улицам города (быстрее, но более опасно)]
     # speaker :
     Нужно действовать быстро. А в смелости тебе не занимать.
@@ -399,18 +400,47 @@ VAR stranger_revealed_his_secret = 0
 }
 ->cult_meeting_scene
 
+
 === cult_meeting_scene
-~NEXT_SCENE_NAME="MapScene"
-->END
 Идете далее. На очередном переулке, подходя к нужному зданию видите несколько представителей культа. Они обрисовывают стены здания в свою символику. Рисуют великого ии.
 Можно подождать пока они уйдут, либо показать себя. Во втором случае они типо испугаются и сломя ноги убегают. Оставив после себя что-то. Потом еще мб философия от гг.
 
-Наконец-то доходите до того здания.
-Тут надо вспомнить пароль. Будет один верный вариант и 3 неверных. Если с первого раза не выберешь, то напарник спросит. Ты что забыл пароль?
+Наконец-то ты видишь то самое здание.
+Подходишь к дофону.
+Нужно ввести пароль от домона, который говорил командир...
+->remember_pass
+== remember_pass
+* [{password}]
+    Дверь открылась!
+    ->room_scene
+* [{min(password + 100, 9999)}]
+    Пароль неверный...
+    ->remember_pass
+* [{max(password - 10, 1000)}]
+    Пароль неверный...
+    ->remember_pass
 
-Дальше выбор как добраться до нужного этажа
-1. лифт. Окажется что он не работает. Ну да ну да, можно было догадаться.
-2. по лестнице.
+=== room_scene === 
+Нужно выбрать как добраться до нужного этажа.
++ [на лифте]
+Ты пытаешься вызывать лифт
+Удивительно, но он не работает...
++ [по лестнице]
+-
+
+
+VAR laptop_pass = "PFEM"
+VAR entered_password = ""
+~AskPlayer("entered_password")
+Введите пароль от ноутбука
+{laptop_pass}
+{entered_password}
+{laptop_pass == entered_password : 
+Ура! Доступ разблокирован!
+}
+awffqce
+~NEXT_SCENE_NAME="MapScene"
+->END
 
 Поднимаетесь.
 Дальше выбор чем вскрывать дверь. Ломом или отмычкой например. Если что-то есть, то можно использовать это. Иначе попросить напарника.

@@ -15,5 +15,7 @@ MonoBehaviour:
   enemyName: Pangu-alpha
   enemyWeakness: 2
   enemyBaseAttack: 23
-  enemyHealthMax: 30
+  enemyHealthMax: 25
   enemySprite: {fileID: 21300000, guid: 9af30731731bf084f9e16be154a5a27b, type: 3}
+  possibleLoot:
+  - {fileID: 11400000, guid: cb6fbc05153897f49b5ac8200ce22034, type: 2}

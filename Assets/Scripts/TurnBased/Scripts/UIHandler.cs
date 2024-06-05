@@ -40,13 +40,11 @@ public class UIHandler : MonoBehaviour
         {
             _mainCharHealthText.text = currHealth.ToString() + "/" + maxHealth.ToString();
             StartCoroutine(SmoothDecreaseHealth(damage, lastHealth, maxHealth));
-            //_mainCharHealthBar.localScale = new Vector3((float)currHealth / maxHealth, 1f, 1f);
             return;
         }
         EnemyBattle enemy = character as EnemyBattle;
         _enemyUIs[enemy].HealthText.text = currHealth.ToString() + "/" + maxHealth.ToString();
-        //StartCoroutine(SmoothDecreaseHealthEnemy(enemy, damage, currHealth));
-        _enemyUIs[enemy].HealthBar.localScale = new Vector3((float)currHealth / maxHealth, 1f, 1f);
+        StartCoroutine(SmoothDecreaseHealthEnemy(enemy, damage, lastHealth, maxHealth));
     }
 
 
@@ -58,11 +56,9 @@ public class UIHandler : MonoBehaviour
 
         while (elapsedTime < _smoothDecreaseDuration)
         {
-            Debug.Log(_mainCharHealthBar.localScale.x);
             float currentDamage = damagePerTick * Time.deltaTime;  
             currentHealth -= currentDamage;
             elapsedTime += Time.deltaTime;
-            Debug.Log(currentHealth / maxHealth);
             _mainCharHealthBar.localScale = new Vector3(currentHealth / maxHealth, 1f, 1f);
             if (currentHealth <= 0)
             {
@@ -73,18 +69,18 @@ public class UIHandler : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator SmoothDecreaseHealthEnemy(EnemyBattle enemy, float damage, int cHealth)
+    private IEnumerator SmoothDecreaseHealthEnemy(EnemyBattle enemy, float damage, float currHealth, int maxHealth)
     {
         float damagePerTick = damage / _smoothDecreaseDuration;
         float elapsedTime = 0f;
-        float currentHealth = cHealth;
+        float currentHealth = currHealth;
 
         while (elapsedTime < _smoothDecreaseDuration)
         {
             float currentDamage = damagePerTick * Time.deltaTime;
             currentHealth -= currentDamage;
             elapsedTime += Time.deltaTime;
-            _enemyUIs[enemy].HealthBar.localScale = new Vector3(currentHealth / cHealth, 1f, 1f);
+            _enemyUIs[enemy].HealthBar.localScale = new Vector3(currentHealth / maxHealth, 1f, 1f);
             if (currentHealth <= 0) {
                 _enemyUIs[enemy].HealthBar.localScale = new Vector3(0f, 1f, 1f);
             }

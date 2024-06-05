@@ -48,18 +48,18 @@ public static class TextProcessor
     public static string GetChoice(string aiAnswer, int choice)
     {
         string separator;
-        if (aiAnswer.Contains("1.") && aiAnswer.Contains("2.") && aiAnswer.Contains("3."))
+        if (aiAnswer.Contains("1.") && aiAnswer.Contains("2."))
         {
             separator = ".";
         }
-        else if (aiAnswer.Contains("1)") && aiAnswer.Contains("2)") && aiAnswer.Contains("3)"))
+        else if (aiAnswer.Contains("1)") && aiAnswer.Contains("2)"))
         {
             separator = ")";
         }
         else
         {
             Debug.LogWarning("Все пошло не по плану))))");
-            return "Ошибочка....";
+            return "ОШИБКА. Обратитесь к администратору.";
         }
         var BeginInd = aiAnswer.IndexOf(choice + separator) + 2;
         var EndInd = aiAnswer.IndexOf(choice + 1 + separator);
