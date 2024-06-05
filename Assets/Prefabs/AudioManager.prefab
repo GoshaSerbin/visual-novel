@@ -129,10 +129,91 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Nature
     clip: {fileID: 8300000, guid: 9e0513140f6726d408c1d5339e1ee801, type: 3}
-    volume: 1
+    volume: 0.994
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
     loop: 1
     mixerGroup: {fileID: -4244998174623549127, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: calm-cheerful
+    clip: {fileID: 8300000, guid: 76acbd950abe8d447b271372b21ad44c, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: -7892869685380107600, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: calm-mysterious
+    clip: {fileID: 8300000, guid: f7bd9466f8ff47f4c82d8533189f7bd7, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: -7892869685380107600, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: cheerful-foreshadowing
+    clip: {fileID: 8300000, guid: dcaf7f8c2a2baa449a2f58f193f7574a, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: -7892869685380107600, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: detective-mysterious
+    clip: {fileID: 8300000, guid: edbe72809b8066c49bac68601a57c47c, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: -7892869685380107600, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: mashinarium
+    clip: {fileID: 8300000, guid: 33641e8d8e802914792e79485f0705a8, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: -7892869685380107600, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: pumping
+    clip: {fileID: 8300000, guid: 87f5133b986b0ce4c83b7652c1e5ae72, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: -7892869685380107600, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: relax-epic
+    clip: {fileID: 8300000, guid: 14f7fb32c07502e4bbc3adece2eb6b2f, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: -7892869685380107600, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: tense
+    clip: {fileID: 8300000, guid: 35f81553f495dc141a967129c26b5e78, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: -7892869685380107600, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: tense-pumping
+    clip: {fileID: 8300000, guid: 698aaa19c77cdb740a85774247890e3c, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: -7892869685380107600, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
     source: {fileID: 0}
