@@ -21,16 +21,16 @@ public class LvlLoader : MonoBehaviour
         SceneManager.LoadScene(levelIndex);
     }
 
-    public void LoadScene(string name)
+    public void LoadScene(string name, LoadSceneMode mode = LoadSceneMode.Single)
     {
-        StartCoroutine(LoadLevelWithName(name));
+        StartCoroutine(LoadLevelWithName(name, mode));
     }
 
-    IEnumerator LoadLevelWithName(string name)
+    IEnumerator LoadLevelWithName(string name, LoadSceneMode mode)
     {
         transition.SetTrigger("End");
         yield return new WaitForSeconds(transitionTime);
 
-        SceneManager.LoadScene(name);
+        SceneManager.LoadScene(name, mode);
     }
 }

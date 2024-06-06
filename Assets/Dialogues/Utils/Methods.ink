@@ -1,5 +1,6 @@
 EXTERNAL GetChoice(choices, num)
 EXTERNAL AskPlayer(varName)
+EXTERNAL Fight()
 
 === function max(a,b) ===
 	{ a < b:

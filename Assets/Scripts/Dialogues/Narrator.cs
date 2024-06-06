@@ -9,6 +9,7 @@ using System.Globalization;
 using Inventory;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
+using UnityEngine.EventSystems;
 
 // This class is responsible for reading the ink story and creating relevent events
 public class Narrator : MonoBehaviour
@@ -239,6 +240,32 @@ public class Narrator : MonoBehaviour
             Debug.Log($"PlayerAsk {name}");
             OnPlayerAsked?.Invoke(name);
         });
+
+        _inkStory.BindExternalFunction("Fight", () =>
+        {
+            DisableAllThatNeededForAdditiveLoading();
+            var lvlLoader = FindObjectOfType<LvlLoader>();
+            if (lvlLoader != null)
+            {
+                lvlLoader.LoadScene("Combat", LoadSceneMode.Additive);
+            }
+            else
+            {
+                SceneManager.LoadScene("Combat", LoadSceneMode.Additive);
+            }
+        });
+    }
+
+    [SerializeField] private Camera _cam;
+    [SerializeField] private EventSystem _eventSys;
+    [SerializeField] private AudioListener _listener;
+
+
+    private void DisableAllThatNeededForAdditiveLoading()
+    {
+        _cam.enabled = false;
+        _eventSys.enabled = false;
+        _listener.enabled = false;
     }
 
     private void LoadNextScene()

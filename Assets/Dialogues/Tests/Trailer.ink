@@ -10,6 +10,10 @@ INCLUDE ../Utils/Methods.ink
 # reset_characters : Джон
 # speaker : John
 Держи
+
+~Fight()
+Привет
+Пока
 ~RemoveFromInventory("Жетон", 1)
 ~AddToInventory("Жетон", 1)
 ~RemoveFromInventory("Кастет", 2)
