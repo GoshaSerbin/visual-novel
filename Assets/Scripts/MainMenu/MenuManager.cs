@@ -25,6 +25,7 @@ public class MenuManager : MonoBehaviour
 
     private AudioManager _audioManger;
     private AIManager _aiManager;
+    private LvlLoader _lvlLoader;
 
 
     [SerializeField] private GameObject ContinueButton;
@@ -34,6 +35,7 @@ public class MenuManager : MonoBehaviour
     {
         _aiManager = FindObjectOfType<AIManager>();
         _audioManger = FindObjectOfType<AudioManager>();
+        _lvlLoader = FindObjectOfType<LvlLoader>();
         int SavedStoryProgress = PlayerPrefs.GetInt("SavedStoryProgress", 0);
         if (SavedStoryProgress != 0)
         {
@@ -67,9 +69,16 @@ public class MenuManager : MonoBehaviour
         _aiManager.GenerateImage(_playerDescriptionInputField.text, 720, 1280, "ANIME", "PlayerProfilePicture", true);
         _audioManger?.Play("ButtonClick");
 
-        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         PlayerPrefs.SetInt("SavedStoryProgress", 0);
-        SceneManager.LoadScene(nextSceneIndex);
+        if (_lvlLoader != null)
+        {
+            _lvlLoader.LoadNextLevel();
+        }
+        else
+        {
+            int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+            SceneManager.LoadScene(nextSceneIndex);
+        }
     }
 
     private void DeleteAllProgress()
@@ -90,7 +99,14 @@ public class MenuManager : MonoBehaviour
     public void ContinueGame()
     {
         string SavedScene = PlayerPrefs.GetString("SavedScene", "");
-        SceneManager.LoadScene(SavedScene);
+        if (_lvlLoader != null)
+        {
+            _lvlLoader.LoadScene(SavedScene);
+        }
+        else
+        {
+            SceneManager.LoadScene(SavedScene);
+        }
     }
 
     public void Quit()
@@ -129,6 +145,13 @@ public class MenuManager : MonoBehaviour
     public void StartPlayAIDungeon()
     {
         _audioManger?.Play("ButtonClick");
-        SceneManager.LoadScene("AIDungeon");
+        if (_lvlLoader != null)
+        {
+            _lvlLoader.LoadScene("AIDungeon");
+        }
+        else
+        {
+            SceneManager.LoadScene("AIDungeon");
+        }
     }
 }

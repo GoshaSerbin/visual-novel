@@ -9,7 +9,15 @@ public class ToMainMenu : MonoBehaviour
 
     public void ToMainMenuFun()
     {
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        var lvlLoader = FindObjectOfType<LvlLoader>();
+        if (lvlLoader != null)
+        {
+            lvlLoader.LoadScene("MainMenu");
+        }
+        else
+        {
+            SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        }
     }
 
 }

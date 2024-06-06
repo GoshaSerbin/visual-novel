@@ -247,7 +247,16 @@ public class Narrator : MonoBehaviour
         PlayerPrefs.SetString(SceneManager.GetActiveScene().name, "");
 
         string name = (string)_inkStory.variablesState["NEXT_SCENE_NAME"];
-        SceneManager.LoadScene(name, LoadSceneMode.Single);
+
+        var lvlLoader = FindObjectOfType<LvlLoader>();
+        if (lvlLoader != null)
+        {
+            lvlLoader.LoadScene(name);
+        }
+        else
+        {
+            SceneManager.LoadScene(name, LoadSceneMode.Single);
+        }
     }
 
     private void BindInventoryFunctionality()

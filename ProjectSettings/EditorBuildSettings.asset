@@ -9,14 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 512ff39d04884d64caa1867138c29f8b
   - enabled: 1
+    path: Assets/Scenes/DemoScene.unity
+    guid: 69d6545cfcadc0f4491edbf922928f69
+  - enabled: 0
     path: Assets/Scenes/Episode1.unity
     guid: 808fb235055442b4586c697f4e6ee004
   - enabled: 1
     path: Assets/Scenes/Combat.unity
     guid: 41d830abebef2524da550b8515015928
-  - enabled: 1
-    path: Assets/Scenes/DemoScene.unity
-    guid: 69d6545cfcadc0f4491edbf922928f69
   - enabled: 1
     path: Assets/Scenes/AIDungeon.unity
     guid: f7d3adbedaa7d55408b15825148e0f36
@@ -32,7 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Finale.unity
     guid: 9568199fcae08fc419e173d83492d8cb
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/DemoScene.unity
     guid: 69d6545cfcadc0f4491edbf922928f69
   m_configObjects: {}

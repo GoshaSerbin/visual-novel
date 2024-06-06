@@ -11,9 +11,12 @@ public class InGameMenuManager : MonoBehaviour
     private AudioManager _audioManger;
     [SerializeField] private GameObject _menuPanel;
     [SerializeField] private GameObject _settingsPanel;
+
+    private LvlLoader _lvlLoader;
     void Awake()
     {
         _audioManger = FindObjectOfType<AudioManager>();
+        _lvlLoader = FindObjectOfType<LvlLoader>();
     }
 
     public void OpenMenu()
@@ -48,7 +51,15 @@ public class InGameMenuManager : MonoBehaviour
         FindObjectOfType<Narrator>()?.SaveStoryProgress();
         _audioManger?.Play("ButtonClick");
         IsMenuOpened = false;
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        if (_lvlLoader != null)
+        {
+            _lvlLoader.LoadScene("MainMenu");
+        }
+        else
+        {
+            SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        }
+
     }
 
     void Update()
