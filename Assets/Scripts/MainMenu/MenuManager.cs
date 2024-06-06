@@ -50,10 +50,10 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         float value = PlayerPrefs.GetFloat(AudioManager.MUSIC_KEY, 1f);
-        _mixer.SetFloat(VolumeSettings.MIXER_MUSIC, Mathf.Log10(value) * 20);
+        _mixer.SetFloat(VolumeSettings.MIXER_MUSIC, Mathf.Log10(value) * VolumeSettings.multiplier);
         value = PlayerPrefs.GetFloat(AudioManager.SFX_KEY, 1f);
-        _mixer.SetFloat(VolumeSettings.MIXER_SFX, Mathf.Log10(value) * 20);
-        _audioManger?.Play("Demo");
+        _mixer.SetFloat(VolumeSettings.MIXER_SFX, Mathf.Log10(value) * VolumeSettings.multiplier);
+        _audioManger?.PlayMusic("calm-cheerful");
     }
     public void StartNewGame()
     {

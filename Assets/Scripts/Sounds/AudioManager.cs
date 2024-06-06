@@ -98,8 +98,8 @@ public class AudioManager : MonoBehaviour
 	{
 		float musicVolume = PlayerPrefs.GetFloat(MUSIC_KEY, 1f);
 		float sfxVolume = PlayerPrefs.GetFloat(SFX_KEY, 1f);
-		_mixer.SetFloat(VolumeSettings.MIXER_MUSIC, Mathf.Log10(musicVolume) * 20);
-		_mixer.SetFloat(VolumeSettings.MIXER_SFX, Mathf.Log10(sfxVolume * 20));
+		_mixer.SetFloat(VolumeSettings.MIXER_MUSIC, Mathf.Log10(musicVolume) * VolumeSettings.multiplier);
+		_mixer.SetFloat(VolumeSettings.MIXER_SFX, Mathf.Log10(sfxVolume * VolumeSettings.multiplier));
 	}
 
 	void StopSound(string sound)
