@@ -29,6 +29,6 @@ public class BattleOverHandler : MonoBehaviour
 
     public void ExitCombatScreen()
     {
-        SceneManager.LoadScene("Finale", LoadSceneMode.Single);
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
     }
 }
