@@ -80,7 +80,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 0}
   m_Color: {r: 0.72156864, g: 0.72156864, b: 0.72156864, a: 1}
   m_FlipX: 0
@@ -106,6 +106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyData: {fileID: 0}
   _enemyCircle: {fileID: 8029443235289881426}
+  <ThisEnemyLoot>k__BackingField: []
 --- !u!114 &5865436152724807131
 MonoBehaviour:
   m_ObjectHideFlags: 0

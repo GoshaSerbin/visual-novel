@@ -245,15 +245,51 @@ public class Narrator : MonoBehaviour
         {
             DisableAllThatNeededForAdditiveLoading();
             var lvlLoader = FindObjectOfType<LvlLoader>();
+            var CombatScene = SceneManager.GetSceneByName("Combat");
+
             if (lvlLoader != null)
             {
-                lvlLoader.LoadScene("Combat", LoadSceneMode.Additive);
+                //lvlLoader.LoadScene("Combat", LoadSceneMode.Additive);
+                StartCoroutine(AsyncSceneLoad("Combat"));
             }
             else
             {
-                SceneManager.LoadScene("Combat", LoadSceneMode.Additive);
+                StartCoroutine(AsyncSceneLoad("Combat"));
             }
         });
+    }
+
+    private IEnumerator AsyncSceneLoad(string sceneName)
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        //you might show the Loading Screen UI here
+        //start loading of new scene
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+
+
+        //return here every frame until isDone is true meaning its finished loading
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        //unload old scene or not
+       // SceneManager.UnloadSceneAsync(currentScene);
+
+        //or set the new scene active (you can still unload old one or keep it around IDK exactly your requirments
+        Scene newScene = SceneManager.GetSceneByName(sceneName);
+
+        if (SceneManager.SetActiveScene(newScene))
+        {
+            //scene acive and loaded
+        }
+        else
+        {
+            //scene not loaded yet
+        }
+
+
+        yield break;
     }
 
     [SerializeField] private Camera _cam;
@@ -266,6 +302,13 @@ public class Narrator : MonoBehaviour
         _cam.enabled = false;
         _eventSys.enabled = false;
         _listener.enabled = false;
+    }
+
+    private void EnableAllThatNeededForAdditiveLoading()
+    {
+        _cam.enabled = true;
+        _eventSys.enabled = true;
+        _listener.enabled = true;
     }
 
     private void LoadNextScene()
@@ -337,8 +380,16 @@ public class Narrator : MonoBehaviour
     private void Start()
     {
         StartStory();
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
+    private void OnSceneUnloaded(Scene current)
+    {
+        if (current == SceneManager.GetSceneByName("Combat"))
+        {
+            EnableAllThatNeededForAdditiveLoading();
+        }
+    }
     private void StartStory()
     {
         BindAIFunctionality();

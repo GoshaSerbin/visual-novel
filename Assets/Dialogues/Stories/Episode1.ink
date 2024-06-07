@@ -10,7 +10,7 @@ INCLUDE ../Utils/PlayerPrefs.ink
 ~Повар_раздачи_description = "{Повар_раздачи_description} Ты не знаешь ни имени главного героя, ни чем конкретно он занимается." 
 
 ~ olivia_description = "{olivia_description} Главного героя знает только в лицо и считает, что тот довольно слаб, чтобы состоять в элитном отряде."
--> houses
+
 -> part1
 
 === part1 ===
