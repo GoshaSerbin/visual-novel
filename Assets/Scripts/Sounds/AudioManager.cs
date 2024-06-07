@@ -132,7 +132,7 @@ public class AudioManager : MonoBehaviour
 
 	}
 
-	void StopMusic()
+	public void StopMusic()
 	{
 		foreach (var s in sounds)
 		{

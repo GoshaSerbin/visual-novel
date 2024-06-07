@@ -274,7 +274,7 @@ public class Narrator : MonoBehaviour
         }
 
         //unload old scene or not
-       // SceneManager.UnloadSceneAsync(currentScene);
+        // SceneManager.UnloadSceneAsync(currentScene);
 
         //or set the new scene active (you can still unload old one or keep it around IDK exactly your requirments
         Scene newScene = SceneManager.GetSceneByName(sceneName);

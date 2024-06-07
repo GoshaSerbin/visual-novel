@@ -6,6 +6,11 @@ INCLUDE ../Utils/SceneManagement.ink
 INCLUDE ../Utils/AI.ink
 INCLUDE ../Utils/Methods.ink
 
+~PlayMusic("detective-mysterious")
+Привет
+    ~Fight()
+    ...
+    ~PlayMusic("cheerful-foreshadowing")
 ->main
 
 
@@ -28,13 +33,13 @@ VAR commrad_description = ""
 VAR password = 0
 VAR is_alone = 0
 VAR informed_about_scientist = 0
+~player_name = GetString("PlayerName", "товарищ")
+~PlayMusic("detective-mysterious")
 # reset_characters : , Командир 
 # background : CommanderOfficeBG
 # speaker : Командир
-~player_name = GetString("PlayerName", "товарищ")
 TODO дополнить диалог, чтобы он более круто выглядел, добавить больше описаний мб, что-то перефразировать
 Приветствую, {player_name}! Я тебя ждал. Как твои дела?
-
 + [Нормально]
     Это не может не радовать, боец.
 + [Так себе]
@@ -176,6 +181,7 @@ VAR forest_philosophy = "..."
     {password}
 + [Уйти]
 -
+~PlayMusic("relax-epic")
 # speaker : 
 # background : {CampBG}
 # reset_characters : 
@@ -282,6 +288,8 @@ VAR landscape_philosophy = "..."
     Впереди ты встречаешь враждебных существ небиологического происхождения.
     ~Fight()
     ...
+    ~PlayMusic("cheerful-foreshadowing")
+    Бой окончен.
  + [Обходными путями (дольше, но безопасней)]
    # speaker : 
     Тише едешь дальше будешь. Ты решил не рисковать.
@@ -307,7 +315,7 @@ TODO далее текст достаточно скуп
     Он выглядит довольно обычно - невысокий, в простой грязной одежде. Что-то в нем дает тебе понять, что он не один из повстанцев.
  + [Подойти поближе]
     Ты решаешь подойти поближе.
-    # reset_characters : Незнакомец, {commrad_name}
+    # reset_characters : Незнакомый человек, {commrad_name}
     Он оборачивается в твою сторону и слабо поднимает руку. На его ладони большие грубые шрамы складываются в причудливый рисунок в виде глаза.
 -
 # speaker : {commrad_name}
@@ -325,7 +333,7 @@ TODO далее текст достаточно скуп
     
     
 === stranger_talk_scene
-# speaker : Незнакомец
+# speaker : Незнакомый человек
 Приветствую, странник. Не думал, что встречу здесь хоть одну живую душу, да еще и из сопротивления.
 Кажется, сегодня мне везет. У тебя есть немного еды?
 VAR stranger_likes_you = 1

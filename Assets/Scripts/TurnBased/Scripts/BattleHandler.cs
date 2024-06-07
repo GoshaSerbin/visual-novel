@@ -70,6 +70,16 @@ public class BattleHandler : MonoBehaviour
         _state = BattleState.PLAYERTURN;
         _activeCharacterBattle = _playerCharacter;
         PlayerTargetSelected(_enemyCharacters[0]);
+        var audioManager = FindObjectOfType<AudioManager>();
+        if (audioManager != null)
+        {
+            Debug.LogWarning("YESESESESESE");
+            audioManager.PlayMusic("tense");
+        }
+        else
+        {
+            Debug.LogWarning("NO audio manager");
+        }
     }
 
     public void CharacterAttack()
@@ -102,7 +112,7 @@ public class BattleHandler : MonoBehaviour
         {
             return 2f;
         }
-            return 3f;
+        return 3f;
     }
     private void ChooseNextActiveCharacter()
     {
