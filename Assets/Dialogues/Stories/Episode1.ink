@@ -14,6 +14,7 @@ INCLUDE ../Utils/PlayerPrefs.ink
 -> part1
 
 === part1 ===
+~PlayMusic("simple")
 ~AIGenerateImage("HellBG","Задний фон для игры, преисподня", 1024, 576)
 # {background} : {BlackBack}
 # {reset_characters} : {None}
@@ -125,6 +126,7 @@ VAR what_happened = "Слушай, мне некогда..."
     {Врач} дает тебе непонятный предмет, о котором ты ничего не знаешь.
     # {speaker} : {None}
     Ты последний раз бросаешь взгляд на недовольного врача и приоткрываешь плотную занавеску, явно служащую здесь в качестве двери.
+    ~PlayMusic("cheerful-foreshadowing")
     # {background} : CampBG
     # {reset_characters} : {None}
     Перед тобой открывается вид на гигантскую площадь, полностью заполненную снующими туда-сюда людьми.

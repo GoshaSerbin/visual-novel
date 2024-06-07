@@ -120,7 +120,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Kitchen
     clip: {fileID: 8300000, guid: d8b0e25db7c4dd145a9ed2cca862f00c, type: 3}
-    volume: 1
+    volume: 0.707
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
@@ -129,7 +129,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Nature
     clip: {fileID: 8300000, guid: 9e0513140f6726d408c1d5339e1ee801, type: 3}
-    volume: 0.994
+    volume: 0.973
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
@@ -210,6 +210,15 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: tense-pumping
     clip: {fileID: 8300000, guid: 698aaa19c77cdb740a85774247890e3c, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: -7892869685380107600, guid: 2d022f59217e3844cbef0dbba119c5a9, type: 2}
+    source: {fileID: 0}
+  - name: simple
+    clip: {fileID: 8300000, guid: f7a6a31eb79619841bc746beddf82705, type: 3}
     volume: 1
     volumeVariance: 0
     pitch: 1

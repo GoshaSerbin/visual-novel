@@ -5,12 +5,6 @@ INCLUDE ../Utils/PlayerPrefs.ink
 INCLUDE ../Utils/SceneManagement.ink
 INCLUDE ../Utils/AI.ink
 INCLUDE ../Utils/Methods.ink
-
-~PlayMusic("detective-mysterious")
-Привет
-    ~Fight()
-    ...
-    ~PlayMusic("cheerful-foreshadowing")
 ->main
 
 
