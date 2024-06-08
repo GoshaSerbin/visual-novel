@@ -204,6 +204,9 @@ EXTERNAL AITalk(system, max_tokens)
 
 Have fun!
 
+# Вопросы?
+@GoshaSerbin, @MiraiRatchet в Telegram
+
 
 
 
