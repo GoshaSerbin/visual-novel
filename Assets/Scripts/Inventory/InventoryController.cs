@@ -23,11 +23,15 @@ namespace Inventory
         void OnEnable()
         {
             _inventoryData.OnInventoryUpdated += UpdateInventoryUI;
+            Narrator.OnStorySaved += SaveInventory;
+            Narrator.OnStoryStartedFromSave += LoadInventory;
         }
 
         void OnDisable()
         {
             _inventoryData.OnInventoryUpdated -= UpdateInventoryUI;
+            Narrator.OnStorySaved -= SaveInventory;
+            Narrator.OnStoryStartedFromSave -= LoadInventory;
         }
 
         void Start()
@@ -200,6 +204,41 @@ namespace Inventory
                 }
             }
             return result;
+        }
+
+        public void SaveInventory()
+        {
+            removeInventorySaves();
+            var items = _inventoryData.GetCurrentInventoryState();
+            foreach (var (k, v) in items)
+            {
+
+                PlayerPrefs.SetInt("Inventory" + v.item.Name, HowMany(v.item.Name));
+            }
+        }
+
+        private void removeInventorySaves()
+        {
+            Dictionary<string, ItemSO> items = ItemsManager.GetAllItems();
+            foreach (var (k, v) in items)
+            {
+                PlayerPrefs.DeleteKey("Inventory" + k);
+            }
+        }
+
+        public void LoadInventory()
+        {
+            _inventoryData.Initialize(); // removes all items
+            Dictionary<string, ItemSO> items = ItemsManager.GetAllItems();
+            foreach (var (k, v) in items)
+            {
+                // RemoveItem(v.Name, 10000); // to do: remove all items
+                int quantity = PlayerPrefs.GetInt("Inventory" + v.Name, -1);
+                if (quantity > 0)
+                {
+                    AddItem(v.Name, quantity);
+                }
+            }
         }
 
 

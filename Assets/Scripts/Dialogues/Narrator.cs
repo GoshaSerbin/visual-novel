@@ -33,6 +33,7 @@ public class Narrator : MonoBehaviour
 
     public static event Action<Replica> OnCharacterSaid;
     public static event Action OnStoryStarted;
+    public static event Action OnStoryStartedFromSave;
     public static event Action OnStoryEnded;
 
     public static event Action<List<Choice>> OnChoicesAppeared;
@@ -95,8 +96,11 @@ public class Narrator : MonoBehaviour
         BarrierSynchronizer.OnWaitEnded -= ContinueStory;
     }
 
+    public static event Action OnStorySaved;
+
     public void SaveStoryProgress()
     {
+        OnStorySaved?.Invoke();
         string savedJson = _inkStory.state.ToJson();
         PlayerPrefs.SetString(SceneManager.GetActiveScene().name, savedJson);
         PlayerPrefs.SetString("SavedScene", SceneManager.GetActiveScene().name);
@@ -400,6 +404,7 @@ public class Narrator : MonoBehaviour
         Debug.Log("StartingStory!!");
         if (fromSave)
         {
+            OnStoryStartedFromSave?.Invoke();
             Debug.Log("fromSave");
             _storyParser.Load();
             ForcedDisplayUpdate();

@@ -5,16 +5,6 @@ using UnityEngine;
 
 public class ItemsManager //TO DO: rename
 {
-
-    [SerializeField]
-    private static Dictionary<string, string> _itemName2FileName = new Dictionary<string, string>(){
-            {"таблетки", "Tablets"},
-            {"деньги", "Money"},
-            {"кофе", "Coffee"},
-            {"жетон", "Token"}
-        };
-
-
     [SerializeField] static private Dictionary<string, ItemSO> _items;
 
     static private void Init()
@@ -38,5 +28,15 @@ public class ItemsManager //TO DO: rename
         }
         Debug.Log("getting item:" + itemName);
         return _items[itemName];
+    }
+
+    static public Dictionary<string, ItemSO> GetAllItems()
+    {
+        if (_items is null)
+        {
+            Debug.Log("items is null");
+            Init();
+        }
+        return _items;
     }
 }

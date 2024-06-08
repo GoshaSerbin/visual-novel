@@ -7,6 +7,13 @@ INCLUDE ../Utils/SceneManagement.ink
 INCLUDE ../Utils/Methods.ink
 
 
+Привет 1
+~AddToInventory("Жетон", 1)
+~AddToInventory("Кастет", 2)
+Привет 2
+Привет 3
+Привет 4
+
 # reset_characters : Джон
 # speaker : John
 Держи
@@ -15,9 +22,7 @@ INCLUDE ../Utils/Methods.ink
 Привет
 Пока
 ~RemoveFromInventory("Жетон", 1)
-~AddToInventory("Жетон", 1)
 ~RemoveFromInventory("Кастет", 2)
-~AddToInventory("Кастет", 2)
 ~RemoveFromInventory("Таблетки от головы", 2)
 ~AddToInventory("Таблетки от головы", 2)
 ~RemoveFromInventory("Кола", 3)
