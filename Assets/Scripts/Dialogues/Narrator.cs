@@ -67,7 +67,15 @@ public class Narrator : MonoBehaviour
 
     private void Awake()
     {
+        _aiManager = FindObjectOfType<AIManager>();
+        _talkManager = FindObjectOfType<TalkManager>();
+        _player = FindObjectOfType<PlayerBehavior>();
         string SavedJsonStory = PlayerPrefs.GetString(SceneManager.GetActiveScene().name, "");
+
+        if (_inkJson == null)
+        {
+            _inkJson = Resources.Load<TextAsset>("Dialogues/Stories/" + SceneManager.GetActiveScene().name);
+        }
         _inkStory = new Story(_inkJson.text);
         if (SavedJsonStory != "")
         {
@@ -81,9 +89,6 @@ public class Narrator : MonoBehaviour
         {
             fromSave = false;
         }
-        _aiManager = FindObjectOfType<AIManager>();
-        _talkManager = FindObjectOfType<TalkManager>();
-        _player = FindObjectOfType<PlayerBehavior>();
     }
 
     void OnEnable()
