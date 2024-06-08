@@ -70,7 +70,8 @@ public class Missions : MonoBehaviour
 
         form.AddField("message", jsonMessages);
         form.AddField("max_tokens", 800);
-        form.AddField("temperature", 1);
+        form.AddField("temperature", "1,2");
+        Debug.Log(jsonMessages);
         _server.SendRequestToServer(form, GenerateMissionCallBack);
     }
 

@@ -17,7 +17,7 @@ public class LocationScript : MonoBehaviour
 
     private void OnMouseDown()
     {
-        SceneManager.LoadScene(_sceneName);
+        FindObjectOfType<LvlLoader>()?.LoadScene(_sceneName);
     }
 
     private void OnMouseEnter()

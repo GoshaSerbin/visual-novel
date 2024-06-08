@@ -8,6 +8,7 @@ INCLUDE ../Utils/Methods.ink
 
 VAR game_theme = "Пиратство"
 ~AskPlayer("game_theme")
+~PlayMusic("mashinarium")
 # {background} : {EarthBG}
 Укажи тему игры, например, "Пиратство", или "Поступление на работу в IT компанию ВК".
 
@@ -41,10 +42,14 @@ VAR background_descr = ""
 ~AIChangeBackground("DungeonBG", "{background_descr}", 1024, 576)
 # barrier : choices
 Смотрим в будущее...
+VAR choice1 = ""
+VAR choice2 = ""
+~choice1 = GetChoice("{choices}", 1)
+~choice2 = GetChoice("{choices}", 2)
 {new_story}
-+ [{GetChoice("{choices}", 1)}]
++ [{choice1}]
     ~player_choice = GetChoice("{choices}", 1)
-+ [{GetChoice("{choices}", 2)}]
++ [{choice2}]
     ~player_choice = GetChoice("{choices}", 2)
 + [Свой вариант]
     ~AskPlayer("player_choice")

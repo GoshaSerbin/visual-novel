@@ -23,4 +23,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Finale.unity
     guid: 9568199fcae08fc419e173d83492d8cb
+  - enabled: 1
+    path: Assets/Scenes/AIDungeon.unity
+    guid: 54a2d9266bd4682449a9597aff65ee69
+  - enabled: 1
+    path: Assets/Scenes/JohnTalk.unity
+    guid: 172575be8ff5a2441b7bdda17ccc2055
+  - enabled: 1
+    path: Assets/Scenes/TomTalk.unity
+    guid: eee07c1d2869db8429d2aad08b159696
   m_configObjects: {}
