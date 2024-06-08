@@ -1780,6 +1780,63 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &516931048
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2902330637895812190, guid: 1e28350082021494e903d80bb69ddccd, type: 3}
+      propertyPath: m_Name
+      value: AIManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926762104669129669, guid: 1e28350082021494e903d80bb69ddccd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926762104669129669, guid: 1e28350082021494e903d80bb69ddccd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926762104669129669, guid: 1e28350082021494e903d80bb69ddccd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926762104669129669, guid: 1e28350082021494e903d80bb69ddccd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926762104669129669, guid: 1e28350082021494e903d80bb69ddccd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926762104669129669, guid: 1e28350082021494e903d80bb69ddccd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926762104669129669, guid: 1e28350082021494e903d80bb69ddccd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926762104669129669, guid: 1e28350082021494e903d80bb69ddccd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926762104669129669, guid: 1e28350082021494e903d80bb69ddccd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926762104669129669, guid: 1e28350082021494e903d80bb69ddccd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1e28350082021494e903d80bb69ddccd, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2193,7 +2250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bcb67747ca8d6a4fb03cdf38a76bc9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inkJson: {fileID: 4900000, guid: 69a0b1e62d25a90428d03ae2c72e42a6, type: 3}
+  inkJson: {fileID: 4900000, guid: 2f98c5ac9ad312248867cb6107d6e353, type: 3}
   dialoguePanel: {fileID: 1871276209}
   dialogueText: {fileID: 961720872}
   nameText: {fileID: 1429462923}
@@ -4125,7 +4182,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1740979977}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Dialogues, Assembly-CSharp
         m_MethodName: 
         m_Mode: 1
@@ -5447,64 +5504,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1711627450}
   m_CullTransparentMesh: 1
---- !u!1 &1740979977
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1740979978}
-  - component: {fileID: 1740979980}
-  - component: {fileID: 1740979979}
-  m_Layer: 0
-  m_Name: AIManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1740979978
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1740979977}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1740979979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1740979977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98aaf15d979ceaf4eb95e02d76eb2e68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1740979980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1740979977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b52ccf2d64dc1f141a7bd052ea206850, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serverURL: http://146.185.211.97:8080
 --- !u!1 &1774075941
 GameObject:
   m_ObjectHideFlags: 0
@@ -6022,7 +6021,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1740979977}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Dialogues, Assembly-CSharp
         m_MethodName: 
         m_Mode: 1
@@ -6671,7 +6670,6 @@ SceneRoots:
   - {fileID: 659433600}
   - {fileID: 771156607}
   - {fileID: 2104855594}
-  - {fileID: 1740979978}
   - {fileID: 1362648046}
   - {fileID: 523042822}
   - {fileID: 1453710121}
@@ -6680,3 +6678,4 @@ SceneRoots:
   - {fileID: 2726773924195841062}
   - {fileID: 1365994768}
   - {fileID: 1388349167}
+  - {fileID: 516931048}

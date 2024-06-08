@@ -5546,6 +5546,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb72c2f08a8f094eb766124bb9110ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cam: {fileID: 0}
+  _eventSys: {fileID: 0}
+  _listener: {fileID: 0}
 --- !u!4 &1453710121
 Transform:
   m_ObjectHideFlags: 0
@@ -6340,7 +6343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52ccf2d64dc1f141a7bd052ea206850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverURL: http://146.185.211.97:8080
+  textFile: {fileID: 0}
 --- !u!1 &1774075941
 GameObject:
   m_ObjectHideFlags: 0

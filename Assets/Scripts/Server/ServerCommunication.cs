@@ -3,10 +3,11 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 using System;
+using System.IO;
 
 public class ServerCommunication : MonoBehaviour
 {
-    [SerializeField] private string serverURL = "http://";
+    private string serverURL = "http://";
 
     public class Message
     {
@@ -17,6 +18,12 @@ public class ServerCommunication : MonoBehaviour
         }
         public string role;
         public string content;
+    }
+    [SerializeField] private TextAsset textFile;
+
+    private void Start()
+    {
+        serverURL = textFile.text.Trim();
     }
 
     public void SendRequestToServer(WWWForm form, Action<string> callback)
