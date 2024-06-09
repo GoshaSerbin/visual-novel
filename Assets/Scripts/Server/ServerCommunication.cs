@@ -7,7 +7,6 @@ using System.IO;
 
 public class ServerCommunication : MonoBehaviour
 {
-    private string serverURL = "http://";
 
     public class Message
     {
@@ -19,12 +18,7 @@ public class ServerCommunication : MonoBehaviour
         public string role;
         public string content;
     }
-    [SerializeField] private TextAsset textFile;
-
-    private void Start()
-    {
-        serverURL = textFile.text.Trim();
-    }
+    [SerializeField] private TextAsset _serverURL;
 
     public void SendRequestToServer(WWWForm form, Action<string> callback)
     {
@@ -63,7 +57,7 @@ public class ServerCommunication : MonoBehaviour
 
     IEnumerator SendMessage(WWWForm form, Action<string> callback)
     {
-        using (UnityWebRequest www = UnityWebRequest.Post(serverURL + "/talk", form))
+        using (UnityWebRequest www = UnityWebRequest.Post(_serverURL.text.Trim() + "/talk", form))
         {
             www.SetRequestHeader("Access-Control-Allow-Origin", "*");
             www.timeout = 20; //sec
@@ -90,7 +84,8 @@ public class ServerCommunication : MonoBehaviour
 
     IEnumerator GetSprite(WWWForm form, Action<Sprite, bool> callback)
     {
-        using (UnityWebRequest www = UnityWebRequest.Post(serverURL + "/image", form))
+        Debug.Log(_serverURL.text.Trim() + "/image");
+        using (UnityWebRequest www = UnityWebRequest.Post(_serverURL.text.Trim() + "/image", form))
         {
             www.timeout = 300; //sec
             yield return www.SendWebRequest();

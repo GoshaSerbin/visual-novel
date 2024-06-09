@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -25,6 +26,7 @@ namespace Inventory.UI
         {
             ResetData();
             Deselect();
+            transform.position = new UnityEngine.Vector3(transform.position.x, transform.position.y, 0);
         }
 
         public void ResetData()

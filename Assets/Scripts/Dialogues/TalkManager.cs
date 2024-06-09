@@ -29,13 +29,13 @@ public class TalkManager : MonoBehaviour
 
     void Awake()
     {
-        _aiManager = FindObjectOfType<AIManager>();
         _narrator = FindObjectOfType<Narrator>();
     }
 
     // !!! Dictionary and list are passed by ref, so in the beggining they are empty, and then they will change during parsing tags.......
     public void StartAITalk(string characterDescription, int maxTokensForSinglePhrase, Dictionary<string, string> affects, List<string> items)
     {
+        _aiManager = AIManager.Instance;
         OnAITalkStarted.Invoke();
         Debug.Log("Start AI Talk!");
         _messageHistory = new();

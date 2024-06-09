@@ -67,7 +67,6 @@ public class Narrator : MonoBehaviour
 
     private void Awake()
     {
-        _aiManager = FindObjectOfType<AIManager>();
         _talkManager = FindObjectOfType<TalkManager>();
         _player = FindObjectOfType<PlayerBehavior>();
         string SavedJsonStory = PlayerPrefs.GetString(SceneManager.GetActiveScene().name, "");
@@ -132,6 +131,8 @@ public class Narrator : MonoBehaviour
 
     private void BindAIFunctionality()
     {
+        Debug.Log(_aiManager);
+        Debug.Log(_aiManager._server);
         _inkStory.BindExternalFunction("AIGenerateText", (string varName, string prompt, int maxTokens) =>
         {
             float temperature = (float)_inkStory.variablesState["ai_temperature"];
@@ -179,6 +180,8 @@ public class Narrator : MonoBehaviour
 
         _inkStory.BindExternalFunction("AIGenerateImage", (string varName, string prompt, int w, int h) =>
         {
+            Debug.Log(_aiManager);
+            Debug.Log(_aiManager._server);
             string style = (string)_inkStory.variablesState["ai_style"];
             bool allowCensored = ((int)_inkStory.variablesState["ai_allow_censored_images"]) != 0;
             Debug.Log("Parsed allowCensored : " + allowCensored);
@@ -388,6 +391,7 @@ public class Narrator : MonoBehaviour
     }
     private void Start()
     {
+        _aiManager = AIManager.Instance;
         StartStory();
         SceneManager.sceneUnloaded += OnSceneUnloaded;
     }

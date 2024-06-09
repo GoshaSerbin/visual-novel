@@ -12,21 +12,26 @@ using Zenject;
 [RequireComponent(typeof(ServerCommunication))]
 public class AIManager : MonoBehaviour
 {
-    private ServerCommunication _server;
+    public ServerCommunication _server;
 
-    public static AIManager instance;
-
+    private static AIManager _instance;
+    public static AIManager Instance
+    {
+        get
+        {
+            if (!_instance)
+            {
+                var prefab = Resources.Load<GameObject>("Prefabs/AIManager");
+                var inScene = Instantiate<GameObject>(prefab);
+                _instance = inScene.GetComponentInChildren<AIManager>();
+                if (!_instance) _instance = inScene.AddComponent<AIManager>();
+                DontDestroyOnLoad(_instance.transform.root.gameObject);
+            }
+            return _instance;
+        }
+    }
     private void Awake()
     {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
         _server = GetComponent<ServerCommunication>();
     }
     private WWWForm GetWWWForm(List<ServerCommunication.Message> messages, int maxTokens, float temperature)
@@ -131,7 +136,6 @@ public class AIManager : MonoBehaviour
             Debug.Log($"ai answer to affected story {varName}: {response}");
             if (response.Contains('Д'))
             {
-                // OnAIAffectedStory.Invoke(varName);
                 callback();
             }
         });
@@ -152,6 +156,7 @@ public class AIManager : MonoBehaviour
     {
         prompt = prompt.Trim('\n');
         var form = GetImageWWWForm(prompt, w, h, style);
+        Debug.Log(_server);
         _server.SendImageRequestToServer(form, (Sprite sprite, bool isCensored) =>
         {
             if (sprite == null)

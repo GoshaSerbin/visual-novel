@@ -8,6 +8,7 @@ using System;
 using UnityEditor;
 using Inventory;
 using UnityEngine.UI;
+using System.Linq;
 
 public class MenuManager : MonoBehaviour
 {
@@ -33,8 +34,6 @@ public class MenuManager : MonoBehaviour
 
     private void Awake()
     {
-        _aiManager = FindObjectOfType<AIManager>();
-        _audioManger = FindObjectOfType<AudioManager>();
         _lvlLoader = FindObjectOfType<LvlLoader>();
         int SavedStoryProgress = PlayerPrefs.GetInt("SavedStoryProgress", 0);
         if (SavedStoryProgress != 0)
@@ -51,6 +50,7 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
+        _aiManager = AIManager.Instance;
         float value = PlayerPrefs.GetFloat(AudioManager.MUSIC_KEY, 1f);
         _mixer.SetFloat(VolumeSettings.MIXER_MUSIC, Mathf.Log10(value) * VolumeSettings.multiplier);
         value = PlayerPrefs.GetFloat(AudioManager.SFX_KEY, 1f);
