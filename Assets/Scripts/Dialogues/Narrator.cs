@@ -93,11 +93,13 @@ public class Narrator : MonoBehaviour
     void OnEnable()
     {
         BarrierSynchronizer.OnWaitEnded += ContinueStory;
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
     void OnDisable()
     {
         BarrierSynchronizer.OnWaitEnded -= ContinueStory;
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
     }
 
     public static event Action OnStorySaved;
@@ -393,7 +395,7 @@ public class Narrator : MonoBehaviour
     {
         _aiManager = AIManager.Instance;
         StartStory();
-        SceneManager.sceneUnloaded += OnSceneUnloaded;
+
     }
 
     private void OnSceneUnloaded(Scene current)

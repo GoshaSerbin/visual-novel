@@ -10,10 +10,10 @@ EditorBuildSettings:
     guid: 512ff39d04884d64caa1867138c29f8b
   - enabled: 1
     path: Assets/Scenes/Episode1.unity
-    guid: e999538b43c47014b9c110258ce4f77a
+    guid: 767ab5fc52819c74a9fd24cdaf89e497
   - enabled: 1
     path: Assets/Scenes/Episode2.unity
-    guid: 1e868561935cfc3499755250230b341b
+    guid: ba1eb0d14b7d40a45bfae42f422daa90
   - enabled: 1
     path: Assets/Scenes/MapScene.unity
     guid: 9f1b206a15db31041b91906e3627fdd7
@@ -23,13 +23,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Finale.unity
     guid: 9568199fcae08fc419e173d83492d8cb
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/AIDungeon.unity
     guid: 54a2d9266bd4682449a9597aff65ee69
   - enabled: 1
     path: Assets/Scenes/JohnTalk.unity
-    guid: 172575be8ff5a2441b7bdda17ccc2055
+    guid: c4c7d08a466d53d4aa78b14eb77ff629
   - enabled: 1
     path: Assets/Scenes/TomTalk.unity
-    guid: eee07c1d2869db8429d2aad08b159696
+    guid: 9fc10de8f28c6e94bb5907e24bb79f94
   m_configObjects: {}

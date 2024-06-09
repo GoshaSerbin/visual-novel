@@ -73,7 +73,6 @@ public class BattleHandler : MonoBehaviour
         var audioManager = FindObjectOfType<AudioManager>();
         if (audioManager != null)
         {
-            Debug.LogWarning("YESESESESESE");
             audioManager.PlayMusic("tense");
         }
         else
