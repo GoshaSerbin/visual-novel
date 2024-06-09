@@ -17,7 +17,14 @@ public class LocationScript : MonoBehaviour
 
     private void OnMouseDown()
     {
-        FindObjectOfType<LvlLoader>()?.LoadScene(_sceneName);
+        if (_sceneName == "Combat")
+        {
+            FindObjectOfType<LvlLoader>()?.LoadScene(_sceneName, LoadSceneMode.Additive);
+        }
+        else
+        {
+            FindObjectOfType<LvlLoader>()?.LoadScene(_sceneName);
+        }
     }
 
     private void OnMouseEnter()

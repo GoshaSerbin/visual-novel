@@ -342,8 +342,10 @@ VAR tablets_num = 0
 ~cola_num = HowManyItems("Суп из столовой")
 ~tablets_num = HowManyItems("Таблетки от головы")
 +{cola_num > 0}[Дать суп из столовой]
+~RemoveFromInventory("Суп из столовой", 1)
 Спасибо! Ну и супчик...Как я могу помочь тебе?->stranger_conversation_scene
 +{tablets_num > 0}[Дать таблетки]
+~RemoveFromInventory("Таблетки от головы", 1)
 Хм...
 А это точно поможет мне от голода?
 Ну ладно, спасибо!->stranger_conversation_scene
@@ -481,7 +483,7 @@ VAR stranger_revealed_his_secret = 0
 VAR laptop_pass = "PFEM"
 VAR entered_password = ""
 # background : MarchevskyHouseInsideBG
-Ты заходишь в комнате
+Ты заходишь в комнату
 ~AskPlayer("entered_password")
 Введите пароль от ноутбука
 {laptop_pass == entered_password : 

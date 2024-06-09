@@ -160,6 +160,7 @@ VAR what_happened = "Слушай, мне некогда..."
     -> free_time_infirmary
  
 === banned_scene
+~PlayMusic("tense-pumping")
 # speaker : 
 У тебя резко темнеет в глазах
 # background : BlackBack
