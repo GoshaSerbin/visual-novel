@@ -35,6 +35,7 @@ public class MenuManager : MonoBehaviour
     private void Awake()
     {
         _lvlLoader = FindObjectOfType<LvlLoader>();
+        _audioManger = FindObjectOfType<AudioManager>();
         int SavedStoryProgress = PlayerPrefs.GetInt("SavedStoryProgress", 0);
         if (SavedStoryProgress != 0)
         {

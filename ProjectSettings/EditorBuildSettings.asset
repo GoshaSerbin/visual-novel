@@ -23,9 +23,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Finale.unity
     guid: 9568199fcae08fc419e173d83492d8cb
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/AIDungeon.unity
-    guid: 54a2d9266bd4682449a9597aff65ee69
+    guid: 833e6e628a4cc0b449d18bfe5c1d2362
   - enabled: 1
     path: Assets/Scenes/JohnTalk.unity
     guid: c4c7d08a466d53d4aa78b14eb77ff629
